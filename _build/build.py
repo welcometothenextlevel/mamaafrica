@@ -165,7 +165,7 @@ def dock():
   <button class="d-book" type="button" data-book><span class="ic">{I["cal"]}</span><span class="tx">Réserver</span></button>
 </div>
 <div class="mbar" id="mbar">
-  <a class="m-tel" href="tel:{TEL}">{I["tel"]}Appeler</a>
+  <a class="m-tel" href="tel:{TEL}" aria-label="Appeler le {PHONE}">{I["tel"]}<span class="m-lbl">Appeler</span></a>
   <a class="m-wa" href="{wa_link()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a>
   <button class="m-book" type="button" data-book>{I["cal"]}Réserver</button>
 </div>

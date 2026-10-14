@@ -5,7 +5,7 @@ her shop flyers, and the previous mama-africa-beauty.ch site."""
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "2"  # cache-busting for css/js
+V = "3"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"

@@ -10,7 +10,9 @@
 
   /* ---------- smooth scroll ---------- */
   var lenis = null;
-  if (!REDUCE && typeof Lenis !== 'undefined') {
+  var TOUCH = matchMedia('(pointer: coarse)').matches;
+  // phones keep native momentum scrolling: smoothing it fights iOS and adds lag
+  if (!REDUCE && !TOUCH && typeof Lenis !== 'undefined') {
     lenis = new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: 0.95 });
     if (hasGsap) {
       lenis.on('scroll', ScrollTrigger.update);
@@ -144,7 +146,7 @@
     });
 
     /* soft parallax on arch frames */
-    d.querySelectorAll('.arch video, .phero-media img, .phero-media video').forEach(function (m) {
+    if (!MOBILE()) d.querySelectorAll('.arch video, .phero-media img, .phero-media video').forEach(function (m) {
       gsap.to(m, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: m.parentNode, start: 'top top', end: 'bottom top', scrub: true } });
     });
   } else {
@@ -169,6 +171,7 @@
   var weave = d.querySelector('.weave');
   var steps = weave ? weave.querySelectorAll('.weave-step') : [];
   var bars = weave ? weave.querySelectorAll('.weave-bar i') : [];
+  var weaveKey = -1;
   function weaveTick() {
     if (!weave) return;
     var r = weave.getBoundingClientRect();
@@ -176,8 +179,12 @@
     var p = Math.min(1, Math.max(0, -r.top / span));
     var q = Math.min(1, Math.max(0, (p - 0.12) / 0.76));
     var idx = Math.min(3, Math.floor(q * 4));
+    if (r.bottom < -50 || r.top > innerHeight + 50) return;
+    var key = Math.round(q * 200);
+    if (key === weaveKey) return;
+    weaveKey = key;
     steps.forEach(function (s, i) { s.classList.toggle('is-on', i === idx); });
-    bars.forEach(function (b, i) { b.style.setProperty('--p', Math.min(1, Math.max(0, q * 4 - i))); });
+    bars.forEach(function (b, i) { b.style.setProperty('--p', Math.min(1, Math.max(0, q * 4 - i)).toFixed(3)); });
   }
 
   /* ---------- horizontal catalogue ---------- */

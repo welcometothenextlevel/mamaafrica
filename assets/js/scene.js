@@ -175,14 +175,14 @@ function mountCompanion() {
   const cowMat = withBend(cowrieMat());
   const cuffGeo = cuffGeometry(1.02, 0.6, 5), cuffGeoS = cuffGeometry(1.0, 0.36, 3);
   let strands = [], deco = [], L = 0, segs = 0;
-  const radial = MOBILE ? 14 : 18;
+  const radial = MOBILE ? 10 : 18;
 
   function build(len) {
     strands.forEach((m) => { spin.remove(m); m.geometry.dispose(); });
     deco.forEach((m) => spin.remove(m));
     strands = []; deco = [];
     L = len;
-    segs = Math.round((len / G.P) * 44);
+    segs = Math.round((len / G.P) * (MOBILE ? 28 : 44));
     hairMat.bumpMap.repeat.set(len / G.P * 1.2, 2);
     for (let k = 0; k < 3; k++) {
       const geo = new THREE.TubeGeometry(new PlaitCurve(k, len, G), segs, R, radial, false);
@@ -206,8 +206,16 @@ function mountCompanion() {
   }
 
   const st = { cw: 0, vh: 0, worldH: 0, upp: 0, heroW: 0, heroCx: 0, railW: 0, railCx: 0, minScale: 1 };
+  // Phones change innerHeight whenever the address bar slides in or out. Resizing the canvas then
+  // re-allocates it (flicker) and can rebuild the braid (jump), so size to the large viewport and
+  // only re-layout when the width changes.
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none';
+  document.body.appendChild(probe);
+  const stableH = () => Math.max(probe.offsetHeight || 0, innerHeight);
+  let lastW = 0;
   function layout() {
-    const vw = innerWidth, vh = innerHeight;
+    const vw = innerWidth, vh = MOBILE ? stableH() : innerHeight;
     const wrap = document.querySelector('main .wrap') || document.querySelector('.wrap');
     let contentRight = vw - 40;
     if (wrap) { const r = wrap.getBoundingClientRect(); contentRight = r.right - parseFloat(getComputedStyle(wrap).paddingRight); }
@@ -238,7 +246,12 @@ function mountCompanion() {
     if (len !== L) build(len);
   }
   layout();
-  addEventListener('resize', layout);
+  lastW = innerWidth;
+  addEventListener('resize', () => {
+    if (MOBILE && Math.abs(innerWidth - lastW) < 2) return; // address bar only: nothing to do
+    lastW = innerWidth;
+    layout();
+  });
 
   // intro: the plait weaves itself down the edge (full on the first page of a visit, quick afterwards)
   let seen = false;
@@ -254,11 +267,11 @@ function mountCompanion() {
     requestAnimationFrame(frame);
     const t = clock.getElapsedTime();
     const y = scrollY;
-    const dy = y - lastY; lastY = y;
+    const dy = THREE.MathUtils.clamp(y - lastY, -80, 80); lastY = y;
     vel += (dy - vel) * 0.2;
 
     // hero → rail
-    const hp = smooth(THREE.MathUtils.clamp(y / (st.vh * 0.85), 0, 1));
+    const hp = smooth(THREE.MathUtils.clamp(Math.max(0, y) / (st.vh * 0.85), 0, 1));
     const W = THREE.MathUtils.lerp(st.heroW, st.railW, hp);
     const cx = THREE.MathUtils.lerp(st.heroCx, st.railCx, hp) - (innerWidth - st.cw);
     const s = (W * st.upp) / WIDTH;
@@ -266,7 +279,9 @@ function mountCompanion() {
     holder.position.x = (cx - st.cw / 2) * st.upp;
 
     // slides with the page (slower than the content), wrapping on the repeat unit
-    const off = ((y * 0.42 * st.upp) / s) % REPEAT;
+    const yy = Math.max(0, y); // iOS rubber-band gives negative scrollY
+    const raw = ((yy * 0.42 * st.upp) / s) % REPEAT;
+    const off = (raw + REPEAT) % REPEAT;
     const topLocal = UNIT * 0.5 + off;
     holder.position.y = st.worldH / 2 + topLocal * s;
 
@@ -283,13 +298,16 @@ function mountCompanion() {
     // spin with time and scroll speed, swing like hair
     if (!REDUCE) {
       // sway around the front view (a plait seen side-on reads as a rope), nudged by scroll speed
-      spinOff = THREE.MathUtils.clamp((spinOff + vel * 0.0022) * 0.965, -1.1, 1.1);
-      rot = Math.sin(t * 0.35) * 0.38 + spinOff;
-      const target = THREE.MathUtils.clamp(-vel * 0.045, -1.6, 1.6) + Math.sin(t * 0.7) * 0.06;
-      bendV += (target - bend) * 0.06; bendV *= 0.88; bend += bendV;
+      const maxSpin = MOBILE ? 0.45 : 1.1;
+      spinOff = THREE.MathUtils.clamp((spinOff + vel * (MOBILE ? 0.0012 : 0.0022)) * 0.965, -maxSpin, maxSpin);
+      rot = Math.sin(t * 0.35) * (MOBILE ? 0.28 : 0.38) + spinOff;
+      // swing measured in screen pixels and kept small, so it never reaches the text
+      const maxPx = MOBILE ? 7 : 22;
+      const target = THREE.MathUtils.clamp(-vel * 0.35, -maxPx, maxPx) + Math.sin(t * 0.7) * (MOBILE ? 1 : 2.5);
+      bendV += (target - bend) * 0.06; bendV *= 0.86; bend += bendV;
     }
     spin.rotation.y = rot;
-    bendU.uBend.value = bend * (s / ((st.heroW * st.upp) / WIDTH));
+    bendU.uBend.value = bend * st.upp;
 
     // step aside for the big braid of the home story, and when menus are open
     let target = 1;
@@ -323,15 +341,15 @@ function mountWeave(canvas) {
   const host = canvas.closest('[data-scene-host]') || canvas.parentElement;
   const track = canvas.closest('[data-scene-track]');
   let renderer;
-  try { renderer = makeRenderer(canvas, MOBILE ? 1.75 : 1.75); } catch (e) { canvas.remove(); return; }
+  try { renderer = makeRenderer(canvas, MOBILE ? 1.5 : 1.75); } catch (e) { canvas.remove(); return; }
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
   camera.position.set(0, 0, 17);
   lights(scene, renderer);
   const spine = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 5.2, 0), new THREE.Vector3(0.15, 2, 0), new THREE.Vector3(-0.1, -1, 0), new THREE.Vector3(0, -3.6, 0)]);
   const fr = spine.computeFrenetFrames(400, false);
-  const opt = { turns: 6, A: 0.62, B: 0.38, r: 0.38, radial: MOBILE ? 14 : 18 };
-  const n = Math.round(opt.turns * 52);
+  const opt = { turns: 6, A: 0.62, B: 0.38, r: 0.38, radial: MOBILE ? 10 : 18 };
+  const n = Math.round(opt.turns * (MOBILE ? 34 : 52));
   const mat = hairMaterial(n / 14);
   const root = new THREE.Group();
   const meshes = [];
@@ -355,7 +373,7 @@ function mountWeave(canvas) {
         a, new THREE.Vector3(a.x + spread * 0.35, a.y - len * 0.3, a.z + 0.3 * (k - 1)),
         new THREE.Vector3(a.x + spread * 0.8, a.y - len * 0.65, a.z), new THREE.Vector3(spread * 1.2 + Math.sin(k) * 0.3, bottom, 0),
       ]);
-      const g = new THREE.TubeGeometry(curve, 40, opt.r * 0.95, opt.radial, false);
+      const g = new THREE.TubeGeometry(curve, MOBILE ? 24 : 40, opt.r * 0.95, opt.radial, false);
       shadeTube(g, opt.radial, k * 2.1);
       const m = new THREE.Mesh(g, mat); root.add(m); loose.push(m);
     }
@@ -386,7 +404,8 @@ function mountWeave(canvas) {
     const r = track.getBoundingClientRect();
     const p = THREE.MathUtils.clamp(-r.top / Math.max(1, r.height - innerHeight), 0, 1);
     const q = THREE.MathUtils.clamp((p - 0.12) / 0.76, 0, 1);
-    if (Math.abs(q - last) > 0.003) { rebuild(q); last = q; }
+    // rebuilding the loose strands allocates geometry, so do it in small steps rather than every frame
+    if (Math.abs(q - last) > (MOBILE ? 0.012 : 0.006) || (q === 1 && last !== 1) || (q === 0 && last !== 0)) { rebuild(q); last = q; }
     root.rotation.y = q * TAU * 0.5 + (REDUCE ? 0 : Math.sin(t * 0.4) * 0.1 + mouse.x * 0.3);
     renderer.render(scene, camera);
     canvas.classList.add('is-live');

@@ -140,7 +140,7 @@ input,select,textarea{font:inherit;color:inherit}
 .scene-layer canvas.is-live{opacity:1}
 .hero .scene-layer{z-index:3}
 
-.scroll-cue{position:absolute;left:50%;bottom:22px;translate:-50% 0;z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;font:600 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.scroll-cue{display:none!important;position:absolute;left:50%;bottom:22px;translate:-50% 0;z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;font:600 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .scroll-cue i{width:1px;height:46px;background:linear-gradient(var(--ink),transparent);animation:cue 2.2s var(--ease) infinite;transform-origin:top}
 @keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 
@@ -488,8 +488,17 @@ input,select,textarea{font:inherit;color:inherit}
 .dock .d-book .ic{width:58px}
 .dock.is-tucked .d-wa,.dock.is-tucked .d-tel{transform:translateX(140%)}
 
-/* mobile action bar */
-.mbar{display:none}
+/* bottom action bar (desktop: centred pill; mobile: full width) */
+.dock{display:none!important}
+.mbar{display:grid;grid-template-columns:auto auto auto;gap:8px;position:fixed;left:50%;bottom:22px;translate:-50% 0;z-index:50;padding:8px;border-radius:24px;background:rgba(27,18,12,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 20px 40px -16px rgba(0,0,0,.6);transition:transform .5s var(--ease)}
+.mbar a,.mbar button{display:flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:0 22px;border-radius:17px;color:#fff;font:600 15px var(--sans);transition:filter .3s}
+.mbar a:hover,.mbar button:hover{filter:brightness(1.12)}
+.mbar svg{width:20px;height:20px}
+.mbar .m-wa{background:#1f9d55}
+.mbar .m-tel{background:rgba(255,255,255,.1)}
+.mbar .m-book{background:var(--terra);padding:0 28px}
+.mbar.is-hidden{transform:translateY(160%)}
+body{padding-bottom:96px}
 
 /* booking sheet */
 .sheet{position:fixed;inset:0;z-index:80;display:grid;place-items:end center;visibility:hidden}
@@ -576,13 +585,8 @@ input,select,textarea{font:inherit;color:inherit}
   .prod-strip{grid-template-columns:1fr 1fr}
   .ftr-grid{grid-template-columns:1fr}
   .dock{display:none}
-  .mbar{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:50;padding:8px;border-radius:24px;background:rgba(27,18,12,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 20px 40px -16px rgba(0,0,0,.6);transition:transform .5s var(--ease)}
-  .mbar a,.mbar button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border-radius:17px;color:#fff;font:600 14px var(--sans)}
-  .mbar svg{width:20px;height:20px}
-  .mbar .m-wa{background:#1f9d55}
-  .mbar .m-tel{background:rgba(255,255,255,.1)}
-  .mbar .m-book{background:var(--terra)}
-  .mbar.is-hidden{transform:translateY(140%)}
+  .mbar{grid-template-columns:1fr 1fr 1.4fr;left:10px;right:10px;translate:none;bottom:calc(10px + env(safe-area-inset-bottom))}
+  .mbar a,.mbar button,.mbar .m-book{padding:0;font-size:14px;gap:8px}
   body{padding-bottom:84px}
   .map{min-height:360px}
   .ba{aspect-ratio:4/5}
