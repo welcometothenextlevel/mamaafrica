@@ -207,7 +207,7 @@ def page(slug, title, desc, body, scenes=False, og="portrait-ochre-1"):
     url = BASE + ("" if slug == "index" else slug)
     robots = '<meta name="robots" content="noindex, nofollow">' if PITCH else ""
     three = ('<script type="importmap">{"imports":{"three":"./assets/js/vendor/three.module.min.js"}}</script>\n'
-             f'<script type="module" src="assets/js/scene.js?v={V}"></script>') if scenes else ""
+             f'<script type="module" src="assets/js/scene.js?v={V}"></script>')
     return f'''<!doctype html>
 <html lang="fr-CH">
 <head>
@@ -248,8 +248,7 @@ def eyebrow(t, dark=False):
     return f'<p class="eyebrow">{KENTE}{t}</p>'
 
 def phero(crumb, eyebrow_t, h1, lead, right="", scene=None, tone="espresso", ctas=True, extra=""):
-    variant = ' data-variant="edge"' if right and scene == "cowries" else ""
-    sc = f'<div class="scene-layer" data-scene-host><canvas data-scene="{scene}" data-tone="{tone}"{variant} aria-hidden="true"></canvas></div>' if scene else ""
+    sc = ""  # 3D now lives in the site-wide companion braid
     btns = f'''<div class="btns" style="margin-top:34px"><button class="btn btn--terra" type="button" data-book>{I["cal"]}Réserver</button><a class="btn btn--ghost" href="{wa_link()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a></div>''' if ctas else ""
     return f'''<section class="phero">
   {sc}
@@ -358,7 +357,6 @@ def p_index():
                 ("Soins & coiffage", "", [("Coupe", "45", ""), ("Défrisage", "50", ""), ("Brushing", "65", ""), ("Bio-plastie capillaire", "95", ""), ("Traitement Lowell", "95", "")])]
     body = f'''
 <section class="hero">
-  <div class="scene-layer scene-desk" data-scene-host><canvas data-scene="hero" data-tone="ombre" aria-hidden="true"></canvas></div>
   <div class="wrap hero-grid">
     <div>
       {eyebrow("Salon de coiffure africaine · Payerne")}
@@ -376,7 +374,6 @@ def p_index():
     </div>
     <div class="hero-visual" data-reveal="fade">
       <div class="arch">{video("tresses-portrait", label="Femme aux longues tresses")}</div>
-      <div class="scene-layer scene-mob" data-scene-host><canvas data-scene="hero" data-variant="arch" data-tone="ombre" aria-hidden="true"></canvas></div>
       <figure class="hero-inset" style="margin:0">{video("salon-tresses", label="Pose de tresses au salon Mama Africa")}<figcaption>Au salon, à Payerne</figcaption></figure>
     </div>
   </div>
@@ -538,7 +535,7 @@ def p_soins():
     body = phero("Soins", "Soins capillaires",
                  "Le soin qui respecte votre boucle.",
                  "Bio-plastie, traitement Lowell, soins hydratants, extensions, défrisage, coupe et couleur : des soins pensés pour les cheveux crépus, bouclés, lisses ou en transition.",
-                 "", scene="pick") + f'''
+                 arch_media(img("portrait-ochre-1", "Portrait, cheveux soignés", "(max-width: 960px) 90vw, 460px", eager=True))) + f'''
 <section class="sec" style="padding-top:clamp(30px,4vw,60px)"><div class="wrap">
   <div class="svc-grid">{cards}</div>
 </div></section>
@@ -587,7 +584,7 @@ def p_tarifs():
     body = phero("Tarifs", "Tarifs 2026",
                  "Des prix clairs, sans surprise.",
                  "Toutes nos prestations et leurs tarifs, identiques à ceux affichés sur Salonkee. Les mèches sont en vente au salon, sauf mention « inclus ».",
-                 "", scene="hero", tone="bordeaux") + f'''
+                 arch_media(img("products-terracotta2", "Soins capillaires", "(max-width: 960px) 90vw, 460px", eager=True))) + f'''
 <section class="sec" style="padding-top:clamp(30px,4vw,60px)"><div class="wrap">
   {menu_block()}
   <p class="note">{I["info"]}Prix en francs suisses. La bio-plastie capillaire se réserve par téléphone. Pour les tresses, la quantité de mèches dépend de la longueur et de l'épaisseur souhaitées : nous vous conseillons au salon.</p>
@@ -720,7 +717,6 @@ def p_salon():
 def p_avis():
     real = "".join(f'''<article class="rv-card" data-reveal style="width:auto"><div class="rv-top"><span class="rv-av">{r["initial"]}</span><div><b>{esc(r["name"])}</b><small>{r["meta"]}</small></div>{I["g"]}</div>{STAR5}<p style="font-size:19px;font-family:var(--serif);line-height:1.4">« {esc(r["text"])} »</p></article>''' for r in REVIEWS)
     body = f'''<section class="phero" style="min-height:auto">
-  <div class="scene-layer" data-scene-host><canvas data-scene="cowries" data-tone="espresso" aria-hidden="true"></canvas></div>
   <div class="wrap phero-grid" style="align-items:center">
     <div><nav class="crumbs" aria-label="Fil d'Ariane"><a href="./">Accueil</a><span>/</span><span>Avis</span></nav>
     {eyebrow("Avis Google")}<h1 class="display" data-split>Ce qu'elles disent de nous.</h1>
@@ -769,7 +765,7 @@ def p_reservation():
     body = phero("Réservation", "Prendre rendez-vous",
                  "Réservez votre moment.",
                  "En ligne sur Salonkee, sur WhatsApp ou par téléphone : choisissez la façon qui vous ressemble. Ou remplissez le formulaire, on vous répond rapidement.",
-                 "", scene="cowries", tone="espresso", ctas=False) + f'''
+                 arch_media(img("salon-fauteuil", "Le fauteuil du salon Mama Africa", "(max-width: 960px) 90vw, 460px", eager=True)), ctas=False) + f'''
 <section class="sec" style="padding-top:clamp(20px,3vw,40px)"><div class="wrap split" style="align-items:start">
   <div>
     {eyebrow("Trois façons de réserver")}
@@ -794,7 +790,7 @@ def p_contact():
   <button class="btn btn--green" type="submit" style="width:100%">{I["wa"]}Envoyer sur WhatsApp</button>
   <p class="form-hint">Le message s'ouvre dans WhatsApp, prêt à envoyer. Aucune donnée n'est enregistrée sur ce site.</p>
 </form>'''
-    tiles = f'''<div class="ways" style="margin-top:30px">
+    tiles = f'''<div class="ways ways--light" style="margin-top:30px">
       <a class="way" style="background:var(--card);box-shadow:0 0 0 1px var(--line)" href="tel:{TEL}"><span class="ic" style="background:var(--ochre);color:var(--ink)">{I["tel"]}</span><span><b>{PHONE}</b><small class="muted">Appel ou SMS</small></span></a>
       <a class="way wa" style="background:var(--card);box-shadow:0 0 0 1px var(--line)" href="{wa_link()}" target="_blank" rel="noopener"><span class="ic">{I["wa"]}</span><span><b>WhatsApp</b><small class="muted">Réponse rapide, photos bienvenues</small></span></a>
       <a class="way" style="background:var(--card);box-shadow:0 0 0 1px var(--line)" href="{INSTAGRAM}" target="_blank" rel="noopener"><span class="ic" style="background:var(--ink)">{I["ig"]}</span><span><b>{IG_HANDLE}</b><small class="muted">Nos dernières réalisations</small></span></a>
@@ -803,7 +799,7 @@ def p_contact():
     body = phero("Contact", "Contact",
                  "Parlons de vos cheveux.",
                  "Une question sur une coiffure, un produit, un tarif ? Appelez, écrivez sur WhatsApp ou passez au salon : nous sommes là du lundi au samedi.",
-                 "", scene="pick", ctas=False, extra=tiles) + f'''
+                 arch_media(img("boutique-allee", "La boutique Mama Africa à Payerne", "(max-width: 960px) 90vw, 460px", eager=True)), ctas=False, extra=tiles) + f'''
 <section class="sec" style="padding-top:clamp(20px,3vw,40px)"><div class="wrap split" style="align-items:start">
   {form}
   <div>{eyebrow("Questions fréquentes")}{faq_block(FAQ[:4])}</div>
