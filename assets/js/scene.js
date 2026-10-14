@@ -1,8 +1,9 @@
-/* Mama Africa — procedural 3D.
-   1. The companion: one braid that hangs along the right edge for the whole visit. It weaves itself in
-      on load, sits wider beside the hero, slims into a rail in the margin as you scroll, slides with the
-      page and swings with scroll speed. Fixed canvas, so it is never cut by a section edge.
-   2. canvas[data-scene="weave"]: the home page braiding story (inside a sticky, full-viewport stage). */
+/* Mama Africa — the braid.
+   One fixed canvas, one braid for the whole visit. Its shape is computed on the GPU from a handful of
+   uniforms, so braiding, sliding and recolouring never rebuild geometry (smooth on phones).
+   Home: three loose strands beside the headline braid themselves as you scroll the hero, then the braid
+   slims into a rail in the right margin and follows you down the site.
+   Other pages: the rail weaves itself in on arrival. Colour swatches anywhere on the site recolour it. */
 import * as THREE from 'three';
 import { RoomEnvironment } from './vendor/addons/RoomEnvironment.js';
 
@@ -10,19 +11,19 @@ const MOBILE = matchMedia('(max-width: 760px)').matches;
 const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TAU = Math.PI * 2;
 
-const HAIR = {
-  espresso: { root: 0x150b06, tip: 0x4a2a15, sheen: 0xb98552 },
+// hair colour codes used by braiding hair brands: [root, tip]
+const SHADES = {
+  '1B': [0x0b0705, 0x1a120d], '2': [0x0e0805, 0x2e1b10], '4': [0x100905, 0x4a2b17],
+  '27': [0x140c06, 0x9c6631], '30': [0x120905, 0x733718], '350': [0x130905, 0x863a17],
+  '613': [0x2e2113, 0xcfb27a], 'BUG': [0x100506, 0x581321], '99J': [0x0d0406, 0x440e26],
 };
 
-/* ---------- shared textures & materials ---------- */
-let hairBump = null;
-function getHairBump() {
-  if (hairBump) return hairBump;
+/* ---------------------------------------------------------------- materials */
+function hairBump() {
   const c = document.createElement('canvas');
   c.width = 128; c.height = 1024;
   const g = c.getContext('2d');
   g.fillStyle = '#808080'; g.fillRect(0, 0, c.width, c.height);
-  // fine fibres running along the strand (u = along the tube, v = around it)
   for (let i = 0; i < 2600; i++) {
     const y = Math.random() * c.height;
     g.strokeStyle = Math.random() > 0.5 ? `rgba(255,255,255,${0.06 + Math.random() * 0.22})` : `rgba(0,0,0,${0.08 + Math.random() * 0.26})`;
@@ -31,60 +32,134 @@ function getHairBump() {
     g.bezierCurveTo(40, y + (Math.random() - 0.5) * 3, 90, y + (Math.random() - 0.5) * 3, c.width, y);
     g.stroke();
   }
-  hairBump = new THREE.CanvasTexture(c);
-  hairBump.wrapS = hairBump.wrapT = THREE.RepeatWrapping;
-  hairBump.anisotropy = 4;
-  return hairBump;
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.anisotropy = 4;
+  return t;
 }
 
-function hairMaterial(repeatU = 12) {
-  const h = HAIR.espresso;
-  const bump = getHairBump().clone();
-  bump.needsUpdate = true;
-  bump.repeat.set(repeatU, 2);
-  return new THREE.MeshPhysicalMaterial({
-    color: 0xffffff, vertexColors: true,
-    roughness: 0.42, metalness: 0,
-    sheen: 1, sheenColor: new THREE.Color(h.sheen), sheenRoughness: 0.35,
-    clearcoat: 0.3, clearcoatRoughness: 0.5,
-    bumpMap: bump, bumpScale: 1.5,
+const U = {
+  uLen: { value: 40 }, uEnd: { value: 40 }, uFront: { value: 0 }, uTipLen: { value: 1.6 },
+  uSep: { value: 1.2 }, uSway: { value: 0.25 }, uOff: { value: 0 }, uTime: { value: 0 },
+  uA: { value: 0.58 }, uB: { value: 0.35 }, uP: { value: 2.5 }, uR: { value: 0.37 },
+  uRoot: { value: new THREE.Color(SHADES['350'][0]) }, uTip: { value: new THREE.Color(SHADES['350'][1]) },
+  uOmbreLen: { value: 14 }, uRail: { value: 0 },
+  uBend: { value: 0 }, uTop: { value: 5 }, uSpan: { value: 10 },
+};
+
+const BRAID_GLSL = /* glsl */`
+uniform float uLen, uEnd, uFront, uTipLen, uSep, uSway, uOff, uTime, uA, uB, uP, uR;
+attribute float aS; attribute float aA; attribute float aK;
+varying float vY; varying float vK; varying float vA;
+vec3 braided(float y, float k) {
+  float ph = ((y + uOff) / uP) * 6.2831853 + k * 2.0943951;
+  return vec3(uA * sin(ph), -y, uB * sin(2.0 * ph));
+}
+vec3 loose(float y, float k) {
+  float d = max(y - uFront, 0.0);
+  vec3 b = braided(uFront, k);
+  float open = 1.0 - exp(-d * 0.45);
+  float sw = sin(uTime * 0.8 + y * 0.3 + k * 2.1) * uSway * min(d * 0.14, 1.0);
+  return vec3(b.x * exp(-d * 0.6) + (k - 1.0) * uSep * open + sw, -y,
+              b.z * exp(-d * 0.8) + (k - 1.0) * 0.2 * open);
+}
+vec3 centerAt(float y, float k) {
+  float w = 1.0 - smoothstep(uFront - 0.5, uFront + 0.35, y);
+  return mix(loose(y, k), braided(y, k), w);
+}
+`;
+
+const BEND_GLSL = `
+  vec4 mvPosition = vec4( transformed, 1.0 );
+  mvPosition = modelViewMatrix * mvPosition;
+  float bt = clamp( ( uTop - mvPosition.y ) / uSpan, 0.0, 1.0 );
+  mvPosition.x += uBend * bt * bt;
+  gl_Position = projectionMatrix * mvPosition;`;
+
+function bendInject(sh) {
+  sh.uniforms.uBend = U.uBend; sh.uniforms.uTop = U.uTop; sh.uniforms.uSpan = U.uSpan;
+  sh.vertexShader = 'uniform float uBend;\nuniform float uTop;\nuniform float uSpan;\n' + sh.vertexShader.replace('#include <project_vertex>', BEND_GLSL);
+}
+
+function braidMaterial() {
+  const m = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff, roughness: 0.42, metalness: 0,
+    sheen: 0.7, sheenColor: new THREE.Color(0x9a6a3c), sheenRoughness: 0.38,
+    clearcoat: 0.22, clearcoatRoughness: 0.5,
+    bumpMap: hairBump(), bumpScale: 1.6,
   });
+  m.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, U);
+    bendInject(sh);
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', '#include <common>\n' + BRAID_GLSL)
+      .replace('#include <beginnormal_vertex>', `
+        float gY = aS * uLen;
+        vec3 gC = centerAt(gY, aK);
+        vec3 gT = normalize(centerAt(gY + 0.04, aK) - gC);
+        vec3 gN = normalize(cross(gT, vec3(0.0, 0.0, 1.0)));
+        vec3 gB = normalize(cross(gT, gN));
+        vec3 objectNormal = normalize(cos(aA) * gN + sin(aA) * gB);
+        float gOpen = 1.0 - exp(-max(gY - uFront, 0.0) * 0.5);
+        float gR = uR * (1.0 - 0.32 * gOpen) * (1.0 - smoothstep(uEnd - uTipLen, uEnd, gY)) * step(gY, uEnd);
+        vY = gY; vK = aK; vA = aA;`)
+      .replace('#include <begin_vertex>', 'vec3 transformed = gC + gR * objectNormal;');
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', '#include <common>\nuniform vec3 uRoot; uniform vec3 uTip; uniform float uOmbreLen; uniform float uRail;\nvarying float vY; varying float vK; varying float vA;')
+      .replace('#include <color_fragment>', `
+        float og = mix(smoothstep(0.1, 1.0, vY / uOmbreLen), 0.55, uRail);
+        // fibres and strand bundles, so it reads as hair rather than a smooth tube
+        float fib = 0.8 + 0.2 * sin(vA * 26.0 + sin(vY * 2.3 + vK * 1.7) * 3.0);
+        float bundle = 0.84 + 0.16 * sin(vA * 7.0 + vK * 2.1 + vY * 0.9);
+        diffuseColor.rgb *= mix(uRoot, uTip, og) * fib * bundle;`);
+  };
+  return m;
 }
-const gold = () => new THREE.MeshStandardMaterial({ color: 0xd9a54c, metalness: 1, roughness: 0.2 });
 
-function shadeTube(geo, radial, seed = 0) {
-  const h = HAIR.espresso;
-  const a = new THREE.Color(h.root), b = new THREE.Color(h.tip), c = new THREE.Color();
-  const n = geo.attributes.position.count;
-  const col = new Float32Array(n * 3);
-  for (let v = 0; v < n; v++) {
-    const i = Math.floor(v / (radial + 1)), j = v % (radial + 1);
-    // periodic warmth so repeated sections stay seamless
-    c.copy(a).lerp(b, 0.45 + 0.25 * Math.sin(i * 0.05 + seed));
-    const shade = 0.8 + 0.2 * Math.sin((j / radial) * TAU * 3 + seed);
-    col[v * 3] = c.r * shade; col[v * 3 + 1] = c.g * shade; col[v * 3 + 2] = c.b * shade;
+function strandsGeometry(len, perUnit, radial) {
+  const seg = Math.max(60, Math.round(len * perUnit));
+  const per = (seg + 1) * (radial + 1);
+  const n = per * 3;
+  const aS = new Float32Array(n), aA = new Float32Array(n), aK = new Float32Array(n), uv = new Float32Array(n * 2);
+  const idx = [];
+  for (let k = 0; k < 3; k++) {
+    for (let i = 0; i <= seg; i++) {
+      for (let j = 0; j <= radial; j++) {
+        const v = k * per + i * (radial + 1) + j;
+        aS[v] = i / seg; aA[v] = (j / radial) * TAU; aK[v] = k;
+        uv[v * 2] = (i / seg) * len * 0.5; uv[v * 2 + 1] = j / radial;
+      }
+    }
+    for (let i = 0; i < seg; i++) {
+      for (let j = 0; j < radial; j++) {
+        const a = k * per + i * (radial + 1) + j, b = a + radial + 1;
+        idx.push(a, b, a + 1, b, b + 1, a + 1);
+      }
+    }
   }
-  geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+  g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  g.setAttribute('aS', new THREE.BufferAttribute(aS, 1));
+  g.setAttribute('aA', new THREE.BufferAttribute(aA, 1));
+  g.setAttribute('aK', new THREE.BufferAttribute(aK, 1));
+  g.setIndex(idx);
+  return g;
 }
 
-function cuffGeometry(R = 1.05, h = 0.46, ridges = 5) {
-  const pts = [];
-  const N = 60;
+function cuffGeometry(R, h, ridges) {
+  const pts = [], N = 60;
   for (let i = 0; i <= N; i++) {
     const t = i / N;
-    const y = -h / 2 + h * t;
-    const ridge = Math.pow(Math.abs(Math.sin(t * Math.PI * ridges)), 0.6) * 0.055;
-    const edge = Math.sin(t * Math.PI) * 0.05;
-    pts.push(new THREE.Vector2(R + ridge + edge, y));
+    pts.push(new THREE.Vector2(R + Math.pow(Math.abs(Math.sin(t * Math.PI * ridges)), 0.6) * 0.055 + Math.sin(t * Math.PI) * 0.05, -h / 2 + h * t));
   }
   for (let i = N; i >= 0; i--) pts.push(new THREE.Vector2(R - 0.035, -h / 2 + h * (i / N)));
   return new THREE.LatheGeometry(pts, 72);
 }
 
-let _cowrie = null;
 function cowrieGeometry() {
-  if (_cowrie) return _cowrie;
-  const g = new THREE.SphereGeometry(1, 64, 40);
+  const g = new THREE.SphereGeometry(1, 48, 32);
   const p = g.attributes.position;
   const col = new Float32Array(p.count * 3);
   const ivory = new THREE.Color(0xf2e7d2), cream = new THREE.Color(0xd9c3a0), dark = new THREE.Color(0x3a2416), c = new THREE.Color();
@@ -94,324 +169,211 @@ function cowrieGeometry() {
     y *= 0.64 * pinch; z *= 0.52 * pinch;
     if (z < 0) z *= 0.38;
     const d = Math.abs(y) / 0.64;
-    if (z <= 0 && d < 0.2) { const groove = 1 - d / 0.2; z += 0.07 * groove; y *= 1 - 0.25 * groove; }
-    if (z > 0) z *= 1 + 0.12 * (1 - Math.abs(x));
+    if (z <= 0 && d < 0.2) { const gr = 1 - d / 0.2; z += 0.07 * gr; y *= 1 - 0.25 * gr; }
     p.setXYZ(i, x, y, z);
     c.copy(ivory).lerp(cream, THREE.MathUtils.clamp(0.5 - z * 0.9 + Math.abs(x) * 0.25, 0, 1));
     if (z <= 0.02 && d < 0.16 && !(Math.cos(x * 34) > 0.15 && d > 0.05)) c.copy(dark);
-    col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+    col.set([c.r, c.g, c.b], i * 3);
   }
   g.setAttribute('color', new THREE.BufferAttribute(col, 3));
   g.computeVertexNormals();
-  _cowrie = g;
   return g;
 }
-const cowrieMat = () => new THREE.MeshPhysicalMaterial({ vertexColors: true, roughness: 0.28, clearcoat: 0.8, clearcoatRoughness: 0.2, sheen: 0.4, sheenColor: new THREE.Color(0xffe2b5) });
 
-function lights(scene, renderer) {
-  const pm = new THREE.PMREMGenerator(renderer);
-  scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.6;
-  const key = new THREE.DirectionalLight(0xffdcb0, 2.6); key.position.set(-5, 7, 8); scene.add(key);
-  const rim = new THREE.DirectionalLight(0xe0782e, 3.0); rim.position.set(6, 2, -6); scene.add(rim);
-  const fill = new THREE.DirectionalLight(0xfff3e4, 0.7); fill.position.set(2, -4, 6); scene.add(fill);
-  scene.add(new THREE.AmbientLight(0xfff0e0, 0.25));
-}
-
-function makeRenderer(canvas, dprCap) {
-  const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  r.setPixelRatio(Math.min(devicePixelRatio, dprCap));
-  r.toneMapping = THREE.ACESFilmicToneMapping;
-  r.toneMappingExposure = 1.1;
-  r.outputColorSpace = THREE.SRGBColorSpace;
-  return r;
-}
-
-/* ---------- a straight plait, analytic so it can repeat seamlessly ---------- */
-class PlaitCurve extends THREE.Curve {
-  constructor(k, len, { A, B, P }) { super(); Object.assign(this, { k, len, A, B, P }); }
-  getPoint(t, target = new THREE.Vector3()) {
-    const y = t * this.len;
-    const ph = (y / this.P) * TAU + (this.k * TAU) / 3;
-    return target.set(this.A * Math.sin(ph), -y, this.B * Math.sin(2 * ph));
-  }
-}
-
-// hair "swing": bends everything sideways in view space, more towards the bottom of the screen
-const bendU = { uBend: { value: 0 }, uTop: { value: 5 }, uSpan: { value: 10 } };
-function withBend(mat) {
-  mat.onBeforeCompile = (sh) => {
-    Object.assign(sh.uniforms, bendU);
-    sh.vertexShader = 'uniform float uBend;\nuniform float uTop;\nuniform float uSpan;\n' + sh.vertexShader.replace('#include <project_vertex>', `
-      vec4 mvPosition = vec4( transformed, 1.0 );
-      mvPosition = modelViewMatrix * mvPosition;
-      float bt = clamp( ( uTop - mvPosition.y ) / uSpan, 0.0, 1.0 );
-      mvPosition.x += uBend * bt * bt;
-      gl_Position = projectionMatrix * mvPosition;`);
-  };
-  return mat;
-}
-
-/* ================================================================ companion */
-function mountCompanion() {
+/* ---------------------------------------------------------------- stage */
+function start() {
   const canvas = document.createElement('canvas');
-  canvas.className = 'companion';
+  canvas.className = 'braid3d';
   canvas.setAttribute('aria-hidden', 'true');
   document.body.appendChild(canvas);
   let renderer;
-  try { renderer = makeRenderer(canvas, 2); } catch (e) { canvas.remove(); return; }
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  } catch (e) { canvas.remove(); return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, MOBILE ? 2 : 1.75));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
   const scene = new THREE.Scene();
-  lights(scene, renderer);
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.45;
+  const key = new THREE.DirectionalLight(0xffdcb0, 2.6); key.position.set(-5, 7, 8); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xf08a3a, 2.4); rim.position.set(6, 2, -6); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0xfff3e4, 0.7); fill.position.set(2, -4, 6); scene.add(fill);
+  scene.add(new THREE.AmbientLight(0xfff0e0, 0.25));
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
   camera.position.set(0, 0, 20);
 
-  // plait in local units: width = 2 (A + R); a gold cuff every UNIT, a cowrie every second UNIT
-  const G = { A: 0.58, B: 0.35, P: 2.5 }; // period ≈ 1.3× the width: lobes sit at ~45°, like a real plait
-  const R = 0.37, WIDTH = 2 * (G.A + R), UNIT = G.P * (MOBILE ? 4 : 3), REPEAT = UNIT * 2;
+  const WIDTH = 2 * (U.uA.value + U.uR.value);
+  const UNIT = U.uP.value * (MOBILE ? 4 : 3), REPEAT = UNIT * 2;
   const holder = new THREE.Group(), spin = new THREE.Group();
   holder.add(spin); scene.add(holder);
-  const hairMat = withBend(hairMaterial());
-  const goldMat = withBend(gold());
-  const cowMat = withBend(cowrieMat());
-  const cuffGeo = cuffGeometry(1.02, 0.6, 5), cuffGeoS = cuffGeometry(1.0, 0.36, 3);
-  let strands = [], deco = [], L = 0, segs = 0;
-  const radial = MOBILE ? 10 : 18;
-
-  function build(len) {
-    strands.forEach((m) => { spin.remove(m); m.geometry.dispose(); });
-    deco.forEach((m) => spin.remove(m));
-    strands = []; deco = [];
-    L = len;
-    segs = Math.round((len / G.P) * (MOBILE ? 28 : 44));
-    hairMat.bumpMap.repeat.set(len / G.P * 1.2, 2);
-    for (let k = 0; k < 3; k++) {
-      const geo = new THREE.TubeGeometry(new PlaitCurve(k, len, G), segs, R, radial, false);
-      shadeTube(geo, radial, k * 2.1);
-      const m = new THREE.Mesh(geo, hairMat);
-      spin.add(m); strands.push(m);
-    }
-    for (let y = UNIT * 0.5, i = 0; y < len; y += UNIT, i++) {
-      const c = new THREE.Mesh(i % 2 ? cuffGeoS : cuffGeo, goldMat);
-      c.position.y = -y; c.userData.y = y;
-      spin.add(c); deco.push(c);
-      if (i % 2 === 1) {
-        const s = new THREE.Mesh(cowrieGeometry(), cowMat);
-        s.scale.setScalar(0.44);
-        s.rotation.set(0, Math.PI, Math.PI / 2);
-        s.position.set(0, -(y + UNIT * 0.5), 0.86);
-        s.userData.y = y + UNIT * 0.5;
-        spin.add(s); deco.push(s);
-      }
+  const mat = braidMaterial();
+  let mesh = null;
+  const gold = new THREE.MeshStandardMaterial({ color: 0xdba64c, metalness: 1, roughness: 0.2 });
+  gold.onBeforeCompile = bendInject;
+  const cowMat = new THREE.MeshPhysicalMaterial({ vertexColors: true, roughness: 0.28, clearcoat: 0.8, clearcoatRoughness: 0.2 });
+  cowMat.onBeforeCompile = bendInject;
+  const cuffBig = cuffGeometry(1.02, 0.6, 5), cuffSmall = cuffGeometry(1.0, 0.36, 3), cowGeo = cowrieGeometry();
+  const deco = [];
+  for (let i = 0; i < 26; i++) {
+    const c = new THREE.Mesh(i % 2 ? cuffSmall : cuffBig, gold);
+    c.userData = { i, kind: 'cuff' }; spin.add(c); deco.push(c);
+    if (i % 2 === 1) {
+      const s = new THREE.Mesh(cowGeo, cowMat);
+      s.scale.setScalar(0.42); s.rotation.set(0, Math.PI, Math.PI / 2);
+      s.userData = { i, kind: 'cowrie' }; spin.add(s); deco.push(s);
     }
   }
+  const finisher = new THREE.Mesh(cuffBig, gold); // the cuff that closes the hero braid
+  spin.add(finisher);
 
-  const st = { cw: 0, vh: 0, worldH: 0, upp: 0, heroW: 0, heroCx: 0, railW: 0, railCx: 0, minScale: 1 };
-  // Phones change innerHeight whenever the address bar slides in or out. Resizing the canvas then
-  // re-allocates it (flicker) and can rebuild the braid (jump), so size to the large viewport and
-  // only re-layout when the width changes.
+  const heroEl = document.querySelector('[data-braid-hero]');
+  const st = {};
   const probe = document.createElement('div');
   probe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none';
   document.body.appendChild(probe);
-  const stableH = () => Math.max(probe.offsetHeight || 0, innerHeight);
-  let lastW = 0;
+
   function layout() {
-    const vw = innerWidth, vh = MOBILE ? stableH() : innerHeight;
-    const wrap = document.querySelector('main .wrap') || document.querySelector('.wrap');
+    const vw = innerWidth;
+    const vh = MOBILE ? Math.max(probe.offsetHeight || 0, innerHeight) : innerHeight;
+    const wrap = document.querySelector('main .wrap');
     let contentRight = vw - 40;
     if (wrap) { const r = wrap.getBoundingClientRect(); contentRight = r.right - parseFloat(getComputedStyle(wrap).paddingRight); }
     const free = Math.max(0, vw - contentRight);
     if (MOBILE) {
-      st.railW = 22; st.railCx = vw - 17;
-      st.heroW = 46; st.heroCx = vw - 29;
+      Object.assign(st, { railW: 22, railCx: vw - 17, heroW: 64, heroCx: vw - 58 });
     } else {
-      st.railW = THREE.MathUtils.clamp(free - 18, 20, 64);
-      st.railCx = Math.min(contentRight + free / 2, vw - st.railW / 2 - 8);
-      st.heroW = THREE.MathUtils.clamp(vw * 0.095, Math.max(st.railW, 90), 168);
-      st.heroCx = vw - st.heroW * 0.6;
+      const railW = THREE.MathUtils.clamp(free - 18, 20, 64);
+      const slot = heroEl && heroEl.querySelector('[data-braid-slot]');
+      let heroCx = vw * 0.74, heroW = THREE.MathUtils.clamp(vw * 0.12, 140, 220);
+      if (slot) { const r = slot.getBoundingClientRect(); heroCx = r.left + r.width / 2; heroW = THREE.MathUtils.clamp(r.width * 0.42, 130, 230); }
+      Object.assign(st, { railW, railCx: Math.min(contentRight + free / 2, vw - railW / 2 - 8), heroW, heroCx });
     }
-    st.cw = Math.min(vw, Math.round(Math.max(st.heroW + 190, vw - st.railCx + st.railW / 2 + 160)));
-    st.vh = vh;
-    renderer.setSize(st.cw, vh, false);
-    canvas.style.width = st.cw + 'px';
-    canvas.style.height = vh + 'px';
-    camera.aspect = st.cw / vh;
-    camera.updateProjectionMatrix();
+    st.vw = vw; st.vh = vh;
+    renderer.setSize(vw, vh, false);
+    canvas.style.width = vw + 'px'; canvas.style.height = vh + 'px';
+    camera.aspect = vw / vh; camera.updateProjectionMatrix();
     st.worldH = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
     st.upp = st.worldH / vh;
-    st.minScale = (Math.min(st.railW, st.heroW) * st.upp) / WIDTH;
-    bendU.uTop.value = st.worldH / 2;
-    bendU.uSpan.value = st.worldH;
-    const need = st.worldH / st.minScale + REPEAT * 1.5;
-    const len = Math.ceil(need / REPEAT) * REPEAT;
-    if (len !== L) build(len);
+    U.uTop.value = st.worldH / 2; U.uSpan.value = st.worldH;
+    const railScale = (st.railW * st.upp) / WIDTH;
+    const len = Math.ceil((st.worldH / railScale + REPEAT * 1.5) / REPEAT) * REPEAT;
+    if (!mesh || Math.abs(len - U.uLen.value) > 0.01) {
+      if (mesh) { spin.remove(mesh); mesh.geometry.dispose(); }
+      U.uLen.value = len;
+      mesh = new THREE.Mesh(strandsGeometry(len, MOBILE ? 11 : 17, MOBILE ? 12 : 18), mat);
+      mesh.frustumCulled = false;
+      spin.add(mesh);
+    }
   }
   layout();
-  lastW = innerWidth;
+  let lastW = innerWidth;
   addEventListener('resize', () => {
-    if (MOBILE && Math.abs(innerWidth - lastW) < 2) return; // address bar only: nothing to do
-    lastW = innerWidth;
-    layout();
+    if (MOBILE && Math.abs(innerWidth - lastW) < 2) return; // address bar only
+    lastW = innerWidth; layout();
   });
 
-  // intro: the plait weaves itself down the edge (full on the first page of a visit, quick afterwards)
+  // colour
+  const want = { root: U.uRoot.value.clone(), tip: U.uTip.value.clone() };
+  function setColor(code, instant) {
+    const s = SHADES[code]; if (!s) return;
+    want.root.set(s[0]); want.tip.set(s[1]);
+    if (instant) { U.uRoot.value.copy(want.root); U.uTip.value.copy(want.tip); }
+    try { sessionStorage.setItem('ma-color', code); } catch (e) {}
+    document.documentElement.dataset.shade = code;
+  }
+  let saved = null;
+  try { saved = sessionStorage.getItem('ma-color'); } catch (e) {}
+  setColor(saved && SHADES[saved] ? saved : '4', true);
+  document.addEventListener('ma:color', (e) => setColor(e.detail));
+
   let seen = false;
   try { seen = sessionStorage.getItem('ma-braid') === '1'; sessionStorage.setItem('ma-braid', '1'); } catch (e) {}
-  const introDur = REDUCE ? 0 : (seen ? 0.7 : 2.2);
+  const introDur = REDUCE ? 0 : (seen ? 0.9 : 1.8);
   const clock = new THREE.Clock();
-  let lastY = scrollY, vel = 0, bend = 0, bendV = 0, spinOff = 0, rot = 0, opacity = 0;
-  const weave = document.querySelector('.weave');
-  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  let lastY = scrollY, vel = 0, bend = 0, bendV = 0, spinOff = 0, opacity = 0;
   const smooth = (x) => x * x * (3 - 2 * x);
+  const clamp01 = (x) => Math.min(1, Math.max(0, x));
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
 
   function frame() {
     requestAnimationFrame(frame);
     const t = clock.getElapsedTime();
-    const y = scrollY;
+    const y = Math.max(0, scrollY);
     const dy = THREE.MathUtils.clamp(y - lastY, -80, 80); lastY = y;
     vel += (dy - vel) * 0.2;
+    U.uTime.value = t;
+    U.uRoot.value.lerp(want.root, 0.06); U.uTip.value.lerp(want.tip, 0.06);
 
-    // hero → rail
-    const hp = smooth(THREE.MathUtils.clamp(Math.max(0, y) / (st.vh * 0.85), 0, 1));
-    const W = THREE.MathUtils.lerp(st.heroW, st.railW, hp);
-    const cx = THREE.MathUtils.lerp(st.heroCx, st.railCx, hp) - (innerWidth - st.cw);
+    // hp 0..1 through the pinned hero (home only)
+    let braid = 1, toRail = 1, railY = y;
+    if (heroEl) {
+      const r = heroEl.getBoundingClientRect();
+      const span = Math.max(1, r.height - st.vh);
+      const hp = clamp01(-r.top / span);
+      braid = REDUCE ? 1 : smooth(clamp01(hp / 0.62));
+      toRail = smooth(clamp01((hp - 0.66) / 0.34));
+      railY = Math.max(0, -r.top - span);
+    }
+    const intro = introDur ? ease(clamp01((t - 0.2) / introDur)) : 1;
+    const W = THREE.MathUtils.lerp(st.heroW, st.railW, heroEl ? toRail : 1);
+    const cx = THREE.MathUtils.lerp(st.heroCx, st.railCx, heroEl ? toRail : 1);
     const s = (W * st.upp) / WIDTH;
     holder.scale.setScalar(s);
-    holder.position.x = (cx - st.cw / 2) * st.upp;
+    holder.position.x = (cx - st.vw / 2) * st.upp;
+    const drop = heroEl ? (1 - intro) * 3 : 0; // on arrival the strands drop in
+    holder.position.y = st.worldH / 2 + 0.8 * s + drop;
 
-    // slides with the page (slower than the content), wrapping on the repeat unit
-    const yy = Math.max(0, y); // iOS rubber-band gives negative scrollY
-    const raw = ((yy * 0.42 * st.upp) / s) % REPEAT;
-    const off = (raw + REPEAT) % REPEAT;
-    const topLocal = UNIT * 0.5 + off;
-    holder.position.y = st.worldH / 2 + topLocal * s;
-
-    // weave itself in
-    const ip = introDur ? ease(THREE.MathUtils.clamp((t - 0.25) / introDur, 0, 1)) : 1;
-    const drawnTo = topLocal + ip * (st.worldH / s + UNIT);
-    const cut = Math.min(segs, Math.ceil((drawnTo / L) * segs));
-    for (const m of strands) m.geometry.setDrawRange(0, cut * radial * 6);
-    for (const d of deco) {
-      const on = d.userData.y < drawnTo - 0.3;
-      d.visible = on;
+    const visible = st.worldH / s; // local units from the top of the screen to the bottom
+    const heroEnd = visible * (MOBILE ? 0.8 : 0.86);
+    const railEnd = visible + 2;
+    U.uOmbreLen.value = heroEl ? THREE.MathUtils.lerp(heroEnd, railEnd, toRail) : railEnd;
+    U.uRail.value = heroEl ? toRail : 1;
+    if (heroEl) {
+      U.uEnd.value = THREE.MathUtils.lerp(heroEnd, railEnd, toRail);
+      // starts a quarter braided so the first frame already reads as a braid in progress
+      U.uFront.value = THREE.MathUtils.lerp(heroEnd * 0.26 + braid * (heroEnd * 0.74 - 2.6), railEnd + 1, toRail);
+      U.uSep.value = (1 - toRail) * (MOBILE ? 0.9 : 1.25);
+      U.uTipLen.value = THREE.MathUtils.lerp(2.2, 0.01, toRail);
+    } else {
+      U.uEnd.value = railEnd;
+      U.uFront.value = REDUCE ? railEnd + 1 : intro * (railEnd + 1);
+      U.uSep.value = 0.55;
+      U.uTipLen.value = 0.01;
     }
+    U.uSway.value = REDUCE ? 0 : 0.22;
+    U.uOff.value = (railY * 0.42 * st.upp) / s;
 
-    // spin with time and scroll speed, swing like hair
+    // gold cuffs and cowries ride on the braided part, sliding with it
+    const slide = ((U.uOff.value % REPEAT) + REPEAT) % REPEAT;
+    for (const d of deco) {
+      const ly = d.userData.i * UNIT + UNIT * 0.5 - slide + (d.userData.kind === 'cowrie' ? UNIT * 0.5 : 0);
+      d.position.set(0, -ly, d.userData.kind === 'cowrie' ? 0.86 : 0);
+      d.visible = ly < U.uFront.value - 1.2 && ly > -1.5 && ly < U.uEnd.value - 1 && (!heroEl || toRail > 0.05);
+    }
+    finisher.visible = !!heroEl && braid > 0.35 && toRail < 0.6;
+    finisher.position.set(0, -Math.max(0.6, U.uFront.value - 0.2), 0);
+    finisher.scale.setScalar(0.4 + 0.6 * clamp01((braid - 0.35) / 0.2));
+
     if (!REDUCE) {
-      // sway around the front view (a plait seen side-on reads as a rope), nudged by scroll speed
-      const maxSpin = MOBILE ? 0.45 : 1.1;
-      spinOff = THREE.MathUtils.clamp((spinOff + vel * (MOBILE ? 0.0012 : 0.0022)) * 0.965, -maxSpin, maxSpin);
-      rot = Math.sin(t * 0.35) * (MOBILE ? 0.28 : 0.38) + spinOff;
-      // swing measured in screen pixels and kept small, so it never reaches the text
-      const maxPx = MOBILE ? 7 : 22;
+      const maxSpin = MOBILE ? 0.45 : 1.0;
+      spinOff = THREE.MathUtils.clamp((spinOff + vel * (MOBILE ? 0.0012 : 0.002)) * 0.965, -maxSpin, maxSpin);
+      const maxPx = MOBILE ? 7 : 20;
       const target = THREE.MathUtils.clamp(-vel * 0.35, -maxPx, maxPx) + Math.sin(t * 0.7) * (MOBILE ? 1 : 2.5);
       bendV += (target - bend) * 0.06; bendV *= 0.86; bend += bendV;
     }
-    spin.rotation.y = rot;
-    bendU.uBend.value = bend * st.upp;
+    spin.rotation.y = Math.sin(t * 0.35) * (MOBILE ? 0.28 : 0.36) + spinOff;
+    U.uBend.value = bend * st.upp;
 
-    // step aside for the big braid of the home story, and when menus are open
-    let target = 1;
-    if (weave) { const r = weave.getBoundingClientRect(); if (r.top < st.vh * 0.75 && r.bottom > st.vh * 0.25) target = 0; }
-    if (document.body.classList.contains('menu-open')) target = 0;
-    opacity += (target - opacity) * 0.08;
+    const hide = document.body.classList.contains('menu-open') || document.body.classList.contains('sheet-open');
+    opacity += ((hide ? 0 : 1) - opacity) * 0.1;
     canvas.style.opacity = opacity.toFixed(3);
     if (opacity > 0.01) renderer.render(scene, camera);
   }
   frame();
+  window.MA3D = { setColor: (c) => setColor(c) };
 }
 
-/* ================================================================ weave (home story) */
-function strandPoints(spine, fr, k, { turns, A, B, from = 0, to = 1, n, taper = 0.12 }) {
-  const pts = [];
-  for (let i = 0; i <= n; i++) {
-    const s = from + (to - from) * (i / n);
-    const idx = Math.min(fr.normals.length - 1, Math.round(s * (fr.normals.length - 1)));
-    const ph = s * turns * TAU + (k * TAU) / 3;
-    const sc = 1 - taper * s;
-    const p = spine.getPointAt(s);
-    // three's frames put the normal along the view axis for planar spines, so the wide sway goes on the binormal
-    p.addScaledVector(fr.binormals[idx], Math.sin(ph) * A * sc);
-    p.addScaledVector(fr.normals[idx], Math.sin(2 * ph) * B * sc);
-    pts.push(p);
-  }
-  return pts;
-}
-
-function mountWeave(canvas) {
-  const host = canvas.closest('[data-scene-host]') || canvas.parentElement;
-  const track = canvas.closest('[data-scene-track]');
-  let renderer;
-  try { renderer = makeRenderer(canvas, MOBILE ? 1.5 : 1.75); } catch (e) { canvas.remove(); return; }
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-  camera.position.set(0, 0, 17);
-  lights(scene, renderer);
-  const spine = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 5.2, 0), new THREE.Vector3(0.15, 2, 0), new THREE.Vector3(-0.1, -1, 0), new THREE.Vector3(0, -3.6, 0)]);
-  const fr = spine.computeFrenetFrames(400, false);
-  const opt = { turns: 6, A: 0.62, B: 0.38, r: 0.38, radial: MOBILE ? 10 : 18 };
-  const n = Math.round(opt.turns * (MOBILE ? 34 : 52));
-  const mat = hairMaterial(n / 14);
-  const root = new THREE.Group();
-  const meshes = [];
-  for (let k = 0; k < 3; k++) {
-    const geo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(strandPoints(spine, fr, k, { ...opt, n })), n, opt.r, opt.radial, false);
-    shadeTube(geo, opt.radial, k * 2.1);
-    const m = new THREE.Mesh(geo, mat); root.add(m); meshes.push(m);
-  }
-  const top = new THREE.Mesh(cuffGeometry(1.08, 0.6, 5), gold());
-  top.position.copy(spine.getPointAt(0.015)); root.add(top);
-  const tie = new THREE.Mesh(cuffGeometry(0.95, 0.36, 3), gold()); root.add(tie);
-  let loose = [], last = -1;
-  function rebuild(p) {
-    loose.forEach((m) => { root.remove(m); m.geometry.dispose(); });
-    loose = [];
-    const s = Math.max(0.03, p);
-    for (let k = 0; k < 3; k++) {
-      const a = strandPoints(spine, fr, k, { ...opt, from: s, to: s, n: 1 })[0];
-      const spread = (k - 1) * 1.5, bottom = -6.4, len = Math.max(0.5, a.y - bottom);
-      const curve = new THREE.CatmullRomCurve3([
-        a, new THREE.Vector3(a.x + spread * 0.35, a.y - len * 0.3, a.z + 0.3 * (k - 1)),
-        new THREE.Vector3(a.x + spread * 0.8, a.y - len * 0.65, a.z), new THREE.Vector3(spread * 1.2 + Math.sin(k) * 0.3, bottom, 0),
-      ]);
-      const g = new THREE.TubeGeometry(curve, MOBILE ? 24 : 40, opt.r * 0.95, opt.radial, false);
-      shadeTube(g, opt.radial, k * 2.1);
-      const m = new THREE.Mesh(g, mat); root.add(m); loose.push(m);
-    }
-    tie.visible = p > 0.03 && p < 0.985;
-    tie.position.copy(spine.getPointAt(Math.min(0.999, s)));
-    for (const m of meshes) m.geometry.setDrawRange(0, Math.floor(s * n) * opt.radial * 6);
-  }
-  scene.add(root);
-  const resize = () => {
-    const w = host.clientWidth || 1, h = host.clientHeight || 1;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.fov = w / h < 0.8 ? 40 : 30;
-    camera.updateProjectionMatrix();
-  };
-  resize();
-  new ResizeObserver(resize).observe(host);
-  let visible = true;
-  new IntersectionObserver((es) => { visible = es[0].isIntersecting; }, { rootMargin: '120px' }).observe(host);
-  const clock = new THREE.Clock();
-  const mouse = { x: 0, tx: 0 };
-  addEventListener('pointermove', (e) => { mouse.tx = (e.clientX / innerWidth) * 2 - 1; }, { passive: true });
-  const frame = () => {
-    requestAnimationFrame(frame);
-    if (!visible) return;
-    const t = clock.getElapsedTime();
-    mouse.x += (mouse.tx - mouse.x) * 0.05;
-    const r = track.getBoundingClientRect();
-    const p = THREE.MathUtils.clamp(-r.top / Math.max(1, r.height - innerHeight), 0, 1);
-    const q = THREE.MathUtils.clamp((p - 0.12) / 0.76, 0, 1);
-    // rebuilding the loose strands allocates geometry, so do it in small steps rather than every frame
-    if (Math.abs(q - last) > (MOBILE ? 0.012 : 0.006) || (q === 1 && last !== 1) || (q === 0 && last !== 0)) { rebuild(q); last = q; }
-    root.rotation.y = q * TAU * 0.5 + (REDUCE ? 0 : Math.sin(t * 0.4) * 0.1 + mouse.x * 0.3);
-    renderer.render(scene, camera);
-    canvas.classList.add('is-live');
-  };
-  frame();
-}
-
-mountCompanion();
-document.querySelectorAll('canvas[data-scene="weave"]').forEach(mountWeave);
+start();

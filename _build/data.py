@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 """Business facts for Mama Africa Beauty, Payerne.
-Sources: Salonkee (salon/mamaafrica-brut), Google Maps listing, Instagram @mamaafricabeauty_,
-her shop flyers, and the previous mama-africa-beauty.ch site."""
+Prices: her October 2026 "Investissement" price list and offer flyers (sent on WhatsApp, 14.10.2026)
+take precedence over the older Salonkee list, which is kept only for services the new flyers don't cover."""
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "3"  # cache-busting for css/js
+V = "10"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
-OWNER = "Neneth"
 PHONE = "078 259 77 38"
 TEL = "+41782597738"
-WA = "41782597738"  # assumed to be on WhatsApp (her business chat exists)
+WA = "41782597738"  # confirmed: her code flyer shows this number with the WhatsApp logo
 STREET = "Rue de Lausanne 38B"
 CITY = "1530 Payerne"
-REGION = "Vaud"
 GEO = (46.8195624, 6.936667)
+SLOGAN = "Votre beauté, notre passion."
 
 SALONKEE = "https://salonkee.ch/salon/mamaafrica-brut"
 INSTAGRAM = "https://www.instagram.com/mamaafricabeauty_/"
@@ -28,134 +27,115 @@ G_WRITE = f"https://search.google.com/local/writereview?placeid={PLACE_ID}"
 G_RATING = "5,0"
 G_COUNT = 1
 
-# Mon=0 … Sun=6 ; IG bio, local.ch, flyer and old site agree on Mon–Sat 9:00–18:30
-HOURS = [
-    ("Lundi", "09:00", "18:30"),
-    ("Mardi", "09:00", "18:30"),
-    ("Mercredi", "09:00", "18:30"),
-    ("Jeudi", "09:00", "18:30"),
-    ("Vendredi", "09:00", "18:30"),
-    ("Samedi", "09:00", "18:30"),
+HOURS = [  # her flyer: "Lundi au samedi 9h00 – 18h30"
+    ("Lundi", "09:00", "18:30"), ("Mardi", "09:00", "18:30"), ("Mercredi", "09:00", "18:30"),
+    ("Jeudi", "09:00", "18:30"), ("Vendredi", "09:00", "18:30"), ("Samedi", "09:00", "18:30"),
     ("Dimanche", None, None),
 ]
 
-# ---------- braids (Salonkee + flyers) ----------
-STYLES = [
-    dict(id="box-braids", name="Box braids & knotless", img="braids-portrait", price="95", unit="CHF",
-         tag="Le classique", desc="Tresses avec ajout, carrées ou sans nœud, du chignon au bas du dos.",
-         long="La tresse avec ajout dans toutes ses versions : box braids, knotless, tresses fines ou épaisses. Les mèches se choisissent au salon, la longueur et la couleur se décident ensemble.",
-         note="Prestation « Diverses tresses avec ajout ». Mèches en vente sur place.", cat="tresses"),
-    dict(id="boheme", name="Tresses bohème", img="braids-smile", price="150", unit="CHF",
-         tag="4 modèles", desc="Tresses fines et mèches bouclées libres pour un effet bohème, léger et lumineux.",
-         long="Quatre modèles bohème, du blond miel au brun profond, avec des boucles libérées tout le long des tresses. Un style qui se porte détaché comme en chignon.",
-         note="Les mèches s'achètent sur place.", cat="tresses"),
-    dict(id="crochet", name="Crochet bouclé", img="crochet-volume", price="120", unit="CHF",
-         tag="Cheveux inclus", desc="Bouclé classique, volume, naturel ou tendance. Cheveux et pose compris.",
-         long="Quatre bouclés au choix, chacun en quatre coloris : classique (1B, 2, 4, 27), volume (27, 30, 350, 613), naturel (1B/30, T1B/27, T4/30, T350) et tendance (99J, BUG, RED, T1B/BUG). Léger, confortable et prêt pour toutes les occasions.",
-         note="Prix tout compris : cheveux et pose.", cat="crochet"),
-    dict(id="rasta-longues", name="Rasta longues", img="braids-sitting", price="150", unit="CHF",
-         tag="Signature", desc="De longues tresses fines et régulières, posées une à une avec patience.",
-         long="Des tresses longues, nettes et régulières, pensées pour durer. Le travail le plus minutieux du salon, et l'un des plus demandés.",
-         note="Mèches en vente sur place.", cat="tresses"),
-    dict(id="rasta-courtes", name="Rasta courtes", img="braids-brick", price="85", unit="CHF",
-         tag="Mi-longues", desc="Le même soin, à hauteur d'épaules : pratique, élégant, vite posé.",
-         long="La version courte des rastas : une coupe à hauteur d'épaules ou de menton, facile à vivre au quotidien.",
-         note="Mèches en vente sur place.", cat="tresses"),
-    dict(id="transplas", name="Transplas", img="transplas-4", price="65", unit="CHF", pre="dès",
-         tag="2 ou 4 tresses", desc="Tresses plaquées propres et durables : 2 transplas 65 CHF, 4 transplas 100 CHF.",
-         long="Les tresses plaquées façon « boxer braids » : deux transplas à 65 CHF, quatre à 100 CHF. Propre, élégant, durable, et adapté aux enfants comme aux adultes.",
-         note="Cheveux à acheter sur place.", cat="tresses"),
-    dict(id="nattes", name="Nattes simples", img="cornrows-portrait", price="55", unit="CHF",
-         tag="Sans ajout", desc="Nattes collées sur vos cheveux naturels, motifs droits ou dessinés.",
-         long="Des nattes collées réalisées avec vos propres cheveux, en lignes droites ou en motifs. Idéal pour protéger la chevelure entre deux coiffures.",
-         note="", cat="tresses"),
-    dict(id="twists", name="Twists", img="locs-2", price=None, unit="", tag="Sur demande",
-         desc="Vanilles et twists avec ou sans ajout, pour un tombé souple et naturel.",
-         long="Des twists à deux brins, avec vos cheveux ou avec ajout, pour un rendu souple qui respecte la texture naturelle.",
-         note="Tarif selon longueur et volume : demandez sur WhatsApp.", cat="tresses"),
+# ---------- current offers (her flyers) ----------
+OFFERS = [
+    dict(id="tresses-africaines", title="Tresses africaines", price="150", img="box-braids-longues",
+         badge="Mèches offertes", flyer=None,
+         lead="Box braids longues, du brun chocolat au blond 613. Les paquets de mèches sont offerts.",
+         incl=["Paquets de mèches offerts", "Toutes longueurs, toutes couleurs", "Sur rendez-vous"]),
+    dict(id="boheme", title="Tresses bohème", price="150", img="boheme-1", badge="Promo",
+         flyer="affiche-promo-boheme",
+         lead="Tresses fines et boucles libres, effet bohème. Deux paquets de cheveux offerts, inclus dans le prix.",
+         incl=["2 paquets de cheveux offerts", "Boucles libres sur toute la longueur", "Blond miel, cuivré ou brun"]),
+    dict(id="twist-curly", title="Twist & Curly", price="150", img="boheme-3", badge="Longue tenue",
+         flyer="affiche-twist-curly",
+         lead="Twists torsadées avec boucles : un style élégant, soigné et propre, pour toutes les occasions.",
+         incl=["Longue tenue", "Style élégant", "Soigné et propre"]),
+    dict(id="rasta-elegance", title="Rasta longues · Élégance", price="135", img="nattes-portrait",
+         badge="Cheveux inclus", flyer="affiche-rasta-135",
+         lead="Nattes collées longues au dessin travaillé, avec baby hair. Cheveux, soin et finition compris.",
+         incl=["Cheveux inclus", "Soin et finition", "Baby hair"]),
+    dict(id="perles", title="Modèles avec perles", price="130", img="perles-1", badge="Tradition",
+         flyer="affiche-perles",
+         lead="Tresses soignées ornées de perles : élégance, style et tradition. Les perles s'achètent sur place.",
+         incl=["Tresses soignées", "Perles de qualité en boutique", "Style unique"]),
+    dict(id="tissage", title="Tissage cousu", price="135", pre="dès", img="tissage-ondule", badge="Naturel",
+         flyer="affiche-tissage",
+         lead="Pose de tissage cousue sur nattes, pour un résultat naturel. Coiffage compris.",
+         incl=["Pose professionnelle", "Tresses bien faites", "Coiffage inclus", "Finition soignée"]),
+    dict(id="extensions-longues", title="Extensions longues", price="150", img="extensions-lisses", badge="Longueur",
+         flyer="affiche-extensions",
+         lead="Pose d'extensions longues, lisses ou bouclées, sur tresses bien faites. Résultat naturel, coiffage compris.",
+         incl=["Pose professionnelle", "Résultat naturel", "Coiffage inclus"]),
+    dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-glam", badge="Seconde vie",
+         flyer="affiche-renovation-perruque",
+         lead="Votre perruque comme neuve : nettoyage, soin, démêlage, remise en forme, ajustement et finition.",
+         incl=["Nettoyage, soin, démêlage", "Remise en forme, ajustement", "Finition professionnelle"]),
 ]
 
-CROCHET_MODELS = [
-    ("Bouclé classique", "crochet-classique", ["#1a1410", "#3b2516", "#5a3a22", "#b07a3e"], "1B · 2 · 4 · 27"),
-    ("Bouclé volume", "crochet-volume", ["#b07a3e", "#8a3e1c", "#9c3a22", "#e8d6a8"], "27 · 30 · 350 · 613"),
-    ("Bouclé naturel", "crochet-naturel", ["#2a1a12", "#6b4426", "#5a3a22", "#7a2e20"], "1B/30 · T1B/27 · T4/30 · T350"),
-    ("Bouclé tendance", "crochet-tendance", ["#5a1420", "#4a1222", "#9e1c24", "#3a1418"], "99J · BUG · RED · T1B/BUG"),
-]
+# ---------- model codes (her catalogue flyer) ----------
+CODES = [(1, "125"), (2, "100"), (3, "125"), (4, "125"), (5, "125"), (6, "135"), (7, "125"), (8, "135"), (9, "115")]
 
-# ---------- full price list (Salonkee categories) ----------
-MENU = [
-    ("Tresses & coiffures", "Les tresses africaines traditionnelles et modernes, posées au salon sur rendez-vous.", [
-        ("Nattes simples", "55", "Sur cheveux naturels, sans ajout"),
-        ("Rasta courtes", "85", "Mèches en vente sur place"),
-        ("Diverses tresses avec ajout", "95", "Box braids, knotless…"),
-        ("Rasta longues", "150", "Mèches en vente sur place"),
-        ("Tresses bohème · 4 modèles", "150", "Mèches à acheter sur place"),
-        ("Transplas · 2 tresses", "65", "Cheveux à acheter sur place"),
-        ("Transplas · 4 tresses", "100", "Cheveux à acheter sur place"),
-        ("Crochet bouclé · 4 modèles", "120", "Cheveux et pose inclus"),
+# ---------- price list ----------
+MENU = {
+    "tresses": ("Tresses & nattes", [
+        ("Nattes simples", "70", "Nattes simples et naturelles"),
+        ("Rasta courtes", "100", "Nattes collées avec locks courtes"),
+        ("Diverses tresses avec ajout", "110", "Tresses variées avec mèches"),
+        ("Modèles avec perles", "130", "Perles à acheter sur place"),
+        ("Rasta longues · Élégance", "135", "Cheveux inclus, soin, finition, baby hair"),
+        ("Tresses africaines", "150", "Paquets de mèches offerts"),
+        ("Tresses bohème", "150", "2 paquets de cheveux offerts"),
+        ("Twist & Curly", "150", "Longue tenue"),
+        ("Rasta longues", "165", "Nattes collées avec locks longues"),
+        ("Crochet bouclé", "120", "Cheveux et pose inclus"),
+        ("Transplas · 2 / 4 tresses", "65 / 100", "Cheveux à acheter sur place"),
     ]),
-    ("Extensions & traitements", "Pour gagner en longueur ou transformer la texture.", [
-        ("Extensions", "120", "Cheveux naturels disponibles au salon"),
-        ("Défrisage des cheveux", "50", ""),
+    "tissage": ("Tissage & extensions", [
+        ("Extensions", "135", "Pose d'extensions ou tissage"),
+        ("Tissage cousu sur nattes", "dès 135", "Coiffage inclus"),
+        ("Extensions longues", "150", "Coiffage inclus"),
     ]),
-    ("Soins capillaires", "Des soins ciblés pour cheveux crépus, bouclés, lisses ou en transition.", [
-        ("Bio-plastie capillaire (clinique)", "95", "Sur rendez-vous téléphonique"),
+    "soins": ("Soins, lissage & perruques", [
+        ("Défrisage des cheveux", "65", "Défrisage et soin protecteur"),
+        ("Brushing", "65", "Brushing simple ou wavy"),
+        ("Rénovation de perruque", "110", "Nettoyage, soin, remise en forme"),
+        ("Bio-plastie capillaire", "95", "Sur rendez-vous téléphonique"),
         ("Soin cheveux lisses ou ondulés", "85", ""),
         ("Traitement produits Lowell", "95", ""),
-    ]),
-    ("Coupes, coiffage & couleur", "", [
         ("Coupe", "45", ""),
-        ("Brushing", "65", ""),
         ("Teinture", "55", ""),
     ]),
-    ("Beauté du regard & maquillage", "", [
+    "beaute": ("Beauté", [
         ("Extension de cils · cil à cil", None, "Sur demande"),
         ("Extension de cils · volume russe", None, "Sur demande"),
         ("Épilation des sourcils", None, "Sur demande"),
         ("Maquillage", None, "Sur demande"),
     ]),
-]
+}
 
-SOINS = [
-    dict(name="Bio-plastie capillaire", img="hands-scalp", price="95", tag="Clinique",
-         desc="Un soin reconstructeur en profondeur pour redonner force, souplesse et brillance aux cheveux fragilisés.",
-         note="Réservation par téléphone"),
-    dict(name="Traitement Lowell", img="products-terracotta", price="95", tag="Gamme Lowell",
-         desc="Le soin aux produits Lowell, la gamme brésilienne que l'on trouve aussi en boutique."),
-    dict(name="Soin lisses ou ondulés", img="afro-glam", price="85", tag="Hydratation",
-         desc="Nourrir, discipliner, faire briller : un soin pensé pour les cheveux lisses ou ondulés."),
-    dict(name="Extensions", img="curls-laugh", price="120", tag="Longueur",
-         desc="Des extensions en cheveux naturels de qualité, choisies au salon pour un résultat invisible."),
-    dict(name="Défrisage", img="portrait-ochre-2", price="50", tag="Lissage",
-         desc="Un défrisage professionnel, appliqué avec méthode pour respecter le cuir chevelu."),
-    dict(name="Brushing", img="afro-1", price="65", tag="Coiffage",
-         desc="Volume, mouvement ou lissé parfait : le brushing qui sublime votre texture."),
-    dict(name="Coupe", img="curls-portrait", price="45", tag="Forme",
-         desc="Une coupe qui respecte la boucle et dessine une forme nette, du crépu au lisse."),
-    dict(name="Teinture", img="curls-eyes", price="55", tag="Couleur",
-         desc="Une couleur uniforme et lumineuse, du naturel au cuivré."),
+SHADES = [  # braiding hair colour codes, as on her crochet flyer
+    ("1B", "#1f1611", "Noir naturel"), ("2", "#3a2213", "Brun très foncé"), ("4", "#5a341b", "Châtain"),
+    ("27", "#b57a3c", "Blond miel"), ("30", "#8a4320", "Auburn"), ("350", "#9c4519", "Cuivré"),
+    ("613", "#dcc08a", "Blond platine"), ("BUG", "#6a1828", "Bordeaux"), ("99J", "#52122e", "Prune"),
 ]
 
 BOUTIQUE_CATS = [
-    ("meches", "Mèches & extensions", "Mèches pour tresses, crochets et extensions en cheveux naturels."),
-    ("perruques", "Perruques", "Perruques et cheveux, à essayer au salon."),
-    ("soins", "Soins capillaires", "Masques, crèmes coiffantes, huiles et shampoings pour cheveux texturés."),
-    ("cosmetiques", "Cosmétiques", "Soins du visage et du corps, maquillage."),
-    ("accessoires", "Accessoires de beauté", "Peignes, bonnets, foulards, élastiques, bijoux de tresses."),
+    ("Mèches & extensions", "Mèches pour tresses, crochets, cheveux naturels."),
+    ("Perruques", "À essayer au salon, rénovation possible."),
+    ("Soins capillaires", "Masques, crèmes coiffantes, huiles pour cheveux texturés."),
+    ("Cosmétiques", "Soins visage et corps, maquillage."),
+    ("Accessoires", "Perles, peignes, bonnets, foulards."),
+    ("Produits africains", "Savon noir, beurre de karité, farine de maïs…"),
 ]
-BRANDS = ["Lola Cosmetics", "Salon Line", "Novex", "Mielle", "O Boticário", "Lowell"]
+BRANDS = ["Lola Cosmetics", "Salon Line", "Novex", "Mielle", "O Boticário", "Lowell", "X-pression"]
 
 REVIEWS = [
     dict(name="Pierre Fall", meta="Local Guide · Avis Google", initial="P",
          text="Une expérience client des plus riches et un accueil super professionnel. Je vous recommande fortement comme coiffeur et esthétique. Vite, vite, elle vous attend !"),
 ]
-REVIEW_PLACEHOLDERS = 7  # replace with real Google reviews as they come in
 
 FAQ = [
-    ("Faut-il prendre rendez-vous ?", "Oui, les coiffures se font sur rendez-vous. Réservez en ligne sur Salonkee, écrivez-nous sur WhatsApp ou appelez le 078 259 77 38. La boutique, elle, est ouverte du lundi au samedi sans rendez-vous."),
-    ("Les mèches sont-elles comprises dans le prix ?", "Cela dépend de la coiffure. Pour le crochet bouclé, cheveux et pose sont inclus (120 CHF). Pour les tresses bohème, les rastas et les transplas, les mèches s'achètent sur place, au salon : nous vous aidons à choisir la bonne quantité et la bonne couleur."),
-    ("Combien de temps dure une pose de tresses ?", "Tout dépend du modèle, de la longueur et de l'épaisseur des tresses. Dites-nous ce que vous voulez sur WhatsApp, photo à l'appui : nous vous donnons une estimation avant le rendez-vous."),
-    ("Je peux venir avec une photo du modèle ?", "Bien sûr. Envoyez-la sur WhatsApp avant votre visite, ou montrez-la au salon : c'est la meilleure façon de partir avec exactement la coiffure dont vous rêviez."),
-    ("Vous coiffez les enfants ?", "Oui. Nattes, transplas et tresses se font aussi pour les enfants. Indiquez simplement l'âge lors de la réservation."),
-    ("Puis-je acheter mes produits sans rendez-vous ?", "Oui. La boutique (soins capillaires, mèches, perruques, cosmétiques et accessoires) est ouverte du lundi au samedi, de 9h00 à 18h30."),
+    ("Les mèches sont-elles comprises ?", "Sur nos modèles à 150 CHF (tresses africaines, bohème), les paquets de mèches sont offerts. Les rasta longues Élégance (135 CHF) et le crochet bouclé (120 CHF) incluent les cheveux. Pour les autres coiffures, les mèches s'achètent sur place et nous vous aidons à choisir la quantité et la couleur."),
+    ("Comment choisir mon modèle ?", "Parcourez notre catalogue de codes (1 à 9) ou envoyez-nous une photo sur WhatsApp. Indiquez simplement le code au moment de réserver."),
+    ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 259 77 38. La boutique est ouverte sans rendez-vous du lundi au samedi."),
+    ("Combien de temps dure une pose ?", "Cela dépend du modèle, de la longueur et de l'épaisseur. Envoyez une photo sur WhatsApp, nous vous donnons une estimation avant le rendez-vous."),
+    ("Vous coiffez les enfants ?", "Oui : nattes, transplas et tresses se font aussi pour les enfants. Précisez l'âge en réservant."),
+    ("Vous rénovez les perruques ?", "Oui, 110 CHF : nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle."),
 ]
