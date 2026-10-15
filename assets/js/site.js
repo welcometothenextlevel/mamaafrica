@@ -28,14 +28,14 @@
 
   /* ---------- header & action bar ---------- */
   var hdr = d.getElementById('hdr'), abar = d.getElementById('abar');
-  var darkTop = d.querySelector('.hero, .phero');
+  var darkTop = null;
   var lastY = 0;
   function onScroll() {
     var y = scrollY, h = darkTop ? darkTop.offsetHeight : 0;
     var solid = y > Math.max(40, h - 90);
     hdr.classList.toggle('is-solid', solid);
     if (!body.classList.contains('menu-open')) hdr.classList.toggle('is-hidden', y > lastY && y > h + 200);
-    if (abar && body.dataset.page === 'index') abar.classList.toggle('is-away', y < innerHeight * 0.55);
+    if (abar) abar.classList.toggle('is-away', y < 420);
     lastY = y;
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -161,6 +161,15 @@
     addEventListener('mousemove', function (e) { tx = e.clientX + 150; ty = e.clientY; });
     (function loop() { x += (tx - x) * 0.14; y += (ty - y) * 0.14; if (on) hov.style.left = x + 'px', hov.style.top = y + 'px'; requestAnimationFrame(loop); })();
   }
+
+  /* ---------- services: the photo follows the hovered row ---------- */
+  var svcPics = d.querySelectorAll('.svc-pic img');
+  if (svcPics.length) d.querySelectorAll('.svc-row').forEach(function (row) {
+    row.addEventListener('mouseenter', function () {
+      d.querySelectorAll('.svc-row').forEach(function (r) { r.classList.toggle('is-on', r === row); });
+      svcPics.forEach(function (p, i) { p.classList.toggle('is-on', i === +row.dataset.pic); });
+    });
+  });
 
   /* ---------- model codes ---------- */
   d.querySelectorAll('.codes').forEach(function (grid) {

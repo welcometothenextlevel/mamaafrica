@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Static generator for the Mama Africa site (v3, editorial, no 3D). Run: python3 _build/build.py
-Writes every page to the repo root (GitHub Pages serves clean URLs)."""
+"""Static generator for the Mama Africa site (v4, warm African luxury). Run: python3 _build/build.py"""
 import os, json, html, sys
 from urllib.parse import quote
 from PIL import Image
@@ -13,18 +12,18 @@ esc = html.escape
 
 I = {
  "wa": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2Zm5.8 14.03c-.25.69-1.44 1.32-1.98 1.37-.51.05-.99.24-3.33-.69-2.81-1.11-4.6-3.98-4.74-4.17-.14-.18-1.13-1.5-1.13-2.87s.72-2.03.97-2.31c.26-.28.56-.35.74-.35l.54.01c.17 0 .41-.07.64.49.25.58.83 2.01.9 2.15.08.14.12.3.03.49-.1.19-.14.3-.28.47-.14.16-.3.37-.42.49-.14.14-.29.29-.12.57.16.28.73 1.2 1.56 1.94 1.07.95 1.98 1.25 2.26 1.39.28.14.44.12.61-.07.16-.19.71-.83.9-1.11.19-.28.37-.23.63-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.11.07.66-.18 1.35Z"/></svg>',
- "tel": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>',
- "cal": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="17" rx="1.5"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></svg>',
- "ig": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>',
- "pin": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="10" r="2.6"/></svg>',
- "arr": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>',
- "prev": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg>',
- "x": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>',
+ "tel": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>',
+ "cal": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></svg>',
+ "ig": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>',
+ "pin": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="10" r="2.6"/></svg>',
+ "clock": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+ "arr": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+ "prev": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+ "x": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
  "g": '<svg class="g-logo" viewBox="0 0 48 48" aria-label="Google"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>',
 }
 ARR_W = I["arr"].replace('<svg', '<svg class="arr"')
 STARS = '<span class="stars" aria-label="5 étoiles sur 5">★★★★★</span>'
-ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
 def wa(msg="Bonjour Mama Africa, j'aimerais prendre rendez-vous."):
     return f"https://wa.me/{WA}?text={quote(msg)}"
@@ -37,60 +36,53 @@ def dims(n):
         except FileNotFoundError: _d[n] = (1200, 1500)
     return _d[n]
 
-def img(n, alt, sizes="(max-width: 760px) 100vw, 50vw", eager=False, lazy=True, cls=""):
+def img(n, alt, sizes="(max-width: 760px) 100vw, 50vw", eager=False, cls=""):
     w, h = dims(n)
     srcset = ""
     if os.path.exists(os.path.join(IMG, n + "-m.webp")):
         srcset = f' srcset="assets/img/{n}-m.webp {dims(n + "-m")[0]}w, assets/img/{n}.webp {w}w" sizes="{sizes}"'
-    load = 'fetchpriority="high"' if eager else ('loading="lazy"' if lazy else "")
+    load = 'fetchpriority="high"' if eager else 'loading="lazy"'
     c = f' class="{cls}"' if cls else ""
     return f'<img src="assets/img/{n}.webp"{srcset} width="{w}" height="{h}" alt="{esc(alt)}" {load} decoding="async"{c}>'
 
-def video(n, label="", cls="", poster=True):
+def video(n, label=""):
     aria = f' aria-label="{esc(label)}"' if label else ' aria-hidden="true"'
-    c = f' class="{cls}"' if cls else ""
-    p = f' poster="assets/video/{n}.webp"' if poster else ""
-    return f'<video{c} src="assets/video/{n}.mp4"{p} muted loop playsinline autoplay preload="metadata"{aria}></video>'
+    return f'<video src="assets/video/{n}.mp4" poster="assets/video/{n}.webp" muted loop playsinline autoplay preload="metadata"{aria}></video>'
 
-def kicker(t, c=False):
-    return f'<p class="kicker{" kicker--c" if c else ""}">{t}</p>'
+def tag(t):
+    return f'<p class="tag">{t}</p>'
 
-def veil(inner, ratio=None, cls="ph"):
-    st = f' style="aspect-ratio:{ratio}"' if ratio else ""
-    return f'<div class="{cls} veil"{st}>{inner}<span class="veil-c"></span></div>'
-
-def chf(p, pre=None):
-    if not p: return '<span class="pr" style="font-size:20px">Sur demande</span>'
-    return f'<span class="pr">{("<em>" + pre + "</em>") if pre else ""}{p}<small>CHF</small></span>'
+def medal(p, pre=None):
+    if not p: return ""
+    e = f"<em>{pre}</em>" if pre else ""
+    return f'<span class="medal" aria-label="{(pre + " ") if pre else ""}{p} francs"><span>{e}<b>{p}</b><small>CHF</small></span></span>'
 
 # ---------------------------------------------------------------- shell
 NAV = [("index", "Accueil", "./"), ("tresses", "Tresses", "tresses"), ("hommes-enfants", "Hommes & enfants", "hommes-enfants"),
        ("tissage", "Tissage", "tissage"), ("soins", "Soins & perruques", "soins"), ("beaute", "Beauté", "beaute"),
        ("offres", "Offres", "offres"), ("tarifs", "Tarifs", "tarifs"), ("boutique", "Boutique", "boutique"),
-       ("galerie", "Galerie", "galerie"), ("salon", "La maison", "salon"), ("avis", "Avis", "avis"), ("contact", "Contact", "contact")]
-LEFT = ["tresses", "offres", "tarifs"]
-RIGHT = ["boutique", "galerie", "contact"]
+       ("galerie", "Galerie", "galerie"), ("salon", "Le salon", "salon"), ("avis", "Avis", "avis"), ("contact", "Contact", "contact")]
+DESK = ["tresses", "hommes-enfants", "tissage", "soins", "offres", "tarifs", "boutique", "contact"]
 
-def header(cur, on_hero):
-    a = lambda keys: "".join(f'<a href="{h}"{" aria-current=page" if s == cur else ""}>{l}</a>' for s, l, h in NAV if s in keys)
-    mnav = "".join(f'<a class="big" href="{h}"><small>{ROMAN[i] if i < len(ROMAN) else i + 1}</small>{l}</a>' for i, (s, l, h) in enumerate(NAV))
-    cls = " on-hero" if on_hero else ""
+def header(cur):
+    nav = "".join(f'<a href="{h}"{" aria-current=page" if s == cur else ""}>{l}</a>' for s, l, h in NAV if s in DESK)
+    mnav = "".join(f'<a class="big" href="{h}">{l}{"<small>Ici</small>" if s == cur else ""}</a>' for s, l, h in NAV)
     return f'''<a class="skip" href="#main">Aller au contenu</a>
-<header class="hdr{cls}" id="hdr"><div class="wrap">
-  <nav class="nav" aria-label="Navigation">{a(LEFT)}</nav>
-  <a class="mark" href="./" aria-label="Mama Africa, accueil"><img src="assets/img/logo-embleme.webp" width="582" height="582" alt=""><span>Mama Africa<small>Beauty · Payerne</small></span></a>
-  <div class="hdr-cta"><nav class="nav nav--r" aria-label="Navigation (suite)">{a(RIGHT)}</nav><button class="btn" type="button" data-book>Réserver</button>
+<header class="hdr" id="hdr"><div class="wrap">
+  <a class="logo" href="./" aria-label="Mama Africa Beauty Shop, accueil"><img src="assets/img/logo.webp" width="731" height="377" alt="Mama Africa Beauty Shop"></a>
+  <nav class="nav" aria-label="Navigation">{nav}</nav>
+  <div class="hdr-r"><a class="hdr-tel" href="tel:{TEL}">{I["tel"]}<span>{PHONE}</span></a><button class="btn btn--gold btn--sm" type="button" data-book>Prendre rendez-vous</button>
   <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><span></span></button></div>
-</div></header>
+</div><div class="ribbon" style="height:7px;background-size:auto 7px"></div></header>
 <nav class="mnav" id="mnav" aria-label="Menu">{mnav}
-  <div class="mnav-foot"><button class="btn btn--light" type="button" data-book>{I["cal"]}Réserver</button><a class="btn btn--line-light" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a><a class="btn btn--line-light" href="tel:{TEL}">{I["tel"]}{PHONE}</a></div>
+  <div class="mnav-foot"><button class="btn btn--gold" type="button" data-book>{I["cal"]}Prendre rendez-vous</button><a class="btn btn--wa" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a><a class="btn" style="box-shadow:inset 0 0 0 1.5px var(--line-d)" href="tel:{TEL}">{I["tel"]}{PHONE}</a></div>
 </nav>'''
 
 def ways(light=False):
     c = " ways--light" if light else ""
     return f'''<div class="ways{c}">
-  <a class="way" href="{SALONKEE}" target="_blank" rel="noopener"><span class="ic">{I["cal"]}</span><span><b>En ligne, sur Salonkee</b><small>Choisissez votre créneau, 24h/24</small></span>{ARR_W}</a>
-  <a class="way" href="{wa()}" target="_blank" rel="noopener"><span class="ic">{I["wa"]}</span><span><b>Sur WhatsApp</b><small>Envoyez le code ou la photo du modèle</small></span>{ARR_W}</a>
+  <a class="way" href="{SALONKEE}" target="_blank" rel="noopener"><span class="ic">{I["cal"]}</span><span><b>En ligne sur Salonkee</b><small>Choisissez votre créneau, 24h/24</small></span>{ARR_W}</a>
+  <a class="way wa" href="{wa()}" target="_blank" rel="noopener"><span class="ic">{I["wa"]}</span><span><b>Sur WhatsApp</b><small>Envoyez le code ou une photo du modèle</small></span>{ARR_W}</a>
   <a class="way" href="tel:{TEL}"><span class="ic">{I["tel"]}</span><span><b>{PHONE}</b><small>Du lundi au samedi, 9h00 – 18h30</small></span>{ARR_W}</a>
 </div>'''
 
@@ -103,36 +95,33 @@ def hours_list():
 
 def footer():
     col = lambda keys: "".join(f'<li><a href="{h}">{l}</a></li>' for s, l, h in NAV if s in keys)
-    return f'''<footer class="ftr"><div class="wrap">
-  <p class="ftr-mark" aria-hidden="true">Mama Africa</p>
-  <div class="ftr-sub"><p>Votre beauté, notre passion.</p><a class="tlink" href="reservation" style="color:var(--on-dark)">Prendre rendez-vous {I["arr"]}</a></div>
-  <div class="ftr-grid">
-    <div><a class="logo" href="./"><img src="assets/img/logo-embleme.webp" width="582" height="582" alt="Mama Africa Beauty Shop" loading="lazy"></a>
-      <p class="small">Maison de tresses africaines et boutique beauté, au centre de Payerne.</p>
+    return f'''<footer class="ftr"><div class="ribbon"></div><div class="wrap">
+  <div class="ftr-top">
+    <div><a class="emb" href="./"><img src="assets/img/logo-embleme.webp" width="582" height="582" alt="" loading="lazy"><span><b>Mama Africa</b><small>Beauty Shop · Payerne</small></span></a>
+      <p>Tresses africaines, soins et boutique beauté, Rue de Lausanne 38B. {SLOGAN}</p>
       <div class="socials"><a href="{INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram">{I["ig"]}</a><a href="{wa()}" target="_blank" rel="noopener" aria-label="WhatsApp">{I["wa"]}</a><a href="{GMAPS}" target="_blank" rel="noopener" aria-label="Google Maps">{I["pin"]}</a><a href="{SALONKEE}" target="_blank" rel="noopener" aria-label="Salonkee">{I["cal"]}</a></div></div>
     <div><h4>Coiffure</h4><ul>{col(["tresses", "hommes-enfants", "tissage", "soins", "beaute"])}</ul></div>
-    <div><h4>La maison</h4><ul>{col(["offres", "tarifs", "boutique", "galerie", "salon", "avis"])}</ul></div>
-    <div><h4>Nous trouver</h4><ul><li><a href="{GMAPS}" target="_blank" rel="noopener">{STREET}<br>{CITY}</a></li><li><a href="tel:{TEL}">{PHONE}</a></li><li><a href="{INSTAGRAM}" target="_blank" rel="noopener">{IG_HANDLE}</a></li><li style="color:var(--on-dark-2)">Lundi – samedi<br>9h00 – 18h30</li></ul></div>
+    <div><h4>Mama Africa</h4><ul>{col(["offres", "tarifs", "boutique", "galerie", "salon", "avis"])}</ul></div>
+    <div><h4>Nous trouver</h4><ul><li><a href="{GMAPS}" target="_blank" rel="noopener">{STREET}<br>{CITY}</a></li><li><a href="tel:{TEL}">{PHONE}</a></li><li><a href="{INSTAGRAM}" target="_blank" rel="noopener">{IG_HANDLE}</a></li><li style="color:var(--on-2)">Lundi au samedi, 9h00 – 18h30</li></ul></div>
   </div>
-  <div class="ftr-bot"><span>© 2026 {NAME}, Payerne</span><span><a href="contact">Contact</a> · <a href="confidentialite">Confidentialité</a></span></div>
+  <div class="ftr-bot"><span>© 2026 {NAME}</span><span><a href="reservation">Réserver</a> · <a href="confidentialite">Confidentialité</a></span></div>
 </div></footer>'''
 
-def overlays(away):
-    return f'''<div class="abar{" is-away" if away else ""}" id="abar">
+def overlays():
+    return f'''<div class="abar is-away" id="abar">
   <a class="a-tel" href="tel:{TEL}" aria-label="Appeler le {PHONE}">{I["tel"]}Appeler</a>
   <a class="a-wa" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a>
   <button class="a-book" type="button" data-book>{I["cal"]}Réserver</button>
 </div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-t" aria-hidden="true">
   <div class="sheet-bg" data-close></div>
-  <div class="sheet-panel"><button class="x" type="button" data-close aria-label="Fermer">{I["x"]}</button>
-    {kicker("Rendez-vous")}<h2 class="d-m" id="sheet-t" style="margin-bottom:26px">Comment souhaitez-vous réserver&nbsp;?</h2>
+  <div class="sheet-panel"><div class="ribbon"></div><button class="x" type="button" data-close aria-label="Fermer">{I["x"]}</button>
+    <div class="sheet-in"><h2 class="h3" id="sheet-t" style="font-size:30px;margin:0 50px 6px 0">Prendre rendez-vous</h2><p class="muted" style="margin:0 0 20px">Choisissez ce qui vous arrange.</p>
     {ways(light=True)}
-    <p class="hint" style="margin-top:20px">Vous avez choisi un modèle ? <a href="tresses#codes" style="text-decoration:underline">Réservez par code</a>.</p>
+    <p class="hint" style="margin-top:18px">Vous avez repéré un modèle&nbsp;? <a href="tresses#codes" style="text-decoration:underline">Réservez-le par son code</a>.</p></div>
   </div>
 </div>
-<div class="lb" id="lb" aria-hidden="true"><button class="x" type="button" aria-label="Fermer">{I["x"]}</button><button class="pv" type="button" aria-label="Précédente">{I["prev"]}</button><img alt=""><button class="nx" type="button" aria-label="Suivante">{I["arr"]}</button><p></p></div>
-<div class="hover-img" id="hover-img" aria-hidden="true"><img alt=""></div>'''
+<div class="lb" id="lb" aria-hidden="true"><button class="x" type="button" aria-label="Fermer">{I["x"]}</button><button class="pv" type="button" aria-label="Précédente">{I["prev"]}</button><img alt=""><button class="nx" type="button" aria-label="Suivante">{I["arr"]}</button><p></p></div>'''
 
 def schema():
     d = {"@context": "https://schema.org", "@type": "HairSalon", "name": NAME, "slogan": SLOGAN,
@@ -143,7 +132,7 @@ def schema():
          "sameAs": [INSTAGRAM, SALONKEE, GMAPS]}
     return '<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False) + "</script>"
 
-def page(slug, title, desc, body, og="box-braids-longues", on_hero=True):
+def page(slug, title, desc, body, og="perles-1"):
     url = BASE + ("" if slug == "index" else slug)
     robots = '<meta name="robots" content="noindex, nofollow">' if PITCH else ""
     return f'''<!doctype html>
@@ -155,22 +144,22 @@ def page(slug, title, desc, body, og="box-braids-longues", on_hero=True):
 <meta name="description" content="{esc(desc)}">
 {robots}
 <link rel="canonical" href="{url}">
-<meta name="theme-color" content="#1b120d">
+<meta name="theme-color" content="#f6ecdd">
 <meta property="og:type" content="website"><meta property="og:locale" content="fr_CH"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}assets/img/{og}.webp">
 <link rel="icon" href="assets/img/favicon-48.png" sizes="48x48"><link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-<link rel="preload" href="assets/fonts/bodoni.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/gambetta-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/author-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css?v={V}">
 <script>document.documentElement.classList.add('js');setTimeout(function(){{if(!window.__ma)document.documentElement.classList.remove('js')}},3500)</script>
 {schema() if slug in ("index", "contact") else ""}
 </head>
 <body data-page="{slug}">
-{header(slug, on_hero)}
+{header(slug)}
 <main id="main">
 {body}
 </main>
 {footer()}
-{overlays(slug == "index")}
+{overlays()}
 <script>window.MA_WA="{WA}";</script>
 <script src="assets/js/vendor/lenis.min.js"></script>
 <script src="assets/js/vendor/gsap.min.js"></script>
@@ -180,357 +169,324 @@ def page(slug, title, desc, body, og="box-braids-longues", on_hero=True):
 </html>'''
 
 # ---------------------------------------------------------------- blocks
-def phero(crumb, kick, h1, lede, bg, badge=None):
-    b = f'<div class="badge" data-reveal><small>{badge[0]}</small><b>{badge[1]}<small>CHF</small></b></div>' if badge else ""
-    return f'''<section class="phero"><div class="bg">{bg}</div>
-<div class="wrap"><nav class="crumbs" aria-label="Fil d'Ariane"><a href="./">Accueil</a><span>/</span><span>{crumb}</span></nav>
-{kicker(kick)}<h1 class="d-xl" data-reveal>{h1}</h1><p class="lede" data-reveal>{lede}</p></div>{b}</section>'''
+def pintro(crumb, h1, intro, pic, price=None, pre=None, btns=True, extra=""):
+    b = f'<div class="btns"><button class="btn btn--gold" type="button" data-book>{I["cal"]}Prendre rendez-vous</button><a class="btn btn--line" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a></div>' if btns else ""
+    return f'''<section class="pintro"><div class="wrap pintro-grid">
+  <div><nav class="crumbs" aria-label="Fil d'Ariane"><a href="./">Accueil</a><span>›</span><span>{crumb}</span></nav>
+    <h1 class="h1">{h1}</h1><p class="intro">{intro}</p>{b}{extra}</div>
+  <div class="pintro-pic"><div class="ph">{pic}</div>{medal(price, pre)}</div>
+</div></section>'''
 
-def sig(o, i):
-    return f'''<article class="sig"><a href="offres#{o["id"]}" aria-label="{esc(o["title"])}">
-  {veil(img(o["img"], o["title"], "(max-width: 760px) 78vw, 400px") + f'<span class="tag">{o["badge"]}</span>')}
-  <div class="cap"><span class="num">{i:02d}</span><h3>{o["title"]}</h3>{chf(o["price"], o.get("pre"))}<p>{o["incl"][0]}</p></div></a></article>'''
+def book_msg(o):
+    return wa("Bonjour Mama Africa, je souhaite réserver : " + o["title"] + " (" + o["price"] + " CHF).")
 
-def rail(items):
-    cards = "".join(sig(o, i) for i, o in enumerate(items, 1))
-    return f'''<div class="rail-wrap"><div class="rail" id="rail">{cards}</div>
-<div class="wrap rail-ctrl"><div class="rail-bar" aria-hidden="true"><i></i></div><div class="arrows"><button type="button" data-rail="-1" aria-label="Précédent">{I["prev"]}</button><button type="button" data-rail="1" aria-label="Suivant">{I["arr"]}</button></div></div></div>'''
-
-CARTE_IMG = {
-    "Nattes simples": "nattes-chignon", "Rasta courtes": "box-braids-sourire", "Diverses tresses avec ajout": "tresses-miel",
-    "Tresses avec perles": "perles-1", "Rasta longues · Élégance": "nattes-portrait", "Tresses africaines": "box-braids-longues",
-    "Tresses bohème · 4 modèles": "boheme-1", "Twist & Curly": "boheme-3", "Rasta longues": "box-braids-dos",
-    "Crochet bouclé": "crochet-volume", "Transplas · 2 / 4 tresses": "transplas-4",
-    "Tresses hommes · 6 modèles": "homme-tresses", "Tresses enfants avec perles colorées": "enfant-perles-3",
-    "Extensions": "tissage-ondule", "Tissage cousu sur nattes": "tissage-ondule", "Extensions longues": "extensions-lisses",
-    "Défrisage des cheveux": "lissage", "Brushing": "afro-studio", "Rénovation de perruque": "perruque-glam",
-    "Bio-plastie capillaire": "hands-scalp", "Soin cheveux lisses ou ondulés": "afro-glam", "Traitement produits Lowell": "products-terracotta",
-    "Coupe": "curls-portrait", "Teinture": "curls-eyes",
-    "Extension de cils · cil à cil": "makeup", "Extension de cils · volume russe": "makeup", "Épilation des sourcils": "portrait-ochre-1", "Maquillage": "portrait-gold",
-}
-
-def carte(keys=("tresses", "famille", "tissage", "soins", "beaute"), intro=True):
-    INTRO = {"tresses": "Mèches offertes ou incluses sur nos offres.", "famille": "Cornrows pour hommes, tresses à perles pour les enfants.",
-             "tissage": "Coiffage compris.", "soins": "Pour cheveux crépus, bouclés, lisses ou en transition.", "beaute": "Par une spécialiste certifiée."}
-    blocks = []
-    for i, k in enumerate(keys):
-        title, items = MENU[k]
-        lis = ""
-        for n, p, d in items:
-            pr = f'{p}<small>CHF</small>' if p else '<small style="font-size:11px">Sur demande</small>'
-            gift = " gift" if d and ("offert" in d or "inclus" in d.lower()) else ""
-            dd = f'<span class="d{gift}">{d}</span>' if d else ""
-            hv = f' data-hover="assets/img/{CARTE_IMG[n]}.webp"' if n in CARTE_IMG else ""
-            lis += f'<li{hv}><span class="n">{n}</span><span class="p">{pr}</span>{dd}</li>'
-        it = f"<p>{INTRO[k]}</p>" if intro else ""
-        blocks.append((k, f'<div class="carte-cat" data-reveal><h3><span class="num">{ROMAN[i]}.</span>{title}</h3>{it}<ul>{lis}</ul></div>'))
-    if len(blocks) == 1:  # single category: split its list over two columns
-        return f'<div class="carte carte--one">{blocks[0][1]}</div>'
-    left = "".join(b for k, b in blocks if k == "tresses")
-    right = "".join(b for k, b in blocks if k != "tresses")
-    if not left:
-        half = (len(blocks) + 1) // 2
-        left, right = "".join(b for _, b in blocks[:half]), "".join(b for _, b in blocks[half:])
-    return f'<div class="carte"><div>{left}</div><div>{right}</div></div>'
-
-def codes_block():
-    items = "".join(f'<button class="code" type="button" data-code="{c}" data-price="{p}" aria-pressed="false"><span class="ph" style="display:block">{img(f"code-{c}", f"Modèle code {c}", "140px")}</span><b>Code {c}</b><strong>{p}<small>CHF</small></strong></button>' for c, p in CODES)
-    return f'''<div class="codes">{items}</div>
-<div class="code-cta"><p id="code-sel">Touchez un modèle pour le choisir.</p><div class="btns"><a class="btn" id="code-wa" href="{wa("Bonjour Mama Africa, je souhaite réserver un modèle de votre catalogue.")}" target="_blank" rel="noopener">{I["wa"]}Réserver ce code</a><button class="btn btn--line btn--sm" type="button" data-flyer="affiche-codes">Voir le catalogue</button></div></div>'''
-
-def feature(o, i, rev=False):
-    incl = "".join(f"<li>{x}</li>" for x in o["incl"])
+def poster(o):
     fl = f'<button class="fly" type="button" data-flyer="{o["flyer"]}">Voir l\'affiche</button>' if o.get("flyer") else ""
-    return f'''<article class="feat{" rev" if rev else ""}" id="{o["id"]}">
-  <div class="f-img">{veil(img(o["img"], o["title"], "(max-width: 960px) 100vw, 58vw"))}</div>
-  <div class="f-txt" data-reveal><span class="num">{ROMAN[i - 1]}. {o["badge"]}</span><h3>{o["title"]}</h3><p class="lede" style="font-size:17px">{o["lead"]}</p>
-    <div class="pr">{("<em>" + o["pre"] + "</em>") if o.get("pre") else ""}{o["price"]}<small>CHF</small></div><ul class="incl">{incl}</ul>
-    <div class="btns" style="align-items:center;gap:22px"><a class="btn" href="{wa("Bonjour Mama Africa, je souhaite réserver : " + o["title"] + " (" + o["price"] + " CHF).")}" target="_blank" rel="noopener">{I["wa"]}Réserver</a>{fl}</div></div>
+    return f'''<article class="poster" data-reveal>
+  <a class="ph" href="offres#{o["id"]}">{img(o["img"], o["title"], "(max-width: 760px) 76vw, 25vw")}<span class="gift">{o["badge"]}</span>{medal(o["price"], o.get("pre"))}</a>
+  <h3>{o["title"]}</h3><p>{o["incl"][0]}</p>
+  <div class="acts"><a class="btn btn--sm" href="{book_msg(o)}" target="_blank" rel="noopener">Réserver</a>{fl}</div>
 </article>'''
 
-def reviews(head=True):
+def detail(o, rev=False):
+    incl = "".join(f"<li>{x}</li>" for x in o["incl"])
+    fl = f'<button class="fly" type="button" data-flyer="{o["flyer"]}">Voir l\'affiche</button>' if o.get("flyer") else ""
+    return f'''<article class="detail{" rev" if rev else ""}" id="{o["id"]}">
+  <div class="d-pic" data-reveal>{img(o["img"], o["title"], "(max-width: 960px) 100vw, 46vw")}<span class="gift">{o["badge"]}</span>{medal(o["price"], o.get("pre"))}</div>
+  <div class="d-txt" data-reveal><h2>{o["title"]}</h2><p class="intro">{o["lead"]}</p><ul class="checks">{incl}</ul>
+    <div class="d-acts"><a class="btn btn--gold" href="{book_msg(o)}" target="_blank" rel="noopener">{I["wa"]}Réserver ce modèle</a>{fl}</div></div>
+</article>'''
+
+INTROS = {"tresses": "Mèches offertes ou incluses sur nos offres.", "famille": "Pour lui et pour les petites.",
+          "tissage": "Coiffage compris.", "soins": "Pour cheveux crépus, bouclés, lisses ou en transition.", "beaute": "Par une spécialiste certifiée."}
+
+def ptable(k):
+    title, items = MENU[k]
+    lis = ""
+    for n, p, d in items:
+        pr = f'{p}<small>CHF</small>' if p else '<small style="font-size:14px;color:inherit">Sur demande</small>'
+        gift = " gift" if d and ("offert" in d or "inclus" in d.lower()) else ""
+        dd = f'<span class="d{gift}">{d}</span>' if d else ""
+        lis += f'<li><span class="n">{n}</span><span class="p">{pr}</span>{dd}</li>'
+    return f'<div class="ptable" data-reveal><div class="ribbon"></div><div class="ptable-in"><h3>{title}</h3><p>{INTROS.get(k, "")}</p><ul>{lis}</ul></div></div>'
+
+def ptables(keys):
+    if len(keys) == 1:
+        return f'<div style="max-width:760px">{ptable(keys[0])}</div>'
+    left = [k for k in keys if k == "tresses"] or list(keys[: (len(keys) + 1) // 2])
+    right = [k for k in keys if k not in left]
+    return f'<div class="ptables"><div style="display:grid;gap:20px">{"".join(ptable(k) for k in left)}</div><div style="display:grid;gap:20px">{"".join(ptable(k) for k in right)}</div></div>'
+
+def codes_block():
+    items = "".join(f'<button class="code" type="button" data-code="{c}" data-price="{p}" aria-pressed="false"><span class="ph">{img(f"code-{c}", f"Modèle code {c}", "140px")}</span><b>Code {c}</b><strong>{p} CHF</strong></button>' for c, p in CODES)
+    return f'''<div class="codes">{items}</div>
+<div class="code-cta"><p id="code-sel">Touchez un modèle pour le choisir.</p><div class="btns"><a class="btn btn--wa" id="code-wa" href="{wa("Bonjour Mama Africa, je souhaite réserver un modèle de votre catalogue.")}" target="_blank" rel="noopener">{I["wa"]}Réserver ce code</a><button class="btn btn--line btn--sm" type="button" data-flyer="affiche-codes">Voir le catalogue</button></div></div>'''
+
+SERVICES = [
+    ("tresses", "Tresses & nattes", "Perles, bohème, box braids, twist, rasta, crochet", "70", "perles-1"),
+    ("hommes-enfants", "Hommes & enfants", "Cornrows en 6 modèles, tresses à perles colorées", "90", "enfant-perles-3"),
+    ("tissage", "Tissage & extensions", "Tissage cousu, extensions longues, coiffage inclus", "135", "tissage-ondule"),
+    ("soins", "Soins & perruques", "Défrisage, brushing, bio-plastie, rénovation de perruque", "45", "afro-or"),
+    ("beaute", "Beauté du regard", "Extensions de cils, sourcils, maquillage", None, "makeup"),
+]
+
+def services():
+    rows = "".join(f'''<a class="svc-row{" is-on" if i == 0 else ""}" href="{s}" data-pic="{i}"><span class="th">{img(pic, "", "64px")}</span><span><b>{t}</b><span class="d">{d}</span></span><span class="from">{("<small>dès</small>" + p + " CHF") if p else "<small>tarif</small>sur demande"}</span></a>''' for i, (s, t, d, p, pic) in enumerate(SERVICES))
+    pics = "".join(img(pic, t, "40vw", cls="is-on" if i == 0 else "") for i, (s, t, d, p, pic) in enumerate(SERVICES))
+    return f'<div class="svc"><div class="svc-list">{rows}</div><div class="svc-pic" aria-hidden="true">{pics}</div></div>'
+
+def strip():
+    items = [
+        (img("reel-nattes", "Tresses collées longues, réalisées au salon", "300px"), "Tresses collées longues", True),
+        (video("salon-tresses", "Pose de tresses au salon"), "Une pose en cours", True),
+        (img("transplas-4", "Quatre transplas", "300px"), "Quatre transplas", True),
+        (img("crochet-volume", "Crochet bouclé volume", "300px"), "Crochet bouclé volume", True),
+        (img("boutique-cheveux", "Le comptoir des mèches", "300px"), "Le comptoir des mèches", False),
+        (video("salon-visite", "La boutique"), "La boutique", False),
+        (img("realisation-tresses-2", "Tresses en cours", "300px"), "Tresses avec ajout", True),
+    ]
+    figs = "".join(f'<figure data-reveal><div class="ph">{m}{"<span class=real>Fait au salon</span>" if r else ""}</div><figcaption>{c}</figcaption></figure>' for m, c, r in items)
+    return f'<div class="strip">{figs}</div>'
+
+def reviews():
     real = lambda r: f'<article class="rv-card"><div class="rv-top"><span class="rv-av">{r["initial"]}</span><div><b>{esc(r["name"])}</b><small>{r["meta"]}</small></div>{I["g"]}</div>{STARS}<p>« {esc(r["text"])} »</p></article>'
     ph = lambda: f'<article class="rv-card is-ph" aria-hidden="true"><div class="rv-top"><span class="rv-av">G</span><div><b style="color:var(--muted)">Avis Google</b><small>Emplacement réservé</small></div>{I["g"]}</div>{STARS}<div class="sk"></div><div class="sk"></div><div class="sk"></div><em>Le prochain avis s\'affichera ici.</em></article>'
-    cta = f'<article class="rv-card is-cta"><b>Vous êtes venue chez nous&nbsp;?</b><p>Votre avis aide d\'autres femmes à trouver une maison qui prend soin de leurs cheveux.</p><a class="btn btn--light btn--sm" href="{G_WRITE}" target="_blank" rel="noopener">Laisser un avis</a></article>'
+    cta = f'<article class="rv-card is-cta"><b>Vous êtes venue chez nous&nbsp;?</b><p>Votre avis aide d\'autres femmes à nous trouver.</p><a class="btn btn--gold btn--sm" href="{G_WRITE}" target="_blank" rel="noopener">Laisser un avis</a></article>'
     r1 = [real(r) for r in REVIEWS] + [ph(), ph(), cta, ph(), ph()]
     r2 = [ph(), cta, ph()] + [real(r) for r in REVIEWS] + [ph(), ph()]
     tr = lambda c: f'<div class="rv-track">{"".join(c)}<div style="display:contents" aria-hidden="true">{"".join(c)}</div></div>'
-    h = f'''<div class="wrap"><div class="head"><div>{kicker("Avis Google")}<h2 class="d-l" data-reveal>Elles en parlent.</h2></div>
-<a class="gscore" href="{G_REVIEWS}" target="_blank" rel="noopener" data-reveal>{I["g"]}<b>{G_RATING}</b><span>{STARS}<small>{G_COUNT} avis sur Google</small></span></a></div></div>''' if head else ""
-    return f'{h}<div class="rv">{tr(r1)}</div><div class="rv rv--rev">{tr(r2)}</div>'
+    return f'''<div class="wrap"><div class="shead"><div>{tag("Avis Google")}<h2 class="h2">Ce que nos clientes en disent</h2></div>
+<a class="gscore" href="{G_REVIEWS}" target="_blank" rel="noopener">{I["g"]}<b>{G_RATING}</b><span>{STARS}<small>{G_COUNT} avis sur Google</small></span></a></div></div>
+<div class="rv">{tr(r1)}</div><div class="rv rv--rev">{tr(r2)}</div>'''
 
 def booking():
-    return f'''<section class="sec book"><div class="wrap book-grid">
-  <div>{kicker("Rendez-vous")}<h2 class="d-l" data-reveal>Prendre rendez-vous.</h2><p class="lede" style="margin-top:24px;color:var(--on-dark-2)" data-reveal>En ligne, sur WhatsApp avec le code ou la photo de votre modèle, ou par téléphone.</p></div>
-  <div data-reveal>{ways()}</div>
+    return f'''<section class="sec sec--dark"><div class="wrap book">
+  <div>{tag("Rendez-vous")}<h2 class="h2">Réservez votre prochaine coiffure</h2><p class="intro" style="margin-top:18px">En ligne, sur WhatsApp avec le code ou une photo de votre modèle, ou par téléphone. Nous vous répondons rapidement.</p></div>
+  {ways()}
 </div></section>'''
 
-def visit():
-    return f'''<section class="sec" id="visite"><div class="wrap visit">
-  <div>{kicker("Nous trouver")}<h2 class="d-l" data-reveal>Rue de Lausanne 38B, Payerne.</h2>
-    <p class="lede" style="margin:24px 0 28px">Le salon et la boutique sont réunis à la même adresse, au centre de Payerne.</p>
+def visit(top=False):
+    st = '' if top else ' style="padding-top:0"'
+    return f'''<section class="sec sec--dark" id="visite"{st}><div class="wrap visit">
+  <div>{tag("Nous trouver")}<h2 class="h2">Rue de Lausanne 38B, Payerne</h2>
+    <p class="intro" style="margin:16px 0 20px">Le salon et la boutique sont à la même adresse, au centre de Payerne.</p>
     <span class="open" id="open-now"><i></i><span>Horaires</span></span>{hours_list()}
-    <div class="btns" style="margin-top:32px"><a class="btn" href="{GMAPS}" target="_blank" rel="noopener">{I["pin"]}Itinéraire</a><a class="btn btn--line" href="tel:{TEL}">{I["tel"]}{PHONE}</a></div></div>
-  <div class="map" data-reveal><iframe title="Carte : Mama Africa Beauty, {STREET}, Payerne" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q={quote('Mama Africa beauty shopping, Rue de Lausanne 38, 1530 Payerne')}&z=16&output=embed"></iframe></div>
+    <div class="btns" style="margin-top:26px"><a class="btn btn--gold" href="{GMAPS}" target="_blank" rel="noopener">{I["pin"]}Itinéraire</a><a class="btn btn--line" href="tel:{TEL}">{I["tel"]}{PHONE}</a></div></div>
+  <div class="map"><iframe title="Carte : Mama Africa Beauty, {STREET}, Payerne" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q={quote('Mama Africa beauty shopping, Rue de Lausanne 38, 1530 Payerne')}&z=16&output=embed"></iframe></div>
 </div></section>'''
 
 def faq(items=FAQ):
     return '<div class="faq">' + "".join(f'<details><summary>{q}<i aria-hidden="true"></i></summary><p>{a}</p></details>' for q, a in items) + '</div>'
 
-def collage():
-    return f'''<div class="collage">
-  <figure class="c1" data-reveal>{veil(img("reel-nattes", "Deux longues tresses collées, réalisées au salon", "(max-width: 960px) 100vw, 42vw") + '<span class="real">Fait au salon</span>')}<figcaption><span class="num">i.</span>Tresses collées longues, réalisées au salon</figcaption></figure>
-  <figure class="c2" data-reveal><div class="ph">{video("salon-tresses", "Pose de tresses au salon")}</div><figcaption><span class="num">ii.</span>Une pose en cours</figcaption></figure>
-  <figure class="c3" data-reveal>{veil(img("transplas-4", "Transplas réalisés au salon", "(max-width: 960px) 50vw, 25vw") + '<span class="real">Fait au salon</span>')}<figcaption><span class="num">iii.</span>Quatre transplas</figcaption></figure>
-  <figure class="c4" data-reveal>{veil(img("boutique-cheveux", "Le comptoir des cheveux et mèches", "(max-width: 960px) 50vw, 25vw"))}<figcaption><span class="num">iv.</span>Le comptoir des mèches</figcaption></figure>
-  <figure class="c5" data-reveal><div class="ph">{video("salon-visite", "La boutique")}</div><figcaption><span class="num">v.</span>La boutique</figcaption></figure>
+def shop():
+    cats = "".join(f'<li><span><b>{t}</b><span>{d}</span></span></li>' for t, d in BOUTIQUE_CATS)
+    return f'''<div class="shop">
+  <div class="shop-pic" data-reveal>{img("boutique-allee", "Les rayons de la boutique Mama Africa", "(max-width: 960px) 100vw, 42vw")}<span class="real">La boutique</span></div>
+  <div data-reveal>{tag("La boutique")}<h2 class="h2">Tout pour vos cheveux, sous le même toit</h2>
+    <p class="intro" style="margin-top:16px">Ouverte du lundi au samedi, sans rendez-vous. Des produits pensés pour les cheveux crépus, bouclés et en transition.</p>
+    <ul class="cats">{cats}</ul>
+    <div class="prods">{"".join(f'<div>{img(f"produit-{i}", "Produit en vente à la boutique", "160px")}</div>' for i in (1, 4, 9, 10))}</div>
+    <div class="brands">{"".join(f"<span>{b}</span>" for b in BRANDS)}</div></div>
 </div>'''
-
-def duo():
-    h, e = OFFER["hommes"], OFFER["enfants"]
-    card = lambda o, href, kick: f'''<a class="duo-card" href="{href}" data-reveal><div class="ph">{img(o["img"], o["title"], "(max-width: 960px) 100vw, 50vw")}</div>
-  <div class="in"><p class="kicker">{kick}</p><h3>{o["title"]}</h3><span class="pr">{o["price"]}<small>CHF</small></span><p>{o["lead"]}</p></div></a>'''
-    return f'<div class="duo">{card(h, "hommes-enfants#hommes", "Pour lui")}{card(e, "hommes-enfants#enfants", "Pour les petites")}</div>'
-
-def shades():
-    return '<div class="shades">' + "".join(f'<span style="--c:{c}"><i></i><span>{k}<small>{n}</small></span></span>' for k, c, n in SHADES) + '</div>'
 
 # ================================================================ PAGES
 def p_index():
     p = OFFER["perles"]
     body = f'''
-<section class="hero" id="hero">
-  <div class="hero-media">{video("hero-film", "Femme aux longues tresses", cls="v-d")}{video("hero-film-m", "", cls="v-m")}</div>
-  <div class="wrap hero-in">
-    <p class="kicker" data-in="1">Maison de tresses africaines · Payerne</p>
-    <h1 class="d-xl" data-in="2">L'art de la tresse africaine.</h1>
-    <div class="hero-foot">
-      <div><p class="lede" data-in="3">Tresses, nattes, tissage, soins et perruques, réalisés avec patience Rue de Lausanne 38B. Sur nos offres, les mèches sont incluses.</p>
-        <div class="btns" data-in="4"><button class="btn btn--light" type="button" data-book>Prendre rendez-vous</button><a class="btn btn--line-light" href="#signatures">Les offres</a></div></div>
-      <a class="hero-offer" href="offres#perles" data-in="4"><img src="assets/img/{p["img"]}-m.webp" alt="" width="64" height="80"><span><small>Offre du moment</small><b>{p["title"]}, {p["price"]} CHF</b><span>Perles et un paquet de mèches offerts</span></span></a>
-    </div>
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    {tag("Salon de tresses africaines à Payerne")}
+    <h1 class="h1">Des tresses faites avec soin, au cœur de Payerne</h1>
+    <p class="intro">Tresses, nattes, tissage, soins et perruques, réalisés à la main Rue de Lausanne 38B. Sur nos offres, les mèches sont incluses.</p>
+    <a class="offer-tag" href="offres#perles">{medal(p["price"])}<span class="ot"><small>En ce moment</small><b>{p["title"]}</b><span>Perles et un paquet de mèches offerts, coiffure comprise</span></span></a>
+    <div class="btns"><button class="btn btn--gold" type="button" data-book>{I["cal"]}Prendre rendez-vous</button><a class="btn btn--line" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a></div>
+    <div class="hero-trust"><span>{STARS} {G_RATING} sur Google</span><span>{I["clock"]}Lun – sam, 9h – 18h30</span><span>{I["pin"]}Rue de Lausanne 38B</span></div>
   </div>
-  <span class="scroll-line" aria-hidden="true"></span>
-</section>
-
-<section class="sec manifesto"><div class="wrap">
-  {kicker("La maison", c=True)}
-  <p class="statement" data-reveal>Une adresse pour vos tresses, vos soins et vos produits. Le geste juste, le temps qu'il faut, et des mèches offertes sur nos modèles signature.</p>
-  <div class="facts" data-reveal>
-    <div><b>{G_RATING} <span class="stars">★★★★★</span></b><span>Note Google</span></div>
-    <div><b>Lun – Sam</b><span>9h00 – 18h30</span></div>
-    <div><b>dès 70 CHF</b><span>Nattes, tresses, soins</span></div>
-    <div><b>38B</b><span>Rue de Lausanne, Payerne</span></div>
+  <div class="hero-pic">
+    <div class="hero-main">{video("tresses-portrait", "Femme aux longues tresses")}</div>
+    <div class="hero-inset">{img("reel-nattes", "Tresses collées réalisées au salon", "220px", eager=True)}<p>Réalisé au salon</p></div>
   </div>
 </div></section>
 
-<section class="sec sec--paper" id="signatures" style="overflow:hidden">
-  <div class="wrap"><div class="head"><div>{kicker("Les signatures")}<h2 class="d-l" data-reveal>Les offres de la maison.</h2></div>
-  <p class="lede" data-reveal>Mèches offertes, cheveux inclus, prix ronds. Faites glisser pour parcourir.</p></div></div>
-  {rail(OFFERS)}
-</section>
-
-<section class="sec" id="carte"><div class="wrap">
-  <div class="head"><div>{kicker("La carte")}<h2 class="d-l" data-reveal>Prestations &amp; tarifs.</h2></div><a class="tlink" href="tarifs">Tous les tarifs {I["arr"]}</a></div>
-  {carte(("tresses", "famille", "tissage", "soins"))}
+<section class="sec sec--paper" id="offres"><div class="wrap">
+  <div class="shead"><div>{tag("Les offres du moment")}<h2 class="h2">Les mèches sont pour nous</h2></div><a class="more" href="offres">Toutes les offres {I["arr"]}</a></div>
+  <div class="posters">{"".join(poster(OFFER[k]) for k in ("perles", "boheme", "hommes", "enfants"))}</div>
 </div></section>
 
-<section class="sec sec--sand" id="codes"><div class="wrap">
-  <div class="head"><div>{kicker("Le catalogue")}<h2 class="d-l" data-reveal>Choisissez votre code.</h2></div><p class="lede" data-reveal>Neuf modèles de nattes et de tresses. Choisissez, réservez en un message.</p></div>
+<div class="ribbon"></div>
+<section class="sec sec--dark"><div class="wrap">
+  <div class="shead"><div>{tag("Nos prestations")}<h2 class="h2">Ce que nous faisons</h2></div><a class="more" href="tarifs">Tous les tarifs {I["arr"]}</a></div>
+  {services()}
+</div></section>
+<div class="ribbon"></div>
+
+<section class="sec" id="codes"><div class="wrap">
+  <div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Choisissez votre modèle par son code</h2></div><p class="intro">Neuf modèles de nattes et de tresses, de 100 à 135 CHF. Indiquez simplement le code en réservant.</p></div>
   {codes_block()}
 </div></section>
 
-<section class="sec sec--dark"><div class="wrap">
-  <div class="head"><div>{kicker("Hommes &amp; enfants")}<h2 class="d-l" data-reveal>Pour toute la famille.</h2></div><p class="lede" data-reveal>Cornrows pour hommes en six modèles, tresses à perles colorées pour les enfants.</p></div>
-  {duo()}
-</div></section>
-
-<section class="sec"><div class="wrap">
-  <div class="head"><div>{kicker("En vrai")}<h2 class="d-l" data-reveal>La maison, sans filtre.</h2></div><a class="tlink" href="galerie">La galerie {I["arr"]}</a></div>
-  {collage()}
+<section class="sec sec--sand"><div class="wrap">
+  <div class="shead"><div>{tag("Au salon")}<h2 class="h2">Notre travail, sans filtre</h2></div><a class="more" href="galerie">La galerie {I["arr"]}</a></div>
+  {strip()}
 </div></section>
 
 <section class="sec sec--paper" style="overflow:hidden">{reviews()}</section>
 
-<section class="sec"><div class="wrap">
-  <div class="head"><div>{kicker("La boutique")}<h2 class="d-l" data-reveal>Tout pour vos cheveux.</h2></div><p class="lede" data-reveal>Mèches, perruques, soins capillaires, cosmétiques et produits africains. Ouvert sans rendez-vous.</p></div>
-  <div class="shop">{"".join(f'<div data-reveal>{img(f"produit-{i}", "Produit capillaire en boutique", "(max-width: 760px) 50vw, 20vw")}</div>' for i in (1, 4, 5, 9, 10))}</div>
-  <div class="brands" data-reveal>{"".join(f"<span>{b}</span>" for b in BRANDS)}</div>
-  <div class="btns" style="justify-content:center;margin-top:44px"><a class="btn btn--line" href="boutique">Entrer dans la boutique</a></div>
-</div></section>
+<section class="sec"><div class="wrap">{shop()}</div></section>
+<div class="ribbon"></div>
 {booking()}
 {visit()}'''
-    return page("index", "Mama Africa · Maison de tresses africaines à Payerne",
-                "Tresses africaines, nattes, tissage, soins et perruques à Payerne. Mèches incluses sur nos offres. Réservation Salonkee, WhatsApp ou 078 259 77 38.", body)
+    return page("index", "Mama Africa Beauty · Tresses africaines à Payerne",
+                "Salon de tresses africaines à Payerne : tresses avec perles, bohème, box braids, nattes, tissage, soins et perruques. Mèches incluses sur nos offres.", body)
 
 def p_tresses():
     sel = [OFFER[k] for k in ("perles", "boheme", "tresses-africaines", "twist-curly", "rasta-elegance")]
-    feats = "".join(feature(o, i, i % 2 == 0) for i, o in enumerate(sel, 1))
-    body = phero("Tresses", "Tresses &amp; nattes", "Toutes les tresses, faites main.",
-                 "Perles, bohème, box braids, twist &amp; curly, rasta, nattes, crochet et transplas. Choisissez un style ou un code.",
-                 img("reel-nattes", "Tresses collées réalisées au salon", "100vw", eager=True), badge=("Mèches incluses dès", "130")) + f'''
-<section class="sec"><div class="wrap">{feats}</div></section>
-<section class="sec sec--paper"><div class="wrap"><div class="head"><div>{kicker("La carte")}<h2 class="d-l" data-reveal>Tresses &amp; nattes.</h2></div><a class="tlink" href="tarifs">Tous les tarifs {I["arr"]}</a></div>{carte(("tresses",), intro=False)}</div></section>
-<section class="sec sec--sand" id="codes"><div class="wrap"><div class="head"><div>{kicker("Le catalogue")}<h2 class="d-l" data-reveal>Choisissez votre code.</h2></div><p class="lede" data-reveal>Le modèle qui vous plaît, réservé en un message.</p></div>{codes_block()}</div></section>
-<section class="sec"><div class="wrap split">
-  <div>{kicker("Les couleurs")}<h2 class="d-l" data-reveal>Toutes les teintes, en boutique.</h2><p class="lede" style="margin-top:22px" data-reveal>Du noir naturel 1B au blond platine 613, en passant par le miel, le cuivré et le bordeaux : choisissez votre couleur au salon.</p>{shades()}</div>
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("tresses-miel", "Tresses couleur miel", "(max-width: 960px) 100vw, 45vw"), cls="ph")}</div>
-</div></section>
-{booking()}'''
+    body = pintro("Tresses", "Tresses africaines et nattes",
+                  "Perles, bohème, box braids, twist &amp; curly, rasta, nattes, crochet et transplas. Choisissez un style ou un code du catalogue.",
+                  img("reel-nattes", "Tresses collées réalisées au salon", "(max-width: 960px) 100vw, 40vw", eager=True) + '<span class="real">Réalisé au salon</span>', "130", "dès") + f'''
+<section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(sel))}</div></section>
+<section class="sec" id="codes"><div class="wrap"><div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Choisissez votre modèle par son code</h2></div></div>{codes_block()}</div></section>
+<section class="sec sec--sand"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Tresses et nattes</h2></div><a class="more" href="tarifs">Tous les tarifs {I["arr"]}</a></div>{ptables(("tresses",))}</div></section>
+<div class="ribbon"></div>{booking()}'''
     return page("tresses", "Tresses africaines à Payerne · Perles, bohème, box braids | Mama Africa",
                 "Tresses avec perles 130 CHF (perles et mèches offertes), bohème et box braids 150 CHF mèches incluses, twist & curly, rasta, nattes, crochet à Payerne.", body, og="reel-nattes")
 
 def p_famille():
     h, e = OFFER["hommes"], OFFER["enfants"]
-    men = "".join(f"<li>{x}</li>" for x in MEN_STYLES)
-    body = phero("Hommes &amp; enfants", "Pour toute la famille", "Hommes &amp; enfants.",
-                 "Cornrows pour hommes en six modèles à 90 CHF. Tresses avec perles colorées pour les enfants à 100 CHF.",
-                 img("homme-tresses-2", "Homme aux tresses", "100vw", eager=True)) + f'''
-<section class="sec"><div class="wrap">
-  <article class="feat" id="hommes"><div class="f-img">{veil(img(h["img"], h["title"], "(max-width: 960px) 100vw, 58vw"))}</div>
-    <div class="f-txt" data-reveal><span class="num">I. Pour lui</span><h3>{h["title"]}</h3><p class="lede" style="font-size:17px">Une coupe nette et des finitions propres, avec des produits de qualité. Rapide et professionnel.</p>
-    <div class="pr">{h["price"]}<small>CHF</small></div><ul class="incl">{men}</ul>
-    <div class="btns" style="align-items:center;gap:22px"><a class="btn" href="{wa("Bonjour Mama Africa, je souhaite réserver des tresses homme (90 CHF).")}" target="_blank" rel="noopener">{I["wa"]}Réserver</a><button class="fly" type="button" data-flyer="{h["flyer"]}">Voir l'affiche</button></div></div></article>
-  {feature(e, 2, True)}
+    hm = dict(h, incl=MEN_STYLES)
+    body = pintro("Hommes &amp; enfants", "Tresses pour hommes et pour enfants",
+                  "Six modèles de cornrows pour hommes à 90 CHF. Des tresses légères avec perles colorées pour les enfants à 100 CHF.",
+                  img("homme-tresses-2", "Homme aux tresses", "(max-width: 960px) 100vw, 40vw", eager=True), "90", "dès") + f'''
+<section class="sec sec--paper"><div class="wrap">{detail(hm)}{detail(e, True)}</div></section>
+<section class="sec"><div class="wrap split">
+  <div class="frame" data-reveal>{img("enfant-perles", "Fillette aux tresses et perles", "(max-width: 960px) 100vw, 45vw")}</div>
+  <div data-reveal>{tag("Les enfants")}<h2 class="h2">Avec douceur et patience</h2><div class="prose" style="margin-top:20px"><p class="lead">Des tresses légères et confortables, qui protègent les cheveux et tiennent dans le temps.</p><p>Les petites choisissent la couleur de leurs perles. Nattes et transplas se font aussi pour les enfants : précisez simplement l'âge en réservant.</p></div></div>
 </div></section>
-<section class="sec sec--paper"><div class="wrap split">
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("enfant-perles", "Fillette aux tresses et perles", "(max-width: 960px) 100vw, 45vw"), cls="ph")}</div>
-  <div>{kicker("Les enfants")}<h2 class="d-l" data-reveal>Douceur et patience.</h2><div class="prose" style="margin-top:24px" data-reveal><p class="big">Des tresses légères et confortables, qui protègent les cheveux et durent.</p><p>Les petites choisissent la couleur de leurs perles. Nattes, transplas et tresses se font aussi pour les enfants : précisez simplement l'âge en réservant.</p></div></div>
-</div></section>
-{booking()}'''
-    return page("hommes-enfants", "Tresses hommes et enfants à Payerne | Mama Africa",
-                "Tresses hommes 90 CHF (cornrows, zigzag, couronne, motifs) et tresses enfants avec perles colorées 100 CHF à Payerne.", body, og="homme-tresses")
+<div class="ribbon"></div>{booking()}'''
+    return page("hommes-enfants", "Tresses hommes et enfants à Payerne | Mama Africa", "Tresses hommes 90 CHF (cornrows, zigzag, couronne, motifs) et tresses enfants avec perles colorées 100 CHF à Payerne.", body, og="homme-tresses-2")
 
 def p_tissage():
-    sel = [OFFER["tissage"], OFFER["extensions-longues"]]
-    body = phero("Tissage", "Tissage &amp; extensions", "De la longueur, en toute discrétion.",
-                 "Tissage cousu sur nattes, extensions longues, lisses ou bouclées. Résultat naturel, coiffage compris.",
-                 img("extensions-lisses", "Longs cheveux lisses", "100vw", eager=True), badge=("Dès", "135")) + f'''
-<section class="sec"><div class="wrap">{"".join(feature(o, i, i % 2 == 0) for i, o in enumerate(sel, 1))}</div></section>
-<section class="sec sec--paper"><div class="wrap split">
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("boutique-cheveux", "Cheveux naturels au comptoir de la boutique", "(max-width: 960px) 100vw, 45vw") + '<span class="real">Au salon</span>', cls="ph")}</div>
-  <div>{kicker("Les cheveux")}<h2 class="d-l" data-reveal>Choisis avec vous.</h2><div class="prose" style="margin-top:24px" data-reveal><p class="big">Cheveux naturels lisses, ondulés ou bouclés, au comptoir de la boutique.</p><p>Nous vous conseillons la longueur, la couleur et la quantité avant la pose. Extensions classiques : 135 CHF.</p></div></div>
+    body = pintro("Tissage", "Tissage et extensions",
+                  "Tissage cousu sur nattes, extensions longues, lisses ou bouclées. Un résultat naturel, coiffage compris.",
+                  img("extensions-lisses", "Longs cheveux lisses", "(max-width: 960px) 100vw, 40vw", eager=True), "135", "dès") + f'''
+<section class="sec sec--paper"><div class="wrap">{detail(OFFER["tissage"])}{detail(OFFER["extensions-longues"], True)}</div></section>
+<section class="sec"><div class="wrap split">
+  <div class="frame" data-reveal>{img("boutique-cheveux", "Cheveux naturels au comptoir de la boutique", "(max-width: 960px) 100vw, 45vw")}<span class="real">Au salon</span></div>
+  <div data-reveal>{tag("Les cheveux")}<h2 class="h2">Choisis avec vous, au salon</h2><div class="prose" style="margin-top:20px"><p class="lead">Cheveux naturels lisses, ondulés ou bouclés, au comptoir de la boutique.</p><p>Nous vous conseillons la longueur, la couleur et la quantité avant la pose. Extensions classiques : 135 CHF.</p></div></div>
 </div></section>
-{booking()}'''
+<div class="ribbon"></div>{booking()}'''
     return page("tissage", "Tissage & extensions à Payerne | Mama Africa", "Tissage cousu dès 135 CHF, extensions 135 CHF, extensions longues 150 CHF, coiffage compris, à Payerne.", body, og="tissage-ondule")
 
 def p_soins():
-    body = phero("Soins &amp; perruques", "Soins, lissage &amp; perruques", "Des cheveux en bonne santé.",
-                 "Défrisage, brushing, bio-plastie, soins Lowell, coupe et couleur. Et vos perruques retrouvent une seconde vie.",
-                 img("afro-or", "Cheveux afro naturels", "100vw", eager=True), badge=("Rénovation de perruque", "110")) + f'''
-<section class="sec"><div class="wrap">{feature(OFFER["renovation-perruque"], 1)}</div></section>
-<section class="sec sec--paper"><div class="wrap"><div class="head"><div>{kicker("La carte")}<h2 class="d-l" data-reveal>Soins &amp; lissage.</h2></div></div>{carte(("soins",), intro=False)}</div></section>
-<section class="sec"><div class="wrap split">
-  <div>{kicker("Notre approche")}<h2 class="d-l" data-reveal>Le soin avant tout.</h2><div class="prose" style="margin-top:24px" data-reveal><p class="big">Avant chaque soin, on observe la texture, la porosité et le cuir chevelu.</p><p>Puis on choisit le bon geste et le bon produit, souvent disponible en boutique pour prolonger le soin chez vous. La gamme Lowell est utilisée au salon et vendue sur place.</p></div></div>
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("hands-scalp", "Soin du cuir chevelu", "(max-width: 960px) 100vw, 45vw"), cls="ph")}</div>
+    body = pintro("Soins &amp; perruques", "Soins, lissage et perruques",
+                  "Défrisage, brushing, bio-plastie, soins Lowell, coupe et couleur. Et vos perruques retrouvent une seconde vie.",
+                  img("afro-or", "Cheveux afro naturels", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
+<section class="sec sec--paper"><div class="wrap">{detail(OFFER["renovation-perruque"])}</div></section>
+<section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Soins et lissage</h2></div></div>{ptables(("soins",))}</div></section>
+<section class="sec sec--sand"><div class="wrap split">
+  <div data-reveal>{tag("Notre approche")}<h2 class="h2">Des cheveux en bonne santé d'abord</h2><div class="prose" style="margin-top:20px"><p class="lead">Avant chaque soin, on regarde la texture, la porosité et le cuir chevelu.</p><p>Puis on choisit le bon geste et le bon produit, souvent disponible à la boutique pour continuer le soin chez vous. La gamme Lowell est utilisée au salon et vendue sur place.</p></div></div>
+  <div class="frame" data-reveal>{img("hands-scalp", "Soin du cuir chevelu", "(max-width: 960px) 100vw, 45vw")}</div>
 </div></section>
-{booking()}'''
-    return page("soins", "Soins capillaires, défrisage & rénovation de perruque à Payerne | Mama Africa", "Défrisage 65 CHF, brushing 65 CHF, rénovation de perruque 110 CHF, bio-plastie, soins Lowell, coupe et teinture à Payerne.", body, og="perruque-glam")
+<div class="ribbon"></div>{booking()}'''
+    return page("soins", "Soins, défrisage & rénovation de perruque à Payerne | Mama Africa", "Défrisage 65 CHF, brushing 65 CHF, rénovation de perruque 110 CHF, bio-plastie, soins Lowell, coupe et teinture à Payerne.", body, og="perruque-glam")
 
 def p_beaute():
-    body = phero("Beauté", "Regard &amp; maquillage", "La beauté jusqu'au bout des cils.",
-                 "Extensions de cils cil à cil et volume russe, sourcils et maquillage, par une spécialiste certifiée.",
-                 video("beaute-maquillage", "Essai de rouges à lèvres")) + f'''
-<section class="sec"><div class="wrap split">
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("neneth-certificat", "Neneth et son certificat d'extension de cils", "(max-width: 960px) 100vw, 45vw"), cls="ph")}</div>
-  <div>{kicker("Savoir-faire certifié")}<h2 class="d-l" data-reveal>Le regard, signé Neneth.</h2><div class="prose" style="margin-top:24px" data-reveal><p class="big">Avant Mama Africa, il y avait Neneth Beauty, spécialiste des extensions de cils.</p><p>Certifiée cil à cil et volume russe, Neneth apporte la même précision à chaque mise en beauté. Tarifs sur demande, selon la technique.</p></div>
-  <div class="btns" style="margin-top:28px"><a class="btn" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous beauté (cils, sourcils ou maquillage).")}" target="_blank" rel="noopener">{I["wa"]}Demander un rendez-vous</a></div></div>
+    body = pintro("Beauté", "Cils, sourcils et maquillage",
+                  "Extensions de cils cil à cil et volume russe, sourcils et maquillage, par une spécialiste certifiée.",
+                  video("beaute-maquillage", "Essai de rouges à lèvres")) + f'''
+<section class="sec sec--paper"><div class="wrap split">
+  <div class="frame" data-reveal>{img("neneth-certificat", "Neneth et son certificat d'extension de cils", "(max-width: 960px) 100vw, 45vw")}</div>
+  <div data-reveal>{tag("Savoir-faire certifié")}<h2 class="h2">Le regard, par Neneth</h2><div class="prose" style="margin-top:20px"><p class="lead">Avant Mama Africa, il y avait Neneth Beauty, spécialiste des extensions de cils.</p><p>Certifiée cil à cil et volume russe, Neneth apporte la même précision à chaque mise en beauté. Tarifs sur demande, selon la technique.</p></div>
+  <div class="btns" style="margin-top:24px"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous beauté (cils, sourcils ou maquillage).")}" target="_blank" rel="noopener">{I["wa"]}Demander un rendez-vous</a></div></div>
 </div></section>
-<section class="sec sec--paper"><div class="wrap"><div class="head"><div>{kicker("La carte")}<h2 class="d-l" data-reveal>Beauté.</h2></div></div>{carte(("beaute",), intro=False)}</div></section>
-{booking()}'''
+<section class="sec"><div class="wrap">{ptables(("beaute",))}</div></section>
+<div class="ribbon"></div>{booking()}'''
     return page("beaute", "Extensions de cils, sourcils & maquillage à Payerne | Mama Africa", "Extensions de cils cil à cil et volume russe, sourcils et maquillage à Payerne.", body, og="makeup")
 
 def p_offres():
-    feats = "".join(feature(o, i, i % 2 == 0) for i, o in enumerate(OFFERS, 1))
-    body = phero("Offres", "Offres du moment", "Les offres de la maison.",
-                 "Mèches offertes, cheveux inclus, prix ronds. Chaque offre a son affiche originale, à consulter en un clic.",
-                 img("boheme-2", "Tresses bohème", "100vw", eager=True), badge=("Perles et mèches offertes", "130")) + f'''
-<section class="sec"><div class="wrap">{feats}</div></section>
-{booking()}'''
+    body = pintro("Offres", "Les offres du moment",
+                  "Mèches offertes, cheveux inclus, prix ronds. Chaque offre a son affiche, à consulter en un clic.",
+                  img("boheme-2", "Tresses bohème", "(max-width: 960px) 100vw, 40vw", eager=True), "130", "dès") + f'''
+<section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(OFFERS))}</div></section>
+<div class="ribbon"></div>{booking()}'''
     return page("offres", "Offres du moment · Mama Africa Payerne", "Tresses avec perles 130 CHF, bohème et tresses africaines 150 CHF mèches incluses, tresses hommes 90 CHF, enfants 100 CHF, rénovation de perruque 110 CHF.", body, og="boheme-1")
 
 def p_tarifs():
-    body = phero("Tarifs", "Tarifs 2026", "La carte.",
-                 "Tous nos tarifs, selon la liste en vigueur au salon. Mèches offertes ou incluses lorsque c'est indiqué.",
-                 img("edito-nuit", "Portrait, tresses", "100vw", eager=True)) + f'''
-<section class="sec"><div class="wrap">{carte()}
-<p class="hint" style="margin-top:20px">Prix en francs suisses. Sauf mention « offert » ou « inclus », les mèches s'achètent au salon. La bio-plastie se réserve par téléphone.</p>
-<div class="btns" style="margin-top:34px"><a class="btn" href="{SALONKEE}" target="_blank" rel="noopener">{I["cal"]}Réserver sur Salonkee</a><button class="btn btn--line" type="button" data-flyer="affiche-tarifs">Voir l'affiche des tarifs</button></div></div></section>
-<section class="sec sec--sand" id="codes"><div class="wrap"><div class="head"><div>{kicker("Le catalogue")}<h2 class="d-l" data-reveal>Tarifs par code.</h2></div></div>{codes_block()}</div></section>
-{booking()}'''
-    return page("tarifs", "Tarifs · Mama Africa Beauty Payerne", "Nattes 70 CHF, tresses hommes 90 CHF, enfants 100 CHF, rasta courtes 100 CHF, tresses avec ajout 110 CHF, perles 130 CHF, bohème 150 CHF, rasta longues 165 CHF.", body, og="edito-nuit")
+    body = pintro("Tarifs", "Nos tarifs",
+                  "Tous nos tarifs, selon la liste en vigueur au salon. Mèches offertes ou incluses lorsque c'est indiqué.",
+                  img("nattes-portrait", "Tresses rasta longues", "(max-width: 960px) 100vw, 40vw", eager=True),
+                  extra=f'<p style="margin-top:20px"><button class="fly" type="button" data-flyer="affiche-tarifs">Voir l\'affiche des tarifs</button></p>') + f'''
+<section class="sec sec--paper"><div class="wrap">{ptables(("tresses", "famille", "tissage", "soins", "beaute"))}
+<p class="hint" style="margin-top:22px">Prix en francs suisses. Sauf mention « offert » ou « inclus », les mèches s'achètent au salon. La bio-plastie se réserve par téléphone.</p></div></section>
+<section class="sec" id="codes"><div class="wrap"><div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Tarifs par code</h2></div></div>{codes_block()}</div></section>
+<div class="ribbon"></div>{booking()}'''
+    return page("tarifs", "Tarifs · Mama Africa Beauty Payerne", "Nattes 70 CHF, tresses hommes 90 CHF, enfants 100 CHF, rasta courtes 100 CHF, tresses avec ajout 110 CHF, perles 130 CHF, bohème 150 CHF, rasta longues 165 CHF.", body, og="nattes-portrait")
 
 def p_boutique():
-    cats = "".join(f'<div data-reveal><span class="num">{ROMAN[i]}.</span><b>{t}</b><small>{d}</small></div>' for i, (t, d) in enumerate(BOUTIQUE_CATS))
-    body = phero("Boutique", "La boutique", "Tout pour vos cheveux, sous un même toit.",
-                 "Mèches, perruques, soins capillaires, cosmétiques, accessoires et produits africains. Du lundi au samedi, sans rendez-vous.",
-                 video("salon-visite", "La boutique")) + f'''
-<section class="sec"><div class="wrap"><div class="cats">{cats}</div></div></section>
-<section class="sec sec--paper"><div class="wrap"><div class="head"><div>{kicker("En rayon")}<h2 class="d-l" data-reveal>Les soins que vos boucles réclament.</h2></div></div>
-<div class="shop">{"".join(f'<div data-reveal>{img(f"produit-{i}", "Produit en vente à la boutique", "(max-width: 760px) 50vw, 20vw")}</div>' for i in range(1, 11))}</div>
-<div class="brands" data-reveal>{"".join(f"<span>{b}</span>" for b in BRANDS)}</div></div></section>
-<section class="sec"><div class="wrap split">
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("boutique-allee", "Les rayons de la boutique", "(max-width: 960px) 100vw, 45vw") + '<span class="real">La boutique</span>', cls="ph")}</div>
-  <div>{kicker("Conseil")}<h2 class="d-l" data-reveal>On vous aide à choisir.</h2><div class="prose" style="margin-top:24px" data-reveal><p class="big">Quel masque pour des cheveux secs ? Combien de paquets pour des rastas longues ?</p><p>Passez nous voir ou écrivez-nous : nous vous répondons avec plaisir.</p></div>
-  <div class="btns" style="margin-top:28px"><a class="btn" href="{wa("Bonjour Mama Africa, avez-vous ce produit en stock ?")}" target="_blank" rel="noopener">{I["wa"]}Demander un produit</a><button class="btn btn--line" type="button" data-flyer="affiche-boutique">L'affiche de la boutique</button></div></div>
-</div></section>
-{visit()}'''
+    prods = "".join(f'<div class="poster" data-reveal><div class="ph" style="aspect-ratio:1;background:#fff">{img(f"produit-{i}", "Produit en vente à la boutique", "(max-width: 760px) 70vw, 20vw")}</div></div>' for i in range(1, 11))
+    body = pintro("Boutique", "La boutique beauté",
+                  "Mèches, perruques, soins capillaires, cosmétiques, accessoires et produits africains. Du lundi au samedi, sans rendez-vous.",
+                  video("salon-visite", "La boutique"), btns=False,
+                  extra=f'<div class="btns" style="margin-top:28px"><a class="btn btn--gold" href="{GMAPS}" target="_blank" rel="noopener">{I["pin"]}Venir à la boutique</a><a class="btn btn--line" href="{wa("Bonjour Mama Africa, avez-vous ce produit en stock ?")}" target="_blank" rel="noopener">{I["wa"]}Demander un produit</a></div>') + f'''
+<section class="sec sec--paper"><div class="wrap">{shop()}</div></section>
+<section class="sec"><div class="wrap"><div class="shead"><div>{tag("En rayon")}<h2 class="h2">Quelques-uns de nos produits</h2></div><button class="fly" type="button" data-flyer="affiche-boutique">L'affiche de la boutique</button></div>
+<div class="posters posters--5">{prods}</div></div></section>
+<div class="ribbon"></div>{visit(top=True)}'''
     return page("boutique", "Boutique beauté afro à Payerne · Mèches, perruques, soins | Mama Africa", "Mèches, perruques, soins capillaires pour cheveux texturés, cosmétiques et produits africains à Payerne.", body, og="produit-10")
 
 GALLERY = [
     ("reel-nattes", "Tresses collées longues", "tresses", True), ("box-braids-longues", "Box braids longues", "tresses", False),
     ("realisation-tresses", "Pose de tresses au salon", "tresses", True), ("perles-1", "Tresses avec perles", "tresses", False),
     ("transplas-4", "Transplas", "tresses", True), ("boheme-1", "Tresses bohème", "tresses", False),
-    ("homme-tresses", "Tresses homme", "famille", False), ("enfant-perles-3", "Tresses enfant avec perles", "famille", False),
-    ("boutique-cheveux", "Le comptoir des mèches", "salon", True), ("edito-nuit", "Tresses, portrait", "tresses", False),
+    ("homme-tresses-2", "Tresses homme", "famille", False), ("enfant-perles-3", "Tresses enfant avec perles", "famille", False),
+    ("boutique-cheveux", "Le comptoir des mèches", "salon", True), ("nattes-portrait", "Rasta longues", "tresses", False),
     ("crochet-volume", "Crochet bouclé volume", "tresses", True), ("tissage-ondule", "Tissage ondulé", "tissage", False),
     ("salon-fauteuil", "Le coin shampoing", "salon", True), ("enfant-perles", "Perles colorées", "famille", False),
     ("realisation-tresses-2", "Tresses en cours", "tresses", True), ("extensions-lisses", "Extensions lisses", "tissage", False),
     ("boutique-allee", "Les rayons soins", "salon", True), ("nattes-motif", "Nattes à motif", "tresses", False),
     ("crochet-tendance", "Crochet bouclé tendance", "tresses", True), ("perruque-glam", "Perruque", "tissage", False),
     ("salon-rose", "Le coin beauté", "salon", True), ("garcon-tresses", "Nattes garçon", "famille", False),
-    ("edito-profil", "Profil, tresses", "tresses", False), ("produit-10", "Gamme Mielle", "salon", True),
+    ("afro-bijoux", "Afro et bijoux", "tresses", False), ("produit-10", "Gamme Mielle", "salon", True),
 ]
 FLYERS = ["affiche-perles-130", "affiche-offre-coiffure", "affiche-hommes", "affiche-enfants", "affiche-twist-curly", "affiche-rasta-135",
           "affiche-tissage", "affiche-extensions", "affiche-renovation-perruque", "affiche-crochet", "affiche-transplas", "affiche-codes", "affiche-tarifs", "affiche-boutique"]
 
 def p_galerie():
-    figs = "".join(f'<figure data-cat="{c}" data-reveal>{img(n, cap, "(max-width: 760px) 100vw, 33vw")}<span class="src{" is-real" if real else ""}">{"Salon" if real else "Inspiration"}</span></figure>' for n, cap, c, real in GALLERY)
+    figs = "".join(f'<figure data-cat="{c}" data-reveal>{img(n, cap, "(max-width: 760px) 100vw, 33vw")}<span class="src{" is-real" if real else ""}">{"Au salon" if real else "Inspiration"}</span></figure>' for n, cap, c, real in GALLERY)
     figs += "".join(f'<figure data-cat="affiches" data-reveal>{img(f, "Affiche Mama Africa", "(max-width: 760px) 100vw, 33vw")}<span class="src is-real">Affiche</span></figure>' for f in FLYERS)
-    filt = "".join(f'<button type="button" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{l}</button>' for k, l in [("all", "Tout"), ("tresses", "Tresses"), ("famille", "Hommes & enfants"), ("tissage", "Tissage & perruques"), ("salon", "La maison"), ("affiches", "Affiches")])
-    body = phero("Galerie", "Réalisations &amp; inspirations", "Regardez, choisissez.",
-                 "Nos réalisations et les coulisses (« Salon »), des inspirations pour votre prochain style, et toutes nos affiches.",
-                 img("edito-tresses-cuir", "Tresses, portrait", "100vw", eager=True)) + f'''
-<section class="sec"><div class="wrap"><div class="filters" role="group" aria-label="Filtrer">{filt}</div><div class="masonry" id="masonry">{figs}</div></div></section>
-{booking()}'''
-    return page("galerie", "Galerie · Mama Africa Payerne", "Réalisations du salon Mama Africa à Payerne, inspirations et affiches : tresses, perles, bohème, hommes, enfants, tissage, perruques.", body, og="reel-nattes")
+    filt = "".join(f'<button type="button" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{l}</button>' for k, l in [("all", "Tout"), ("tresses", "Tresses"), ("famille", "Hommes & enfants"), ("tissage", "Tissage & perruques"), ("salon", "Le salon"), ("affiches", "Nos affiches")])
+    body = pintro("Galerie", "Galerie",
+                  "Nos réalisations et les coulisses du salon (« Au salon »), des idées pour votre prochain style, et toutes nos affiches.",
+                  img("nattes-motif", "Nattes à motif", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False) + f'''
+<section class="sec sec--paper"><div class="wrap"><div class="filters" role="group" aria-label="Filtrer">{filt}</div><div class="masonry" id="masonry">{figs}</div></div></section>
+<div class="ribbon"></div>{booking()}'''
+    return page("galerie", "Galerie · Mama Africa Payerne", "Réalisations du salon Mama Africa à Payerne, inspirations et affiches.", body, og="reel-nattes")
 
 def p_salon():
-    body = phero("La maison", "Notre histoire", "Mama Africa, la beauté africaine à Payerne.",
-                 "Un salon de tresses africaines et une boutique de beauté, réunis Rue de Lausanne 38B.",
-                 video("salon-tresses", "Pose de tresses au salon")) + f'''
-<section class="sec manifesto"><div class="wrap">{kicker("Qui sommes-nous", c=True)}<p class="statement" data-reveal>Venez pour les produits, restez pour la coiffure, repartez avec le sourire et des cheveux sublimés.</p></div></section>
+    body = pintro("Le salon", "Mama Africa, à Payerne",
+                  "Un salon de tresses africaines et une boutique de beauté, réunis Rue de Lausanne 38B.",
+                  video("salon-tresses", "Pose de tresses au salon")) + f'''
 <section class="sec sec--paper"><div class="wrap split">
-  <div class="prose" data-reveal><p class="big">Mama Africa est une boutique de cosmétiques et de soins capillaires tournée vers la beauté naturelle et l'identité africaine.</p><p>Des produits pour tous les types de cheveux, en particulier crépus, bouclés et en transition. Mais notre vrai cœur, c'est le salon : tresses, nattes, tissage, soins, coiffures africaines traditionnelles et modernes. Chaque rendez-vous est une expérience où beauté rime avec authenticité.</p></div>
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("salon-fauteuil", "Le salon Mama Africa", "(max-width: 960px) 100vw, 45vw") + '<span class="real">La maison</span>', cls="ph")}</div>
+  <div class="prose" data-reveal>{tag("Qui sommes-nous")}<p class="lead">Mama Africa est une boutique de cosmétiques et de soins capillaires tournée vers la beauté naturelle et l'identité africaine.</p><p>Des produits pour tous les types de cheveux, en particulier crépus, bouclés et en transition. Mais notre vrai cœur, c'est le salon : tresses, nattes, tissage, soins, coiffures africaines traditionnelles et modernes.</p><p>Venez pour les produits, restez pour la coiffure, et repartez avec le sourire.</p></div>
+  <div class="frame" data-reveal>{img("salon-fauteuil", "Le salon Mama Africa", "(max-width: 960px) 100vw, 45vw")}<span class="real">Le salon</span></div>
 </div></section>
 <section class="sec"><div class="wrap split">
-  <div class="frame" style="aspect-ratio:4/5">{veil(img("neneth-certificat", "Neneth, fondatrice", "(max-width: 960px) 100vw, 45vw"), cls="ph")}</div>
-  <div>{kicker("La fondatrice")}<h2 class="d-l" data-reveal>Neneth.</h2><div class="prose" style="margin-top:24px" data-reveal><p class="big">Avant Mama Africa, il y avait Neneth Beauty, spécialiste certifiée des extensions de cils.</p><p>Neneth a fait grandir son activité jusqu'à ouvrir une adresse qui réunit le geste et le produit. {SLOGAN}</p></div>
-  <div class="btns" style="margin-top:28px"><a class="btn btn--line" href="{INSTAGRAM}" target="_blank" rel="noopener">{I["ig"]}Instagram</a></div></div>
+  <div class="frame" data-reveal>{img("neneth-certificat", "Neneth, fondatrice", "(max-width: 960px) 100vw, 45vw")}</div>
+  <div class="prose" data-reveal>{tag("La fondatrice")}<h2 class="h2" style="margin-bottom:18px">Neneth</h2><p class="lead">Avant Mama Africa, il y avait Neneth Beauty, spécialiste certifiée des extensions de cils.</p><p>Neneth a fait grandir son activité jusqu'à ouvrir une adresse qui réunit le geste et le produit. {SLOGAN}</p>
+  <div class="btns" style="margin-top:22px"><a class="btn btn--line" href="{INSTAGRAM}" target="_blank" rel="noopener">{I["ig"]}Suivre sur Instagram</a></div></div>
 </div></section>
-<section class="sec sec--paper"><div class="wrap"><div class="head"><div>{kicker("Le lieu")}<h2 class="d-l" data-reveal>La maison, sans filtre.</h2></div></div>{collage()}</div></section>
-{booking()}'''
-    return page("salon", "La maison · Notre histoire | Mama Africa Payerne", "Mama Africa, maison de tresses africaines et boutique beauté à Payerne, fondée par Neneth.", body, og="salon-fauteuil")
+<section class="sec sec--sand"><div class="wrap"><div class="shead"><div>{tag("Au salon")}<h2 class="h2">Notre travail, sans filtre</h2></div></div>{strip()}</div></section>
+<div class="ribbon"></div>{booking()}'''
+    return page("salon", "Le salon · Mama Africa Payerne", "Mama Africa, salon de tresses africaines et boutique beauté à Payerne, fondé par Neneth.", body, og="salon-fauteuil")
 
 def p_avis():
-    body = phero("Avis", "Avis Google", "Ce qu'elles disent de nous.",
-                 "Merci à toutes celles et ceux qui partagent leur expérience. Votre avis aide d'autres femmes à nous trouver.",
-                 img("edito-profil", "Portrait de profil", "100vw", eager=True)) + f'''
-<section class="sec sec--paper" style="overflow:hidden">{reviews()}
-<div class="wrap"><div class="btns" style="justify-content:center;margin-top:56px"><a class="btn" href="{G_WRITE}" target="_blank" rel="noopener">Laisser un avis Google</a><a class="btn btn--line" href="{G_REVIEWS}" target="_blank" rel="noopener">Voir sur Google</a></div></div></section>
-{booking()}'''
-    return page("avis", "Avis clients · Mama Africa Payerne", "Avis Google sur Mama Africa Beauty, maison de tresses africaines à Payerne.", body, og="edito-profil")
+    body = pintro("Avis", "Vos avis",
+                  "Merci à toutes celles et ceux qui partagent leur expérience. Un avis aide d'autres femmes à nous trouver.",
+                  img("afro-bijoux", "Cliente souriante", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False,
+                  extra=f'<div class="btns" style="margin-top:28px"><a class="btn btn--gold" href="{G_WRITE}" target="_blank" rel="noopener">Laisser un avis Google</a><a class="btn btn--line" href="{G_REVIEWS}" target="_blank" rel="noopener">Voir sur Google</a></div>') + f'''
+<section class="sec sec--paper" style="overflow:hidden">{reviews()}</section>
+<div class="ribbon"></div>{booking()}'''
+    return page("avis", "Avis clients · Mama Africa Payerne", "Avis Google sur Mama Africa Beauty, salon de tresses africaines à Payerne.", body, og="afro-bijoux")
 
 def p_reservation():
     def num(p):
@@ -542,50 +498,50 @@ def p_reservation():
     picks = "".join(f'<div class="field"><span class="lbl">{MENU[k][0]}</span><div class="pick">{"".join(chip(n, p) for n, p, d in MENU[k][1])}</div></div>' for k in ("tresses", "famille", "tissage", "soins", "beaute"))
     codes = "".join(f'<label><input type="radio" name="code" value="{c}"><span>Code {c}<em>{p} CHF</em></span></label>' for c, p in CODES)
     form = f'''<form class="form form-card" id="book-form" novalidate>
-  {kicker("Demande de rendez-vous")}<p class="hint" style="margin-top:-12px">Votre demande s'ouvre dans WhatsApp, prête à envoyer. Nous confirmons par message.</p>
+  <h2>Votre demande</h2><p class="hint" style="margin-top:-8px">Elle s'ouvre dans WhatsApp, prête à envoyer. Nous confirmons le créneau par message.</p>
   {picks}<div class="field"><span class="lbl">Un modèle du catalogue ? (facultatif)</span><div class="pick">{codes}</div></div>
   <div class="total"><span>Estimation</span><b id="bf-total">0 CHF</b></div>
   <div class="two"><div class="field"><label for="bf-date">Date souhaitée</label><input id="bf-date" name="date" type="date"></div>
   <div class="field"><label for="bf-time">Moment</label><select id="bf-time" name="time"><option>Matin (9h – 12h)</option><option>Midi (12h – 14h)</option><option>Après-midi (14h – 18h30)</option><option>Peu importe</option></select></div></div>
   <div class="two"><div class="field"><label for="bf-name">Prénom et nom</label><input id="bf-name" name="name" autocomplete="name" required></div>
   <div class="field"><label for="bf-tel">Téléphone</label><input id="bf-tel" name="tel" type="tel" autocomplete="tel"></div></div>
-  <div class="field"><label for="bf-msg">Couleur, longueur, questions</label><textarea id="bf-msg" name="msg" placeholder="Ex. couleur 27, longueur bas du dos…"></textarea></div>
-  <button class="btn" type="submit" style="width:100%">{I["wa"]}Envoyer sur WhatsApp</button><p class="hint">Aucune donnée n'est enregistrée sur ce site.</p>
+  <div class="field"><label for="bf-msg">Couleur, longueur, questions</label><textarea id="bf-msg" name="msg" placeholder="Par ex. couleur 27, longueur bas du dos…"></textarea></div>
+  <button class="btn btn--wa" type="submit" style="width:100%">{I["wa"]}Envoyer sur WhatsApp</button><p class="hint">Aucune donnée n'est enregistrée sur ce site.</p>
 </form>'''
-    body = phero("Réserver", "Rendez-vous", "Réservez votre moment.",
-                 "En ligne sur Salonkee, sur WhatsApp ou par téléphone. Ou détaillez votre demande ci-dessous.",
-                 img("salon-fauteuil", "Le salon", "100vw", eager=True)) + f'''
-<section class="sec"><div class="wrap split" style="align-items:start">
-  <div>{kicker("Trois façons de réserver")}{ways(light=True)}<div style="margin-top:56px">{kicker("Horaires")}{hours_list()}</div></div>
-  {form}
-</div></section>
-<section class="sec sec--paper"><div class="wrap split" style="align-items:start"><div>{kicker("Questions fréquentes")}<h2 class="d-l" data-reveal>Bon à savoir.</h2></div>{faq()}</div></section>'''
+    body = pintro("Réserver", "Prendre rendez-vous",
+                  "En ligne sur Salonkee, sur WhatsApp ou par téléphone. Ou détaillez votre demande ci-dessous.",
+                  img("salon-fauteuil", "Le salon", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False,
+                  extra=f'<div style="margin-top:28px">{ways(light=True)}</div>') + f'''
+<section class="sec sec--paper"><div class="wrap split" style="align-items:start">
+  {form}<div class="light">{tag("Horaires")}{hours_list()}<div style="margin-top:44px">{tag("Questions fréquentes")}{faq()}</div></div>
+</div></section>'''
     return page("reservation", "Réserver · Mama Africa Payerne", "Réservez vos tresses, tissage, soins ou beauté à Payerne : Salonkee, WhatsApp ou 078 259 77 38.", body, og="salon-fauteuil")
 
 def p_contact():
-    form = f'''<form class="form form-card" id="contact-form" novalidate>{kicker("Écrivez-nous")}
+    form = f'''<form class="form form-card" id="contact-form" novalidate><h2>Écrivez-nous</h2>
   <div class="two"><div class="field"><label for="cf-name">Prénom et nom</label><input id="cf-name" name="name" autocomplete="name" required></div>
   <div class="field"><label for="cf-subj">Sujet</label><select id="cf-subj" name="subj"><option>Rendez-vous coiffure</option><option>Offre du moment</option><option>Produit de la boutique</option><option>Rénovation de perruque</option><option>Autre</option></select></div></div>
   <div class="field"><label for="cf-msg">Message</label><textarea id="cf-msg" name="msg" required></textarea></div>
-  <button class="btn" type="submit" style="width:100%">{I["wa"]}Envoyer sur WhatsApp</button><p class="hint">Aucune donnée n'est enregistrée sur ce site.</p></form>'''
-    body = phero("Contact", "Contact", "Parlons de vos cheveux.",
-                 "Une question sur un modèle, une offre, un produit ? Appelez, écrivez sur WhatsApp, ou passez nous voir.",
-                 img("boutique-allee", "La boutique", "100vw", eager=True)) + f'''
-<section class="sec"><div class="wrap split" style="align-items:start"><div>{kicker("Joindre la maison")}{ways(light=True)}<div style="margin-top:56px">{kicker("Questions fréquentes")}{faq(FAQ[:4])}</div></div>{form}</div></section>
-{visit()}'''
-    return page("contact", "Contact · Mama Africa, Rue de Lausanne 38B, Payerne", "Mama Africa Beauty, Rue de Lausanne 38B, 1530 Payerne. 078 259 77 38, WhatsApp, Instagram. Lundi – samedi 9h00 – 18h30.", body, og="boutique-allee")
+  <button class="btn btn--wa" type="submit" style="width:100%">{I["wa"]}Envoyer sur WhatsApp</button><p class="hint">Aucune donnée n'est enregistrée sur ce site.</p></form>'''
+    body = pintro("Contact", "Nous contacter",
+                  "Une question sur un modèle, une offre ou un produit ? Appelez, écrivez sur WhatsApp, ou passez nous voir.",
+                  img("boutique-allee", "La boutique", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False,
+                  extra=f'<div style="margin-top:28px">{ways(light=True)}</div>') + f'''
+<section class="sec sec--paper"><div class="wrap split" style="align-items:start">{form}<div>{tag("Questions fréquentes")}{faq(FAQ[:4])}</div></div></section>
+<div class="ribbon"></div>{visit(top=True)}'''
+    return page("contact", "Contact · Mama Africa, Rue de Lausanne 38B, Payerne", "Mama Africa Beauty, Rue de Lausanne 38B, 1530 Payerne. 078 259 77 38, WhatsApp, Instagram. Lundi au samedi 9h00 – 18h30.", body, og="boutique-allee")
 
 def p_conf():
-    body = f'''<section class="sec" style="padding-top:calc(var(--hdr) + 80px)"><div class="wrap wrap--narrow">{kicker("Informations légales")}<h1 class="d-l">Confidentialité.</h1>
-<div class="prose" style="margin-top:36px"><p><b>Éditeur.</b> {NAME}, {STREET}, {CITY}, Suisse. {PHONE}.</p>
+    body = f'''<section class="sec"><div class="wrap" style="max-width:820px">{tag("Informations légales")}<h1 class="h1">Confidentialité</h1>
+<div class="prose" style="margin-top:30px"><p><b>Éditeur.</b> {NAME}, {STREET}, {CITY}, Suisse. {PHONE}.</p>
 <p><b>Données.</b> Ce site n'enregistre aucune donnée. Les formulaires préparent un message WhatsApp que vous envoyez vous-même. Les réservations en ligne passent par Salonkee.</p>
 <p><b>Services tiers.</b> La carte est fournie par Google Maps, qui peut déposer des cookies. Les liens Instagram, WhatsApp, Salonkee et Google ouvrent ces services, soumis à leurs propres règles.</p>
 <p><b>Crédits.</b> Photos du salon, de la boutique et affiches : {NAME}. Photos et vidéos d'inspiration : Unsplash et Pexels.</p></div></div></section>'''
-    return page("confidentialite", "Confidentialité · Mama Africa", "Informations légales et confidentialité.", body, on_hero=False)
+    return page("confidentialite", "Confidentialité · Mama Africa", "Informations légales et confidentialité.", body)
 
 def p_404():
-    body = f'<section class="nf"><div>{kicker("Erreur 404", c=True)}<h1 class="d-xl">Page introuvable.</h1><p class="lede" style="margin:24px auto 34px">La page demandée n\'existe pas ou a été déplacée.</p><div class="btns" style="justify-content:center"><a class="btn" href="./">Accueil</a><button class="btn btn--line" type="button" data-book>Réserver</button></div></div></section>'
-    return page("404", "Page introuvable · Mama Africa", "Page introuvable.", body, on_hero=False)
+    body = f'<section class="nf"><div>{tag("Erreur 404")}<h1 class="h1">Cette page est introuvable</h1><p class="intro" style="margin:20px auto 30px">Elle n\'existe pas ou a été déplacée.</p><div class="btns" style="justify-content:center"><a class="btn" href="./">Retour à l\'accueil</a><button class="btn btn--gold" type="button" data-book>Prendre rendez-vous</button></div></div></section>'
+    return page("404", "Page introuvable · Mama Africa", "Page introuvable.", body)
 
 PAGES = {"index": p_index, "tresses": p_tresses, "hommes-enfants": p_famille, "tissage": p_tissage, "soins": p_soins, "beaute": p_beaute,
          "offres": p_offres, "tarifs": p_tarifs, "boutique": p_boutique, "galerie": p_galerie, "salon": p_salon, "avis": p_avis,

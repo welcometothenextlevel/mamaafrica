@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "20"  # cache-busting for css/js
+V = "30"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -55,7 +55,7 @@ OFFERS = [
          flyer="affiche-rasta-135",
          lead="Nattes collées longues au dessin travaillé, avec baby hair. Cheveux, soin et finition compris.",
          incl=["Cheveux inclus", "Soin et finition", "Baby hair"]),
-    dict(id="hommes", title="Tresses hommes", price="90", img="homme-tresses", badge="6 modèles",
+    dict(id="hommes", title="Tresses hommes", price="90", img="homme-tresses-2", badge="6 modèles",
          flyer="affiche-hommes",
          lead="Cornrows classiques, droites vers l'arrière, zigzag, raie au milieu, couronne ou motifs modernes.",
          incl=["Coupe nette, finitions propres", "Produits de qualité", "Rapide et professionnel"]),
