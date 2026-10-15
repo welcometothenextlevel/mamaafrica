@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "10"  # cache-busting for css/js
+V = "20"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -33,41 +33,52 @@ HOURS = [  # her flyer: "Lundi au samedi 9h00 – 18h30"
     ("Dimanche", None, None),
 ]
 
-# ---------- current offers (her flyers) ----------
+# ---------- current offers (her flyers, latest first: 14–15.10.2026) ----------
 OFFERS = [
-    dict(id="tresses-africaines", title="Tresses africaines", price="150", img="box-braids-longues",
-         badge="Mèches offertes", flyer=None,
+    dict(id="perles", title="Tresses avec perles", price="130", img="perles-1", badge="Perles offertes",
+         flyer="affiche-perles-130",
+         lead="Tresses soignées ornées de perles. Les perles et un paquet de mèches sont offerts par la maison, coiffure comprise.",
+         incl=["Perles offertes", "1 paquet de mèches offert", "Coiffure comprise dans le prix"]),
+    dict(id="boheme", title="Tresses bohème", price="150", img="boheme-1", badge="Mèches incluses",
+         flyer="affiche-offre-coiffure",
+         lead="Quatre modèles bohème, boucles libres sur toute la longueur. Paquets de mèches inclus : 150 CHF pour chaque modèle.",
+         incl=["Paquets de mèches inclus", "4 modèles au choix", "Boucles libres, effet naturel"]),
+    dict(id="tresses-africaines", title="Tresses africaines", price="150", img="box-braids-longues", badge="Mèches offertes",
+         flyer=None,
          lead="Box braids longues, du brun chocolat au blond 613. Les paquets de mèches sont offerts.",
-         incl=["Paquets de mèches offerts", "Toutes longueurs, toutes couleurs", "Sur rendez-vous"]),
-    dict(id="boheme", title="Tresses bohème", price="150", img="boheme-1", badge="Promo",
-         flyer="affiche-promo-boheme",
-         lead="Tresses fines et boucles libres, effet bohème. Deux paquets de cheveux offerts, inclus dans le prix.",
-         incl=["2 paquets de cheveux offerts", "Boucles libres sur toute la longueur", "Blond miel, cuivré ou brun"]),
+         incl=["Paquets de mèches offerts", "Toutes longueurs", "Toutes couleurs"]),
     dict(id="twist-curly", title="Twist & Curly", price="150", img="boheme-3", badge="Longue tenue",
          flyer="affiche-twist-curly",
-         lead="Twists torsadées avec boucles : un style élégant, soigné et propre, pour toutes les occasions.",
+         lead="Twists torsadées et boucles : un style élégant, soigné et propre, pour toutes les occasions.",
          incl=["Longue tenue", "Style élégant", "Soigné et propre"]),
-    dict(id="rasta-elegance", title="Rasta longues · Élégance", price="135", img="nattes-portrait",
-         badge="Cheveux inclus", flyer="affiche-rasta-135",
+    dict(id="rasta-elegance", title="Rasta longues Élégance", price="135", img="nattes-portrait", badge="Cheveux inclus",
+         flyer="affiche-rasta-135",
          lead="Nattes collées longues au dessin travaillé, avec baby hair. Cheveux, soin et finition compris.",
          incl=["Cheveux inclus", "Soin et finition", "Baby hair"]),
-    dict(id="perles", title="Modèles avec perles", price="130", img="perles-1", badge="Tradition",
-         flyer="affiche-perles",
-         lead="Tresses soignées ornées de perles : élégance, style et tradition. Les perles s'achètent sur place.",
-         incl=["Tresses soignées", "Perles de qualité en boutique", "Style unique"]),
-    dict(id="tissage", title="Tissage cousu", price="135", pre="dès", img="tissage-ondule", badge="Naturel",
+    dict(id="hommes", title="Tresses hommes", price="90", img="homme-tresses", badge="6 modèles",
+         flyer="affiche-hommes",
+         lead="Cornrows classiques, droites vers l'arrière, zigzag, raie au milieu, couronne ou motifs modernes.",
+         incl=["Coupe nette, finitions propres", "Produits de qualité", "Rapide et professionnel"]),
+    dict(id="enfants", title="Tresses enfants avec perles", price="100", img="enfant-perles-3", badge="Perles colorées",
+         flyer="affiche-enfants",
+         lead="Des tresses jolies, légères et confortables, adaptées aux enfants, avec perles de couleur.",
+         incl=["Tresses légères", "Protection des cheveux", "Perles de différentes couleurs"]),
+    dict(id="tissage", title="Tissage cousu", price="135", pre="dès", img="tissage-ondule", badge="Coiffage inclus",
          flyer="affiche-tissage",
          lead="Pose de tissage cousue sur nattes, pour un résultat naturel. Coiffage compris.",
-         incl=["Pose professionnelle", "Tresses bien faites", "Coiffage inclus", "Finition soignée"]),
-    dict(id="extensions-longues", title="Extensions longues", price="150", img="extensions-lisses", badge="Longueur",
+         incl=["Pose professionnelle", "Tresses bien faites", "Finition soignée"]),
+    dict(id="extensions-longues", title="Extensions longues", price="150", img="extensions-lisses", badge="Coiffage inclus",
          flyer="affiche-extensions",
-         lead="Pose d'extensions longues, lisses ou bouclées, sur tresses bien faites. Résultat naturel, coiffage compris.",
+         lead="Extensions longues, lisses ou bouclées, posées sur tresses bien faites. Résultat naturel.",
          incl=["Pose professionnelle", "Résultat naturel", "Coiffage inclus"]),
     dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-glam", badge="Seconde vie",
          flyer="affiche-renovation-perruque",
-         lead="Votre perruque comme neuve : nettoyage, soin, démêlage, remise en forme, ajustement et finition.",
+         lead="Nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle.",
          incl=["Nettoyage, soin, démêlage", "Remise en forme, ajustement", "Finition professionnelle"]),
 ]
+OFFER = {o["id"]: o for o in OFFERS}
+
+MEN_STYLES = ["Tresses classiques (cornrows)", "Tresses droites vers l'arrière", "Tresses en zigzag", "Raie au milieu (center part)", "Tresses en couronne (style royal)", "Tresses modernes à motifs"]
 
 # ---------- model codes (her catalogue flyer) ----------
 CODES = [(1, "125"), (2, "100"), (3, "125"), (4, "125"), (5, "125"), (6, "135"), (7, "125"), (8, "135"), (9, "115")]
@@ -78,14 +89,18 @@ MENU = {
         ("Nattes simples", "70", "Nattes simples et naturelles"),
         ("Rasta courtes", "100", "Nattes collées avec locks courtes"),
         ("Diverses tresses avec ajout", "110", "Tresses variées avec mèches"),
-        ("Modèles avec perles", "130", "Perles à acheter sur place"),
+        ("Tresses avec perles", "130", "Perles + 1 paquet de mèches offerts, coiffure comprise"),
         ("Rasta longues · Élégance", "135", "Cheveux inclus, soin, finition, baby hair"),
         ("Tresses africaines", "150", "Paquets de mèches offerts"),
-        ("Tresses bohème", "150", "2 paquets de cheveux offerts"),
+        ("Tresses bohème · 4 modèles", "150", "Paquets de mèches inclus"),
         ("Twist & Curly", "150", "Longue tenue"),
         ("Rasta longues", "165", "Nattes collées avec locks longues"),
         ("Crochet bouclé", "120", "Cheveux et pose inclus"),
         ("Transplas · 2 / 4 tresses", "65 / 100", "Cheveux à acheter sur place"),
+    ]),
+    "famille": ("Hommes & enfants", [
+        ("Tresses hommes · 6 modèles", "90", "Cornrows, zigzag, couronne, motifs…"),
+        ("Tresses enfants avec perles colorées", "100", "Légères, confortables, perles au choix"),
     ]),
     "tissage": ("Tissage & extensions", [
         ("Extensions", "135", "Pose d'extensions ou tissage"),
@@ -132,7 +147,7 @@ REVIEWS = [
 ]
 
 FAQ = [
-    ("Les mèches sont-elles comprises ?", "Sur nos modèles à 150 CHF (tresses africaines, bohème), les paquets de mèches sont offerts. Les rasta longues Élégance (135 CHF) et le crochet bouclé (120 CHF) incluent les cheveux. Pour les autres coiffures, les mèches s'achètent sur place et nous vous aidons à choisir la quantité et la couleur."),
+    ("Les mèches sont-elles comprises ?", "Oui sur nos offres : tresses africaines et tresses bohème à 150 CHF (paquets de mèches inclus), tresses avec perles à 130 CHF (perles et un paquet offerts), rasta longues Élégance à 135 CHF et crochet bouclé à 120 CHF (cheveux inclus). Pour les autres coiffures, les mèches s'achètent sur place et nous vous aidons à choisir la quantité et la couleur."),
     ("Comment choisir mon modèle ?", "Parcourez notre catalogue de codes (1 à 9) ou envoyez-nous une photo sur WhatsApp. Indiquez simplement le code au moment de réserver."),
     ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 259 77 38. La boutique est ouverte sans rendez-vous du lundi au samedi."),
     ("Combien de temps dure une pose ?", "Cela dépend du modèle, de la longueur et de l'épaisseur. Envoyez une photo sur WhatsApp, nous vous donnons une estimation avant le rendez-vous."),
