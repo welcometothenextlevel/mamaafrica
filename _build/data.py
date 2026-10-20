@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "30"  # cache-busting for css/js
+V = "40"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -35,23 +35,23 @@ HOURS = [  # her flyer: "Lundi au samedi 9h00 – 18h30"
 
 # ---------- current offers (her flyers, latest first: 14–15.10.2026) ----------
 OFFERS = [
-    dict(id="perles", title="Tresses avec perles", price="130", img="perles-1", badge="Perles offertes",
+    dict(id="perles", title="Tresses avec perles", price="130", img="perles-a", badge="Perles offertes",
          flyer="affiche-perles-130",
          lead="Tresses soignées ornées de perles. Les perles et un paquet de mèches sont offerts par la maison, coiffure comprise.",
          incl=["Perles offertes", "1 paquet de mèches offert", "Coiffure comprise dans le prix"]),
-    dict(id="boheme", title="Tresses bohème", price="150", img="boheme-1", badge="Mèches incluses",
+    dict(id="boheme", title="Tresses bohème", price="150", img="boheme-a", badge="Mèches incluses",
          flyer="affiche-offre-coiffure",
          lead="Quatre modèles bohème, boucles libres sur toute la longueur. Paquets de mèches inclus : 150 CHF pour chaque modèle.",
          incl=["Paquets de mèches inclus", "4 modèles au choix", "Boucles libres, effet naturel"]),
-    dict(id="tresses-africaines", title="Tresses africaines", price="150", img="box-braids-longues", badge="Mèches offertes",
+    dict(id="tresses-africaines", title="Tresses africaines", price="150", img="africaines-a", badge="Mèches offertes",
          flyer=None,
          lead="Box braids longues, du brun chocolat au blond 613. Les paquets de mèches sont offerts.",
          incl=["Paquets de mèches offerts", "Toutes longueurs", "Toutes couleurs"]),
-    dict(id="twist-curly", title="Twist & Curly", price="150", img="boheme-3", badge="Longue tenue",
+    dict(id="twist-curly", title="Twist & Curly", price="150", img="twist-b", badge="Longue tenue",
          flyer="affiche-twist-curly",
          lead="Twists torsadées et boucles : un style élégant, soigné et propre, pour toutes les occasions.",
          incl=["Longue tenue", "Style élégant", "Soigné et propre"]),
-    dict(id="rasta-elegance", title="Rasta longues Élégance", price="135", img="nattes-portrait", badge="Cheveux inclus",
+    dict(id="rasta-elegance", title="Rasta longues Élégance", price="135", img="rasta-a", badge="Cheveux inclus",
          flyer="affiche-rasta-135",
          lead="Nattes collées longues au dessin travaillé, avec baby hair. Cheveux, soin et finition compris.",
          incl=["Cheveux inclus", "Soin et finition", "Baby hair"]),
@@ -59,7 +59,7 @@ OFFERS = [
          flyer="affiche-hommes",
          lead="Cornrows classiques, droites vers l'arrière, zigzag, raie au milieu, couronne ou motifs modernes.",
          incl=["Coupe nette, finitions propres", "Produits de qualité", "Rapide et professionnel"]),
-    dict(id="enfants", title="Tresses enfants avec perles", price="100", img="enfant-perles-3", badge="Perles colorées",
+    dict(id="enfants", title="Tresses enfants avec perles", price="100", img="enfants-a", badge="Perles colorées",
          flyer="affiche-enfants",
          lead="Des tresses jolies, légères et confortables, adaptées aux enfants, avec perles de couleur.",
          incl=["Tresses légères", "Protection des cheveux", "Perles de différentes couleurs"]),
@@ -67,11 +67,11 @@ OFFERS = [
          flyer="affiche-tissage",
          lead="Pose de tissage cousue sur nattes, pour un résultat naturel. Coiffage compris.",
          incl=["Pose professionnelle", "Tresses bien faites", "Finition soignée"]),
-    dict(id="extensions-longues", title="Extensions longues", price="150", img="extensions-lisses", badge="Coiffage inclus",
+    dict(id="extensions-longues", title="Extensions longues", price="150", img="extensions-a", badge="Coiffage inclus",
          flyer="affiche-extensions",
          lead="Extensions longues, lisses ou bouclées, posées sur tresses bien faites. Résultat naturel.",
          incl=["Pose professionnelle", "Résultat naturel", "Coiffage inclus"]),
-    dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-glam", badge="Seconde vie",
+    dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-b", badge="Seconde vie",
          flyer="affiche-renovation-perruque",
          lead="Nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle.",
          incl=["Nettoyage, soin, démêlage", "Remise en forme, ajustement", "Finition professionnelle"]),

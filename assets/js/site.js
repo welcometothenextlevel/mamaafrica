@@ -171,6 +171,19 @@
     });
   });
 
+  /* ---------- sound toggle on her videos ---------- */
+  d.querySelectorAll('.snd').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.parentNode.querySelector('video'); if (!v) return;
+      var on = v.muted;
+      d.querySelectorAll('.vcard video').forEach(function (o) { o.muted = true; });
+      d.querySelectorAll('.snd').forEach(function (o) { o.setAttribute('aria-pressed', 'false'); o.setAttribute('aria-label', 'Activer le son'); });
+      v.muted = !on;
+      if (on) { v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', on ? 'Couper le son' : 'Activer le son');
+    });
+  });
+
   /* ---------- model codes ---------- */
   d.querySelectorAll('.codes').forEach(function (grid) {
     var box = grid.parentNode, sel = box.querySelector('#code-sel'), link = box.querySelector('#code-wa');
