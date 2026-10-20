@@ -5,6 +5,7 @@ from urllib.parse import quote
 from PIL import Image
 sys.path.insert(0, os.path.dirname(__file__))
 from data import *  # noqa
+import seo
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMG = os.path.join(ROOT, "assets", "img")
@@ -61,7 +62,7 @@ def medal(p, pre=None):
 NAV = [("index", "Accueil", "./"), ("tresses", "Tresses", "tresses"), ("hommes-enfants", "Hommes & enfants", "hommes-enfants"),
        ("tissage", "Tissage", "tissage"), ("soins", "Soins & perruques", "soins"), ("beaute", "Beauté", "beaute"),
        ("offres", "Offres", "offres"), ("tarifs", "Tarifs", "tarifs"), ("boutique", "Boutique", "boutique"),
-       ("galerie", "Galerie", "galerie"), ("salon", "Le salon", "salon"), ("avis", "Avis", "avis"), ("contact", "Contact", "contact")]
+       ("galerie", "Galerie", "galerie"), ("salon", "Le salon", "salon"), ("avis", "Avis", "avis"), ("conseils", "Conseils", "conseils"), ("contact", "Contact", "contact")]
 DESK = ["tresses", "hommes-enfants", "tissage", "soins", "offres", "tarifs", "boutique", "contact"]
 
 def header(cur):
@@ -98,10 +99,10 @@ def footer():
     return f'''<footer class="ftr"><div class="ribbon"></div><div class="wrap">
   <div class="ftr-top">
     <div><a class="emb" href="./"><img src="assets/img/logo-embleme.webp" width="582" height="582" alt="" loading="lazy"><span><b>Mama Africa</b><small>Beauty Shop · Payerne</small></span></a>
-      <p>Tresses africaines, soins et boutique beauté, Rue de Lausanne 38B. {SLOGAN}</p>
+      <p>Coiffeuse afro et boutique de produits pour cheveux afro à Payerne, Rue de Lausanne 38B, à 3 minutes de la gare. {SLOGAN}</p>
       <div class="socials"><a href="{INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram">{I["ig"]}</a><a href="{wa()}" target="_blank" rel="noopener" aria-label="WhatsApp">{I["wa"]}</a><a href="{GMAPS}" target="_blank" rel="noopener" aria-label="Google Maps">{I["pin"]}</a><a href="{SALONKEE}" target="_blank" rel="noopener" aria-label="Salonkee">{I["cal"]}</a></div></div>
     <div><h4>Coiffure</h4><ul>{col(["tresses", "hommes-enfants", "tissage", "soins", "beaute"])}</ul></div>
-    <div><h4>Mama Africa</h4><ul>{col(["offres", "tarifs", "boutique", "galerie", "salon", "avis"])}</ul></div>
+    <div><h4>Mama Africa</h4><ul>{col(["offres", "tarifs", "boutique", "galerie", "salon", "avis", "conseils"])}<li><a href="coiffure-afro-broye">Broye, Fribourg et environs</a></li></ul></div>
     <div><h4>Nous trouver</h4><ul><li><a href="{GMAPS}" target="_blank" rel="noopener">{STREET}<br>{CITY}</a></li><li><a href="tel:{TEL}">{PHONE}</a></li><li><a href="{INSTAGRAM}" target="_blank" rel="noopener">{IG_HANDLE}</a></li><li style="color:var(--on-2)">Lundi au samedi, 9h00 – 18h30</li></ul></div>
   </div>
   <div class="ftr-bot"><span>© 2026 {NAME}</span><span><a href="reservation">Réserver</a> · <a href="confidentialite">Confidentialité</a></span></div>
@@ -132,7 +133,10 @@ def schema():
          "sameAs": [INSTAGRAM, SALONKEE, GMAPS]}
     return '<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False) + "</script>"
 
-def page(slug, title, desc, body, og="perles-1"):
+def page(slug, title, desc, body, og="perles-1", ld=None):
+    if slug in seo.META: title, desc = seo.META[slug]
+    if ld is None:
+        ld = seo.jsonld(slug, crumbs=[(seo.CRUMB[slug], slug)] if slug in seo.CRUMB else None)
     url = BASE + ("" if slug == "index" else slug)
     robots = '<meta name="robots" content="noindex, nofollow">' if PITCH else ""
     return f'''<!doctype html>
@@ -145,13 +149,13 @@ def page(slug, title, desc, body, og="perles-1"):
 {robots}
 <link rel="canonical" href="{url}">
 <meta name="theme-color" content="#f6ecdd">
-<meta property="og:type" content="website"><meta property="og:locale" content="fr_CH"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}assets/img/{og}.webp">
+<meta property="og:type" content="{"article" if slug in seo.ARTICLES else "website"}"><meta property="og:site_name" content="Mama Africa Beauty"><meta property="og:locale" content="fr_CH"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}assets/img/{og}.webp">
 <link rel="icon" href="assets/img/favicon-48.png" sizes="48x48"><link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/gambetta-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/author-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css?v={V}">
-<script>document.documentElement.classList.add('js');setTimeout(function(){{if(!window.__ma)document.documentElement.classList.remove('js')}},3500)</script>
-{schema() if slug in ("index", "contact") else ""}
+<script>(function(p){{if(p.slice(-5)===".html"){{history.replaceState(null,"",p.slice(-11)==="/index.html"?p.slice(0,-10):p.slice(0,-5)+location.search+location.hash)}}}})(location.pathname);document.documentElement.classList.add('js');setTimeout(function(){{if(!window.__ma)document.documentElement.classList.remove('js')}},3500)</script>
+{ld if slug != "404" else ""}
 </head>
 <body data-page="{slug}">
 {header(slug)}
@@ -286,6 +290,24 @@ def visit(top=False):
   <div class="map"><iframe title="Carte : Mama Africa Beauty, {STREET}, Payerne" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q={quote('Mama Africa beauty shopping, Rue de Lausanne 38, 1530 Payerne')}&z=16&output=embed"></iframe></div>
 </div></section>'''
 
+def why_us():
+    brands = "".join(f"<li>{b}</li>" for b in ["Mielle", "Lola Cosmetics", "Salon Line", "Novex", "O Boticário", "Lowell", "X-pression"])
+    return f'''<section class="sec"><div class="wrap why">
+  <div class="prose" data-reveal>{tag("Coiffeuse afro à Payerne")}<h2 class="h2" style="margin-bottom:22px">Une adresse afro rare dans la Broye</h2>
+    <p class="lead">Trouver une coiffeuse qui sait travailler les cheveux crépus et bouclés, sans faire une heure de route : c'est pour ça que Mama Africa existe.</p>
+    <p>Au salon de la Rue de Lausanne 38B, à 3 minutes à pied de la gare de Payerne, nous réalisons <a href="tresses">tresses africaines</a>, box braids, knotless, nattes collées, <a href="tissage">tissages</a>, <a href="soins">défrisages et soins</a>, pour les femmes, les <a href="hommes-enfants">hommes et les enfants</a>.</p>
+    <p>Nos clientes viennent de Payerne, mais aussi d'Estavayer-le-Lac, d'Avenches, de Moudon, de Fribourg ou d'Yverdon-les-Bains. <a href="coiffure-afro-broye">Venir depuis la région</a>.</p></div>
+  <aside class="rare" data-reveal><div class="ribbon"></div><div class="rare-in">{tag("La boutique")}<h3 class="h3">Des produits qu'on ne trouve presque nulle part ailleurs dans la région</h3>
+    <p>Les grandes surfaces suisses proposent très peu de soins pour cheveux afro. À la boutique, ces marques sont en rayon :</p><ul class="rare-list">{brands}</ul>
+    <p>Mèches pour tresses, cheveux naturels, perruques, cosmétiques et produits africains complètent la sélection.</p>
+    <a class="btn btn--gold" href="boutique">Découvrir la boutique {I["arr"]}</a></div></aside>
+</div></section>'''
+
+def brand_notes():
+    cards = "".join(f'<div class="bnote" data-reveal><b>{n}</b><p>{d}</p></div>' for n, d in seo.BRAND_NOTES)
+    return f'''<div class="shead"><div>{tag("Nos marques")}<h2 class="h2">Des marques rares en Suisse romande, en rayon à Payerne</h2></div><p class="intro">Inutile de commander à l'étranger et d'attendre la livraison : venez voir les produits, demandez conseil, repartez avec.</p></div>
+<div class="bnotes">{cards}</div>'''
+
 def faq(items=FAQ):
     return '<div class="faq">' + "".join(f'<details><summary>{q}<i aria-hidden="true"></i></summary><p>{a}</p></details>' for q, a in items) + '</div>'
 
@@ -294,7 +316,7 @@ def shop():
     return f'''<div class="shop">
   <div class="shop-pic" data-reveal>{img("boutique-rayons-1", "Les rayons de soins de la boutique Mama Africa", "(max-width: 960px) 100vw, 42vw")}<span class="real">La boutique</span></div>
   <div data-reveal>{tag("La boutique")}<h2 class="h2">Tout pour vos cheveux, sous le même toit</h2>
-    <p class="intro" style="margin-top:16px">Ouverte du lundi au samedi, sans rendez-vous. Des produits pensés pour les cheveux crépus, bouclés et en transition.</p>
+    <p class="intro" style="margin-top:16px">Mielle, Lola Cosmetics, Salon Line, Novex, Lowell : des marques pour cheveux crépus, bouclés et en transition qu'on trouve très peu ailleurs dans la région. Chez nous, elles sont en rayon, avec les conseils en plus. Ouvert du lundi au samedi, sans rendez-vous.</p>
     <ul class="cats">{cats}</ul>
     <div class="prods">{"".join(f'<div>{img(f"produit-{i}", "Produit en vente à la boutique", "160px")}</div>' for i in (1, 4, 9, 10))}</div>
     <div class="brands">{"".join(f"<span>{b}</span>" for b in BRANDS)}</div></div>
@@ -307,7 +329,7 @@ def p_index():
 <section class="hero"><div class="wrap hero-grid">
   <div>
     {tag("Salon de tresses africaines à Payerne")}
-    <h1 class="h1">Des tresses faites avec soin, au cœur de Payerne</h1>
+    <h1 class="h1">Coiffeuse afro à Payerne : tresses, tissage et soins</h1>
     <p class="intro">Tresses, nattes, tissage, soins et perruques, réalisés à la main Rue de Lausanne 38B. Sur nos offres, les mèches sont incluses.</p>
     <a class="offer-tag" href="offres#perles">{medal(p["price"])}<span class="ot"><small>En ce moment</small><b>{p["title"]}</b><span>Perles et un paquet de mèches offerts, coiffure comprise</span></span></a>
     <div class="btns"><button class="btn btn--gold" type="button" data-book>{I["cal"]}Prendre rendez-vous</button><a class="btn btn--line" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a></div>
@@ -345,7 +367,8 @@ def p_index():
 
 <section class="sec sec--paper" style="overflow:hidden">{reviews()}</section>
 
-<section class="sec"><div class="wrap">{shop()}</div></section>
+{why_us()}
+<section class="sec sec--paper"><div class="wrap">{shop()}</div></section>
 <div class="ribbon"></div>
 {booking()}
 {visit()}'''
@@ -354,7 +377,7 @@ def p_index():
 
 def p_tresses():
     sel = [OFFER[k] for k in ("perles", "boheme", "tresses-africaines", "twist-curly", "rasta-elegance")]
-    body = pintro("Tresses", "Tresses africaines et nattes",
+    body = pintro("Tresses", "Tresses africaines à Payerne",
                   "Perles, bohème, box braids, twist &amp; curly, rasta, nattes, crochet et transplas. Choisissez un style ou un code du catalogue.",
                   img("reel-nattes", "Tresses collées réalisées au salon", "(max-width: 960px) 100vw, 40vw", eager=True) + '<span class="real">Réalisé au salon</span>', "130", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(sel))}</div></section>
@@ -367,7 +390,7 @@ def p_tresses():
 def p_famille():
     h, e = OFFER["hommes"], OFFER["enfants"]
     hm = dict(h, incl=MEN_STYLES)
-    body = pintro("Hommes &amp; enfants", "Tresses pour hommes et pour enfants",
+    body = pintro("Hommes &amp; enfants", "Tresses homme et tresses enfant à Payerne",
                   "Six modèles de cornrows pour hommes à 90 CHF. Des tresses légères avec perles colorées pour les enfants à 100 CHF.",
                   img("homme-tresses-2", "Homme aux tresses", "(max-width: 960px) 100vw, 40vw", eager=True), "90", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{detail(hm)}</div></section>
@@ -379,7 +402,7 @@ def p_famille():
     return page("hommes-enfants", "Tresses hommes et enfants à Payerne | Mama Africa", "Tresses hommes 90 CHF (cornrows, zigzag, couronne, motifs) et tresses enfants avec perles colorées 100 CHF à Payerne.", body, og="homme-tresses-2")
 
 def p_tissage():
-    body = pintro("Tissage", "Tissage et extensions",
+    body = pintro("Tissage", "Tissage et extensions à Payerne",
                   "Tissage cousu sur nattes, extensions longues, lisses ou bouclées. Un résultat naturel, coiffage compris.",
                   img("extensions-b", "Extensions bouclées", "(max-width: 960px) 100vw, 40vw", eager=True), "135", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{detail(OFFER["tissage"])}{detail(OFFER["extensions-longues"], True)}</div></section>
@@ -391,8 +414,8 @@ def p_tissage():
     return page("tissage", "Tissage & extensions à Payerne | Mama Africa", "Tissage cousu dès 135 CHF, extensions 135 CHF, extensions longues 150 CHF, coiffage compris, à Payerne.", body, og="tissage-ondule")
 
 def p_soins():
-    body = pintro("Soins &amp; perruques", "Soins, lissage et perruques",
-                  "Défrisage, brushing, bio-plastie, soins Lowell, coupe et couleur. Et vos perruques retrouvent une seconde vie.",
+    body = pintro("Soins &amp; perruques", "Coiffeuse femme à Payerne : soins, lissage et perruques",
+                  "Coupe, couleur, brushing, défrisage, lissage et soins profonds : une coiffeuse pour toutes les femmes, quels que soient vos cheveux, crépus, bouclés, ondulés ou lisses. Et vos perruques retrouvent une seconde vie.",
                   img("perruque-a", "Cheveux lisses et brillants", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{detail(OFFER["renovation-perruque"])}</div></section>
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
@@ -405,7 +428,7 @@ def p_soins():
     return page("soins", "Soins, défrisage & rénovation de perruque à Payerne | Mama Africa", "Défrisage 65 CHF, brushing 65 CHF, rénovation de perruque 110 CHF, bio-plastie, soins Lowell, coupe et teinture à Payerne.", body, og="perruque-glam")
 
 def p_beaute():
-    body = pintro("Beauté", "Cils, sourcils et maquillage",
+    body = pintro("Beauté", "Extensions de cils et maquillage à Payerne",
                   "Extensions de cils cil à cil et volume russe, sourcils et maquillage, par une spécialiste certifiée.",
                   video("beaute-maquillage", "Essai de rouges à lèvres")) + f'''
 <section class="sec sec--paper"><div class="wrap split">
@@ -418,7 +441,7 @@ def p_beaute():
     return page("beaute", "Extensions de cils, sourcils & maquillage à Payerne | Mama Africa", "Extensions de cils cil à cil et volume russe, sourcils et maquillage à Payerne.", body, og="makeup")
 
 def p_offres():
-    body = pintro("Offres", "Les offres du moment",
+    body = pintro("Offres", "Les offres du moment à Payerne",
                   "Mèches offertes, cheveux inclus, prix ronds. Chaque offre a son affiche, à consulter en un clic.",
                   img("boheme-b", "Tresses bohème", "(max-width: 960px) 100vw, 40vw", eager=True), "130", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(OFFERS))}</div></section>
@@ -426,7 +449,7 @@ def p_offres():
     return page("offres", "Offres du moment · Mama Africa Payerne", "Tresses avec perles 130 CHF, bohème et tresses africaines 150 CHF mèches incluses, tresses hommes 90 CHF, enfants 100 CHF, rénovation de perruque 110 CHF.", body, og="boheme-1")
 
 def p_tarifs():
-    body = pintro("Tarifs", "Nos tarifs",
+    body = pintro("Tarifs", "Tarifs des tresses et soins à Payerne",
                   "Tous nos tarifs, selon la liste en vigueur au salon. Mèches offertes ou incluses lorsque c'est indiqué.",
                   img("rasta-a", "Tresses rasta longues", "(max-width: 960px) 100vw, 40vw", eager=True),
                   extra=f'<p style="margin-top:20px"><button class="fly" type="button" data-flyer="affiche-tarifs">Voir l\'affiche des tarifs</button></p>') + f'''
@@ -438,18 +461,20 @@ def p_tarifs():
 
 def p_boutique():
     prods = "".join(f'<div class="poster" data-reveal><div class="ph" style="aspect-ratio:1;background:#fff">{img(f"produit-{i}", "Produit en vente à la boutique", "(max-width: 760px) 70vw, 20vw")}</div></div>' for i in range(1, 11))
-    body = pintro("Boutique", "La boutique beauté",
-                  "Mèches, perruques, soins capillaires, cosmétiques, accessoires et produits africains. Du lundi au samedi, sans rendez-vous.",
+    body = pintro("Boutique", "Produits pour cheveux afro à Payerne",
+                  "Mielle, Lola Cosmetics, Salon Line, Novex, Lowell, mèches X-pression, perruques et cheveux naturels : des marques qu'on trouve très peu ailleurs dans la région, en rayon à Payerne. Du lundi au samedi, sans rendez-vous.",
                   video("salon-visite", "La boutique"), btns=False,
                   extra=f'<div class="btns" style="margin-top:28px"><a class="btn btn--gold" href="{GMAPS}" target="_blank" rel="noopener">{I["pin"]}Venir à la boutique</a><a class="btn btn--line" href="{wa("Bonjour Mama Africa, avez-vous ce produit en stock ?")}" target="_blank" rel="noopener">{I["wa"]}Demander un produit</a></div>') + f'''
 <section class="sec sec--paper"><div class="wrap">{shop()}</div></section>
-<section class="sec"><div class="wrap"><div class="shead"><div>{tag("En photos")}<h2 class="h2">La boutique, rayon par rayon</h2></div><button class="fly" type="button" data-flyer="affiche-produits">Nos produits en boutique</button></div>
+<section class="sec"><div class="wrap">{brand_notes()}</div></section>
+<section class="sec sec--paper"><div class="wrap"><div class="shead"><div>{tag("En photos")}<h2 class="h2">La boutique, rayon par rayon</h2></div><button class="fly" type="button" data-flyer="affiche-produits">Nos produits en boutique</button></div>
 <div class="shopgrid">{"".join(f'<figure data-reveal class="sg{i}"><div class="ph">{img(n, c, "(max-width: 760px) 100vw, 40vw")}</div><figcaption>{c}</figcaption></figure>' for i, (n, c) in enumerate([("boutique-rayons-1", "Les soins capillaires"), ("boutique-meches", "Le mur des mèches à tresser"), ("boutique-cheveux-2", "Cheveux naturels, tissages et perruques"), ("boutique-rayons-2", "Masques, crèmes et huiles"), ("boutique-vitrine", "L'entrée de la boutique")], 1))}</div></div></section>
-<section class="sec sec--paper"><div class="wrap">{soin_videos()}</div></section>
-<section class="sec"><div class="wrap"><div class="shead"><div>{tag("En rayon")}<h2 class="h2">Quelques-uns de nos produits</h2></div><button class="fly" type="button" data-flyer="affiche-boutique">L'affiche de la boutique</button></div>
+<section class="sec"><div class="wrap">{soin_videos()}</div></section>
+<section class="sec sec--paper"><div class="wrap"><div class="shead"><div>{tag("En rayon")}<h2 class="h2">Quelques-uns de nos produits</h2></div><button class="fly" type="button" data-flyer="affiche-boutique">L'affiche de la boutique</button></div>
 <div class="posters posters--5">{prods}</div></div></section>
+<section class="sec"><div class="wrap split" style="align-items:start"><div>{tag("Questions fréquentes")}<h2 class="h2">La boutique en pratique</h2><p class="intro" style="margin-top:16px">Comment choisir ses soins ? Lisez notre guide <a href="produits-cheveux-afro-suisse-romande" style="text-decoration:underline">où acheter des produits pour cheveux afro en Suisse romande</a>.</p></div>{faq(seo.BOUTIQUE_FAQ)}</div></section>
 <div class="ribbon"></div>{visit(top=True)}'''
-    return page("boutique", "Boutique beauté afro à Payerne · Mèches, perruques, soins | Mama Africa", "Mèches, perruques, soins capillaires pour cheveux texturés, cosmétiques et produits africains à Payerne.", body, og="produit-10")
+    return page("boutique", "", "", body, og="boutique-rayons-1", ld=seo.jsonld("boutique", crumbs=[("Boutique", "boutique")], faq=seo.BOUTIQUE_FAQ))
 
 GALLERY = [  # (image, caption, filter, is_real_salon_photo) — her own images first, stock only as inspiration
     ("reel-nattes", "Tresses collées longues", "tresses", True), ("perles-a", "Tresses avec perles", "tresses", False),
@@ -477,7 +502,7 @@ def p_galerie():
     figs = "".join(f'<figure data-cat="{c}" data-reveal>{img(n, cap, "(max-width: 760px) 100vw, 33vw")}<span class="src{" is-real" if real else ""}">{"Au salon" if real else "Inspiration"}</span></figure>' for n, cap, c, real in GALLERY)
     figs += "".join(f'<figure data-cat="affiches" data-reveal>{img(f, "Affiche Mama Africa", "(max-width: 760px) 100vw, 33vw")}<span class="src is-real">Affiche</span></figure>' for f in FLYERS)
     filt = "".join(f'<button type="button" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{l}</button>' for k, l in [("all", "Tout"), ("tresses", "Tresses"), ("famille", "Hommes & enfants"), ("tissage", "Tissage & perruques"), ("salon", "Le salon"), ("affiches", "Nos affiches")])
-    body = pintro("Galerie", "Galerie",
+    body = pintro("Galerie", "Nos tresses en photos",
                   "Nos réalisations et les coulisses du salon (« Au salon »), des idées pour votre prochain style, et toutes nos affiches.",
                   img("perles-c", "Tresses avec perles", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False) + f'''
 <section class="sec sec--paper"><div class="wrap"><div class="filters" role="group" aria-label="Filtrer">{filt}</div><div class="masonry" id="masonry">{figs}</div></div></section>
@@ -485,7 +510,7 @@ def p_galerie():
     return page("galerie", "Galerie · Mama Africa Payerne", "Réalisations du salon Mama Africa à Payerne, inspirations et affiches.", body, og="reel-nattes")
 
 def p_salon():
-    body = pintro("Le salon", "Mama Africa, à Payerne",
+    body = pintro("Le salon", "Mama Africa, salon afro et boutique à Payerne",
                   "Un salon de tresses africaines et une boutique de beauté, réunis Rue de Lausanne 38B.",
                   video("salon-tresses", "Pose de tresses au salon")) + f'''
 <section class="sec sec--paper"><div class="wrap split">
@@ -502,7 +527,7 @@ def p_salon():
     return page("salon", "Le salon · Mama Africa Payerne", "Mama Africa, salon de tresses africaines et boutique beauté à Payerne, fondé par Neneth.", body, og="salon-fauteuil")
 
 def p_avis():
-    body = pintro("Avis", "Vos avis",
+    body = pintro("Avis", "Avis de nos clientes",
                   "Merci à toutes celles et ceux qui partagent leur expérience. Un avis aide d'autres femmes à nous trouver.",
                   img("africaines-b", "Tresses blondes", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False,
                   extra=f'<div class="btns" style="margin-top:28px"><a class="btn btn--gold" href="{G_WRITE}" target="_blank" rel="noopener">Laisser un avis Google</a><a class="btn btn--line" href="{G_REVIEWS}" target="_blank" rel="noopener">Voir sur Google</a></div>') + f'''
@@ -537,7 +562,7 @@ def p_reservation():
 <section class="sec sec--paper"><div class="wrap split" style="align-items:start">
   {form}<div class="light">{tag("Horaires")}{hours_list()}<div style="margin-top:44px">{tag("Questions fréquentes")}{faq()}</div></div>
 </div></section>'''
-    return page("reservation", "Réserver · Mama Africa Payerne", "Réservez vos tresses, tissage, soins ou beauté à Payerne : Salonkee, WhatsApp ou 078 259 77 38.", body, og="salon-fauteuil")
+    return page("reservation", "", "", body, og="salon-fauteuil", ld=seo.jsonld("reservation", crumbs=[("Réserver", "reservation")], faq=FAQ))
 
 def p_contact():
     form = f'''<form class="form form-card" id="contact-form" novalidate><h2>Écrivez-nous</h2>
@@ -551,7 +576,55 @@ def p_contact():
                   extra=f'<div style="margin-top:28px">{ways(light=True)}</div>') + f'''
 <section class="sec sec--paper"><div class="wrap split" style="align-items:start">{form}<div>{tag("Questions fréquentes")}{faq(FAQ[:4])}</div></div></section>
 <div class="ribbon"></div>{visit(top=True)}'''
-    return page("contact", "Contact · Mama Africa, Rue de Lausanne 38B, Payerne", "Mama Africa Beauty, Rue de Lausanne 38B, 1530 Payerne. 078 259 77 38, WhatsApp, Instagram. Lundi au samedi 9h00 – 18h30.", body, og="boutique-allee")
+    return page("contact", "", "", body, og="boutique-vitrine", ld=seo.jsonld("contact", crumbs=[("Contact", "contact")], faq=FAQ[:4]))
+
+def p_region():
+    rows = "".join(f"<tr><th scope=row>{t}</th><td>{c}</td><td>{tr}</td></tr>" for t, c, tr in seo.TOWNS)
+    body = pintro("Broye et environs", "Coiffeuse afro pour la Broye, Fribourg et le Nord vaudois",
+                  "Il y a très peu de salons spécialisés dans les cheveux afro entre Fribourg et Yverdon. Mama Africa est au centre de Payerne, à 3 minutes à pied de la gare : facile d'accès depuis toute la région.",
+                  img("africaines-a", "Tresses africaines longues", "(max-width: 960px) 100vw, 40vw", eager=True)) + f'''
+<section class="sec sec--paper"><div class="wrap split" style="align-items:start">
+  <div class="prose" data-reveal>{tag("Pourquoi venir à Payerne")}<h2 class="h2" style="margin-bottom:20px">Le salon afro le plus proche de chez vous</h2>
+    <p class="lead">Tresses africaines, nattes collées, tissage, défrisage, soins pour cheveux crépus : tout au même endroit, sans aller jusqu'à Lausanne ou Berne.</p>
+    <p>Nos clientes viennent d'Estavayer-le-Lac, d'Avenches, de Moudon, de Lucens, de Romont, de Morat, de Fribourg et d'Yverdon-les-Bains. Beaucoup en profitent pour faire le plein de produits à la <a href="boutique">boutique</a> : des marques pour cheveux afro qu'on trouve très peu ailleurs dans la région.</p>
+    <p>Pour gagner du temps, envoyez la photo de votre modèle sur WhatsApp : nous vous donnons le prix et la durée avant de venir, et nous préparons les mèches.</p></div>
+  <div data-reveal><h3 class="h3" style="margin-bottom:14px">Temps de trajet jusqu'au salon</h3>
+    <table class="towns"><thead><tr><th scope=col>Depuis</th><th scope=col>En voiture</th><th scope=col>En train</th></tr></thead><tbody>{rows}</tbody></table>
+    <p class="hint" style="margin-top:12px">Temps indicatifs. En train, le salon est à 3 minutes à pied de la gare de Payerne.</p></div>
+</div></section>
+<section class="sec"><div class="wrap"><div class="shead"><div>{tag("Les offres du moment")}<h2 class="h2">Ce qui vaut le déplacement</h2></div><a class="more" href="offres">Toutes les offres {I["arr"]}</a></div>
+  <div class="posters">{"".join(poster(OFFER[k]) for k in ("perles", "boheme", "hommes", "enfants"))}</div></div></section>
+<section class="sec sec--paper"><div class="wrap split" style="align-items:start"><div>{tag("Questions fréquentes")}<h2 class="h2">Venir au salon</h2></div>{faq(seo.REGION_FAQ)}</div></section>
+<div class="ribbon"></div>{booking()}
+{visit()}'''
+    return page("coiffure-afro-broye", "", "", body, og="africaines-a", ld=seo.jsonld("coiffure-afro-broye", crumbs=[("Broye et environs", "coiffure-afro-broye")], faq=seo.REGION_FAQ))
+
+def p_conseils():
+    cards = "".join(f'''<article class="poster" data-reveal><a class="ph" href="{s}">{img(a["img"], a["h1"], "(max-width: 760px) 76vw, 33vw")}</a><h3><a href="{s}">{a["h1"]}</a></h3><p>{a["intro"][:150].rsplit(" ", 1)[0]}…</p><div class="acts"><a class="more" href="{s}">Lire l\'article {I["arr"]}</a></div></article>''' for s, a in seo.ARTICLES.items())
+    body = pintro("Conseils", "Conseils cheveux afro et tresses",
+                  "Entretien des tresses, choix du modèle, produits pour cheveux crépus et bouclés : les réponses aux questions qu'on nous pose le plus souvent au salon.",
+                  img("perles-c", "Tresses avec perles", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False) + f'''
+<section class="sec sec--paper"><div class="wrap"><div class="posters posters--3">{cards}</div></div></section>
+<div class="ribbon"></div>{booking()}'''
+    return page("conseils", "", "", body, og="perles-c")
+
+def p_article(slug):
+    a = seo.ARTICLES[slug]
+    secs = "".join(f"<h2>{h}</h2><p>{p}</p>" for h, p in a["sections"])
+    others = "".join(f'<li><a href="{s}">{o["h1"]}</a></li>' for s, o in seo.ARTICLES.items() if s != slug)
+    body = f'''<article class="art"><div class="wrap art-grid">
+  <div><nav class="crumbs" aria-label="Fil d'Ariane"><a href="./">Accueil</a><span>›</span><a href="conseils">Conseils</a></nav>
+    <h1 class="h1" style="font-size:clamp(36px,4.6vw,60px)">{a["h1"]}</h1>
+    <p class="intro" style="margin:20px 0 30px">{a["intro"]}</p>
+    <div class="art-pic">{img(a["img"], a["h1"], "(max-width: 960px) 100vw, 60vw", eager=True)}</div>
+    <div class="art-body prose">{secs}<h2>Questions fréquentes</h2>{faq(a["faq"])}</div></div>
+  <aside class="art-side"><div class="rare"><div class="ribbon"></div><div class="rare-in"><h3 class="h3">Prendre rendez-vous</h3><p>Mama Africa, salon de coiffure afro et boutique, Rue de Lausanne 38B à Payerne.</p>{ways(light=True)}</div></div>
+    <h3 class="h3" style="margin:34px 0 12px">À lire aussi</h3><ul class="art-more">{others}<li><a href="tarifs">Nos tarifs</a></li></ul></aside>
+</div></article>
+<div class="ribbon"></div>{booking()}'''
+    ld = seo.jsonld(slug, crumbs=[("Conseils", "conseils"), (a["h1"], slug)], faq=a["faq"],
+                    article=dict(headline=a["h1"], description=seo.META[slug][1], image=a["img"], slug=slug, date=a["date"]))
+    return page(slug, "", "", body, og=a["img"], ld=ld)
 
 def p_conf():
     body = f'''<section class="sec"><div class="wrap" style="max-width:820px">{tag("Informations légales")}<h1 class="h1">Confidentialité</h1>
@@ -567,7 +640,10 @@ def p_404():
 
 PAGES = {"index": p_index, "tresses": p_tresses, "hommes-enfants": p_famille, "tissage": p_tissage, "soins": p_soins, "beaute": p_beaute,
          "offres": p_offres, "tarifs": p_tarifs, "boutique": p_boutique, "galerie": p_galerie, "salon": p_salon, "avis": p_avis,
-         "reservation": p_reservation, "contact": p_contact, "confidentialite": p_conf, "404": p_404}
+         "reservation": p_reservation, "contact": p_contact, "confidentialite": p_conf, "404": p_404,
+         "coiffure-afro-broye": p_region, "conseils": p_conseils}
+for _s in seo.ARTICLES:
+    PAGES[_s] = (lambda s: (lambda: p_article(s)))(_s)
 
 if __name__ == "__main__":
     for f in os.listdir(ROOT):
@@ -577,7 +653,10 @@ if __name__ == "__main__":
         with open(os.path.join(ROOT, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(fn())
     with open(os.path.join(ROOT, "sitemap.xml"), "w") as f:
-        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}{'' if s == 'index' else s}</loc></url>\n" for s in PAGES if s != "404") + "</urlset>\n")
+        import datetime
+        today = datetime.date.today().isoformat()
+        prio = {"index": "1.0", "tresses": "0.9", "boutique": "0.9", "hommes-enfants": "0.8", "tissage": "0.8", "soins": "0.8", "tarifs": "0.8", "offres": "0.8", "coiffure-afro-broye": "0.8", "reservation": "0.7", "contact": "0.7"}
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{BASE}{'' if s == 'index' else s}</loc><lastmod>{today}</lastmod><priority>{prio.get(s, '0.6')}</priority></url>\n" for s in PAGES if s not in ("404", "confidentialite")) + "</urlset>\n")
     with open(os.path.join(ROOT, "robots.txt"), "w") as f:
         f.write("User-agent: *\n" + ("Disallow: /\n" if PITCH else f"Allow: /\nSitemap: {BASE}sitemap.xml\n"))
     print("built", len(PAGES), "pages")

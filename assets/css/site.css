@@ -215,6 +215,42 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 .shopgrid .sg2,.shopgrid .sg3{grid-column:span 3}.shopgrid .sg2 .ph,.shopgrid .sg3 .ph{aspect-ratio:16/9}
 .shopgrid .sg4,.shopgrid .sg5{grid-column:span 3}.shopgrid .sg4 .ph,.shopgrid .sg5 .ph{aspect-ratio:4/3}
 
+/* why us + rare brands */
+.why{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,80px);align-items:center}
+.why>*{min-width:0}
+.prose a,.art-body a{color:var(--terra);text-decoration:underline;text-underline-offset:3px}
+.rare{background:var(--paper);border-radius:var(--r);box-shadow:0 0 0 1px var(--line);overflow:hidden}
+.rare .ribbon{height:10px;background-size:auto 10px}
+.rare-in{padding:26px 28px 28px}
+.rare-in p{color:var(--ink-2);margin:12px 0}
+.rare-list{list-style:none;padding:0;margin:14px 0 18px;display:flex;flex-wrap:wrap;gap:8px}
+.rare-list li{padding:8px 13px;border-radius:9px;background:var(--cacao);color:var(--gold-2);font:600 14.5px var(--sans)}
+.bnotes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.bnote{padding:22px;border-radius:var(--r);background:var(--paper);box-shadow:0 0 0 1px var(--line)}
+.bnote b{display:block;font:500 24px/1.1 var(--serif);margin-bottom:8px}
+.bnote p{margin:0;font-size:15px;color:var(--ink-2)}
+/* region table */
+.towns{width:100%;border-collapse:collapse;font-size:16px}
+.towns th,.towns td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}
+.towns thead th{font:600 14px var(--sans);color:var(--muted)}
+.towns tbody th{font-weight:600}
+/* articles */
+.posters--3{grid-template-columns:repeat(3,1fr)}
+.poster h3 a:hover{color:var(--terra)}
+.art{padding:clamp(34px,5vw,64px) 0 clamp(70px,8vw,110px)}
+.art-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:clamp(30px,5vw,70px);align-items:start}
+.art-pic{aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:var(--sand);margin-bottom:34px}
+.art-pic img{width:100%;height:100%;object-fit:cover}
+.art-body{max-width:68ch}
+.art-body h2{font-size:clamp(25px,2.4vw,32px);margin:36px 0 12px}
+.art-body p{font-size:17.5px;line-height:1.75}
+.art-side{position:sticky;top:calc(var(--hdr) + 24px)}
+.art-more{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.art-more a{font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(42,23,14,.3)}
+@media (max-width:1100px){.bnotes{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:960px){.why,.art-grid{grid-template-columns:1fr}.art-side{position:static}.posters--3{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){.bnotes{grid-template-columns:1fr}.posters--3{grid-template-columns:none}.towns{font-size:15px}.towns th,.towns td{padding:10px 6px}}
+
 /* reviews */
 .gscore{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:var(--r);background:var(--paper);box-shadow:0 0 0 1px var(--line)}
 .gscore b{font:500 40px/1 var(--serif)}
