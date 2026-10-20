@@ -195,6 +195,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 .vcard figcaption{margin-top:14px}
 .vcard figcaption b{display:block;font:500 22px/1.2 var(--serif)}
 .vcard figcaption span{display:block;color:var(--muted);font-size:15px;margin-top:4px}
+.vprice{position:absolute;left:12px;top:12px;padding:7px 11px;border-radius:9px;background:var(--cacao);color:var(--gold-2);font:600 14px var(--sans);box-shadow:0 0 0 1.5px var(--gold)}
+.vcard .fly{display:inline-block;margin-top:8px}
 .snd{position:absolute;right:12px;bottom:12px;padding:9px 13px;border-radius:10px;background:rgba(42,23,14,.82);color:var(--on);font:600 13.5px var(--sans);backdrop-filter:blur(6px)}
 .snd .on{display:none}.snd[aria-pressed="true"] .on{display:inline}.snd[aria-pressed="true"] .off{display:none}
 /* men styles / kids grid */

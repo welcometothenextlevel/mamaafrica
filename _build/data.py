@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "40"  # cache-busting for css/js
+V = "41"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -71,6 +71,14 @@ OFFERS = [
          flyer="affiche-extensions",
          lead="Extensions longues, lisses ou bouclées, posées sur tresses bien faites. Résultat naturel.",
          incl=["Pose professionnelle", "Résultat naturel", "Coiffage inclus"]),
+    dict(id="soin-collagene", title="Soin nourrissant collagène & karité", price="95", img="soin-collagene", badge="Cheveux secs et abîmés",
+         flyer="affiche-soin-collagene",
+         lead="Le masque Ecolchi au collagène et au beurre de karité, appliqué au salon : il nourrit les cheveux secs et abîmés, et leur rend douceur et souplesse.",
+         incl=["Aide à nourrir les cheveux", "Douceur et souplesse", "Traitement réalisé au salon"]),
+    dict(id="soin-brillance", title="Soin douceur & brillance", price="95", img="soin-brillance", badge="Rituel EVORK",
+         flyer="affiche-soin-brillance",
+         lead="Un rituel de soin avec shampoing et après-shampoing EVORK, pour des cheveux doux, soyeux, brillants et faciles à coiffer.",
+         incl=["Cheveux doux et soyeux", "Brillants et faciles à coiffer", "Soin réalisé au salon"]),
     dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-b", badge="Seconde vie",
          flyer="affiche-renovation-perruque",
          lead="Nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle.",
@@ -110,6 +118,8 @@ MENU = {
     "soins": ("Soins, lissage & perruques", [
         ("Défrisage des cheveux", "65", "Défrisage et soin protecteur"),
         ("Brushing", "65", "Brushing simple ou wavy"),
+        ("Soin nourrissant collagène & karité", "95", "Masque Ecolchi, pour cheveux secs et abîmés"),
+        ("Soin douceur & brillance", "95", "Rituel EVORK, shampoing et après-shampoing"),
         ("Rénovation de perruque", "110", "Nettoyage, soin, remise en forme"),
         ("Bio-plastie capillaire", "95", "Sur rendez-vous téléphonique"),
         ("Soin cheveux lisses ou ondulés", "85", ""),

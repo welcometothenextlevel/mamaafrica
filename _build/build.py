@@ -198,7 +198,7 @@ def detail(o, rev=False):
     return f'''<article class="detail{" rev" if rev else ""}" id="{o["id"]}">
   <div class="d-pic" data-reveal>{img(o["img"], o["title"], "(max-width: 960px) 100vw, 46vw")}<span class="gift">{o["badge"]}</span>{medal(o["price"], o.get("pre"))}</div>
   <div class="d-txt" data-reveal><h2>{o["title"]}</h2><p class="intro">{o["lead"]}</p><ul class="checks">{incl}</ul>
-    <div class="d-acts"><a class="btn btn--gold" href="{book_msg(o)}" target="_blank" rel="noopener">{I["wa"]}Réserver ce modèle</a>{fl}</div></div>
+    <div class="d-acts"><a class="btn btn--gold" href="{book_msg(o)}" target="_blank" rel="noopener">{I["wa"]}{"Réserver ce soin" if o.get("id", "").startswith(("soin", "renovation")) else "Réserver ce modèle"}</a>{fl}</div></div>
 </article>'''
 
 INTROS = {"tresses": "Mèches offertes ou incluses sur nos offres.", "famille": "Pour lui et pour les petites.",
@@ -255,12 +255,12 @@ def strip():
     return f'<div class="strip">{figs}</div>'
 
 def soin_videos(head=True):
-    vids = [("soin-lissage", "Lissage et soin protecteur", "Du cheveu crépu au lisse brillant, étape par étape."),
-            ("soin-masque", "Masque au collagène et beurre de karité", "Le soin nourrissant qui répare et fait briller.")]
-    cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span></figcaption></figure>''' for v, t, d in vids)
+    vids = [("soin-lissage", "Soin douceur & brillance", "Rituel EVORK : des cheveux doux, soyeux et brillants.", "affiche-soin-brillance"),
+            ("soin-masque", "Soin nourrissant collagène & karité", "Masque Ecolchi pour cheveux secs et abîmés.", "affiche-soin-collagene")]
+    cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<span class="vprice">95 CHF</span><button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span><button class="fly" type="button" data-flyer="{f}">Voir l\'affiche</button></figcaption></figure>''' for v, t, d, f in vids)
     return f'''<div class="vsplit"><div>{tag("Les soins en vidéo")}<h2 class="h2">Voyez le résultat</h2>
-  <p class="intro" style="margin:18px 0 26px">Lissage, défrisage et masques nourrissants : des soins qui transforment le cheveu, du crépu au lisse brillant. Les produits sont en vente à la boutique.</p>
-  <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin (lissage, défrisage ou masque).")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
+  <p class="intro" style="margin:18px 0 26px">Deux soins réalisés au salon, à 95 CHF chacun : le rituel douceur &amp; brillance EVORK et le masque nourrissant Ecolchi au collagène et au karité. Les produits sont aussi en vente à la boutique.</p>
+  <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin à 95 CHF (douceur & brillance ou collagène & karité).")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
   <div class="vcards">{cards}</div></div>'''
 
 def reviews():
@@ -417,7 +417,7 @@ def p_soins():
     body = pintro("Soins &amp; perruques", "Coiffeuse femme à Payerne : soins, lissage et perruques",
                   "Coupe, couleur, brushing, défrisage, lissage et soins profonds : une coiffeuse pour toutes les femmes, quels que soient vos cheveux, crépus, bouclés, ondulés ou lisses. Et vos perruques retrouvent une seconde vie.",
                   img("perruque-a", "Cheveux lisses et brillants", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
-<section class="sec sec--paper"><div class="wrap">{detail(OFFER["renovation-perruque"])}</div></section>
+<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-collagene"])}{detail(OFFER["soin-brillance"], True)}{detail(OFFER["renovation-perruque"])}</div></section>
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
 <section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Soins et lissage</h2></div></div>{ptables(("soins",))}</div></section>
 <section class="sec sec--sand"><div class="wrap split">
@@ -495,7 +495,7 @@ GALLERY = [  # (image, caption, filter, is_real_salon_photo) — her own images 
     ("perruque-a", "Perruque lisse", "tissage", False), ("boutique-vitrine", "L'entrée de la boutique", "salon", True),
     ("realisation-tresses-2", "Tresses en cours", "tresses", True), ("salon-rose", "Le coin beauté", "salon", True),
 ]
-FLYERS = ["affiche-produits", "affiche-perles-130", "affiche-offre-coiffure", "affiche-hommes", "affiche-enfants", "affiche-twist-curly", "affiche-rasta-135",
+FLYERS = ["affiche-soin-collagene", "affiche-soin-brillance", "affiche-produits", "affiche-perles-130", "affiche-offre-coiffure", "affiche-hommes", "affiche-enfants", "affiche-twist-curly", "affiche-rasta-135",
           "affiche-tissage", "affiche-extensions", "affiche-renovation-perruque", "affiche-crochet", "affiche-transplas", "affiche-codes", "affiche-tarifs", "affiche-boutique"]
 
 def p_galerie():
