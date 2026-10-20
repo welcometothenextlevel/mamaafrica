@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "41"  # cache-busting for css/js
+V = "42"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -79,6 +79,10 @@ OFFERS = [
          flyer="affiche-soin-brillance",
          lead="Un rituel de soin avec shampoing et après-shampoing EVORK, pour des cheveux doux, soyeux, brillants et faciles à coiffer.",
          incl=["Cheveux doux et soyeux", "Brillants et faciles à coiffer", "Soin réalisé au salon"]),
+    dict(id="soin-boucles", title="Soin des boucles Meu Cacho", price="95", img="curls-portrait", badge="Cheveux bouclés",
+         flyer="affiche-tarifs",
+         lead="Un soin pensé pour les cheveux bouclés et frisés, avec la crème Meu Cacho : des boucles bien définies et un volume naturel.",
+         incl=["Définition des boucles", "Volume naturel", "Soin réalisé au salon"]),
     dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-b", badge="Seconde vie",
          flyer="affiche-renovation-perruque",
          lead="Nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle.",
@@ -102,7 +106,7 @@ MENU = {
         ("Tresses africaines", "150", "Paquets de mèches offerts"),
         ("Tresses bohème · 4 modèles", "150", "Paquets de mèches inclus"),
         ("Twist & Curly", "150", "Longue tenue"),
-        ("Rasta longues", "165", "Nattes collées avec locks longues"),
+        ("Rasta longues", "150", "Nattes collées avec locks longues"),
         ("Crochet bouclé", "120", "Cheveux et pose inclus"),
         ("Transplas · 2 / 4 tresses", "65 / 100", "Cheveux à acheter sur place"),
     ]),
@@ -120,6 +124,7 @@ MENU = {
         ("Brushing", "65", "Brushing simple ou wavy"),
         ("Soin nourrissant collagène & karité", "95", "Masque Ecolchi, pour cheveux secs et abîmés"),
         ("Soin douceur & brillance", "95", "Rituel EVORK, shampoing et après-shampoing"),
+        ("Soin des boucles Meu Cacho", "95", "Définition des boucles et volume naturel"),
         ("Rénovation de perruque", "110", "Nettoyage, soin, remise en forme"),
         ("Bio-plastie capillaire", "95", "Sur rendez-vous téléphonique"),
         ("Soin cheveux lisses ou ondulés", "85", ""),

@@ -90,7 +90,7 @@ def _offers(keys):
 def salon_jsonld(full=True):
     d = {"@type": "HairSalon", "@id": SALON_ID, "name": NAME, "alternateName": "Mama Africa Beauty Shop",
          "url": BASE, "telephone": TEL, "image": [BASE + "assets/img/logo.png", BASE + "assets/img/boutique-rayons-1.webp"],
-         "logo": BASE + "assets/img/logo-embleme.png", "priceRange": "CHF 45 – 165",
+         "logo": BASE + "assets/img/logo-embleme.png", "priceRange": "CHF 45 – 150",
          "address": {"@type": "PostalAddress", "streetAddress": STREET, "postalCode": "1530", "addressLocality": "Payerne", "addressRegion": "VD", "addressCountry": "CH"},
          "geo": {"@type": "GeoCoordinates", "latitude": GEO[0], "longitude": GEO[1]}, "hasMap": GMAPS,
          "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:00", "closes": "18:30"}],

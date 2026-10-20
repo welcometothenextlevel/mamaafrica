@@ -126,7 +126,7 @@ def overlays():
 
 def schema():
     d = {"@context": "https://schema.org", "@type": "HairSalon", "name": NAME, "slogan": SLOGAN,
-         "image": BASE + "assets/img/logo.png", "url": BASE, "telephone": TEL, "priceRange": "CHF 45 – 165",
+         "image": BASE + "assets/img/logo.png", "url": BASE, "telephone": TEL, "priceRange": "CHF 45 – 150",
          "address": {"@type": "PostalAddress", "streetAddress": STREET, "postalCode": "1530", "addressLocality": "Payerne", "addressRegion": "VD", "addressCountry": "CH"},
          "geo": {"@type": "GeoCoordinates", "latitude": GEO[0], "longitude": GEO[1]},
          "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:00", "closes": "18:30"}],
@@ -259,8 +259,8 @@ def soin_videos(head=True):
             ("soin-masque", "Soin nourrissant collagène & karité", "Masque Ecolchi pour cheveux secs et abîmés.", "affiche-soin-collagene")]
     cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<span class="vprice">95 CHF</span><button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span><button class="fly" type="button" data-flyer="{f}">Voir l\'affiche</button></figcaption></figure>''' for v, t, d, f in vids)
     return f'''<div class="vsplit"><div>{tag("Les soins en vidéo")}<h2 class="h2">Voyez le résultat</h2>
-  <p class="intro" style="margin:18px 0 26px">Deux soins réalisés au salon, à 95 CHF chacun : le rituel douceur &amp; brillance EVORK et le masque nourrissant Ecolchi au collagène et au karité. Les produits sont aussi en vente à la boutique.</p>
-  <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin à 95 CHF (douceur & brillance ou collagène & karité).")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
+  <p class="intro" style="margin:18px 0 26px">Trois soins réalisés au salon, à 95 CHF chacun : le rituel douceur &amp; brillance EVORK, le masque nourrissant Ecolchi au collagène et au karité, et le soin des boucles Meu Cacho. Les produits sont aussi en vente à la boutique.</p>
+  <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin à 95 CHF (douceur & brillance, collagène & karité ou boucles Meu Cacho).")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
   <div class="vcards">{cards}</div></div>'''
 
 def reviews():
@@ -417,7 +417,7 @@ def p_soins():
     body = pintro("Soins &amp; perruques", "Coiffeuse femme à Payerne : soins, lissage et perruques",
                   "Coupe, couleur, brushing, défrisage, lissage et soins profonds : une coiffeuse pour toutes les femmes, quels que soient vos cheveux, crépus, bouclés, ondulés ou lisses. Et vos perruques retrouvent une seconde vie.",
                   img("perruque-a", "Cheveux lisses et brillants", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
-<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-collagene"])}{detail(OFFER["soin-brillance"], True)}{detail(OFFER["renovation-perruque"])}</div></section>
+<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-collagene"])}{detail(OFFER["soin-brillance"], True)}{detail(OFFER["soin-boucles"])}{detail(OFFER["renovation-perruque"], True)}</div></section>
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
 <section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Soins et lissage</h2></div></div>{ptables(("soins",))}</div></section>
 <section class="sec sec--sand"><div class="wrap split">
@@ -457,7 +457,7 @@ def p_tarifs():
 <p class="hint" style="margin-top:22px">Prix en francs suisses. Sauf mention « offert » ou « inclus », les mèches s'achètent au salon. La bio-plastie se réserve par téléphone.</p></div></section>
 <section class="sec" id="codes"><div class="wrap"><div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Tarifs par code</h2></div></div>{codes_block()}</div></section>
 <div class="ribbon"></div>{booking()}'''
-    return page("tarifs", "Tarifs · Mama Africa Beauty Payerne", "Nattes 70 CHF, tresses hommes 90 CHF, enfants 100 CHF, rasta courtes 100 CHF, tresses avec ajout 110 CHF, perles 130 CHF, bohème 150 CHF, rasta longues 165 CHF.", body, og="nattes-portrait")
+    return page("tarifs", "Tarifs · Mama Africa Beauty Payerne", "Nattes 70 CHF, tresses hommes 90 CHF, enfants 100 CHF, rasta courtes 100 CHF, tresses avec ajout 110 CHF, perles 130 CHF, bohème 150 CHF, rasta longues 150 CHF.", body, og="nattes-portrait")
 
 def p_boutique():
     prods = "".join(f'<div class="poster" data-reveal><div class="ph" style="aspect-ratio:1;background:#fff">{img(f"produit-{i}", "Produit en vente à la boutique", "(max-width: 760px) 70vw, 20vw")}</div></div>' for i in range(1, 11))
