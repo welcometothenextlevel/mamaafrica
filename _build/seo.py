@@ -165,7 +165,7 @@ TOWNS = [  # (town, by car, by train) — rounded travel times to Rue de Lausann
 
 ARTICLES = {
     "entretien-tresses-africaines": dict(
-        h1="Entretenir ses tresses africaines : le guide pratique", img="perles-1", date="2026-10-20",
+        h1="Entretenir ses tresses africaines : le guide pratique", img="perles-a", date="2026-10-20",
         intro="Des tresses bien entretenues restent belles plus longtemps et protègent vraiment vos cheveux. Voici ce que nous conseillons à nos clientes au salon, à Payerne.",
         sections=[
             ("Combien de temps garder ses tresses ?", "Comptez en général entre quatre et huit semaines selon le modèle et la pousse. Au-delà, les cheveux qui repoussent s'emmêlent à la racine et les tresses tirent davantage. Après les avoir défaites, laissez idéalement vos cheveux respirer quelques jours avec un soin profond avant une nouvelle pose."),
@@ -178,7 +178,7 @@ ARTICLES = {
         faq=[("Combien de temps peut-on garder des tresses africaines ?", "Entre quatre et huit semaines en général, selon le modèle et la pousse de vos cheveux."),
              ("Peut-on laver ses cheveux avec des tresses ?", "Oui, toutes les une à deux semaines, en appliquant un shampoing dilué directement sur le cuir chevelu, puis en séchant bien les longueurs.")]),
     "box-braids-knotless-boheme": dict(
-        h1="Box braids, knotless ou bohème : quelles tresses choisir ?", img="boheme-1", date="2026-10-20",
+        h1="Box braids, knotless ou bohème : quelles tresses choisir ?", img="boheme-a", date="2026-10-20",
         intro="Ce sont les trois demandes les plus fréquentes au salon. Elles se ressemblent, mais ne se posent pas de la même façon et ne donnent pas le même rendu.",
         sections=[
             ("Les box braids, le grand classique", "La tresse démarre par un petit nœud à la racine, autour duquel on ajoute la mèche. Le résultat est très net, avec une base bien marquée, et la coiffure tient longtemps. C'est un style polyvalent, des tresses fines aux plus épaisses, de toutes les longueurs."),
