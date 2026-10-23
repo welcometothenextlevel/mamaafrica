@@ -25,7 +25,7 @@ GMAPS = "https://maps.google.com/?cid=7358691076882633461"
 G_REVIEWS = f"https://search.google.com/local/reviews?placeid={PLACE_ID}"
 G_WRITE = f"https://search.google.com/local/writereview?placeid={PLACE_ID}"
 G_RATING = "5,0"
-G_COUNT = 1
+G_COUNT = 2
 
 HOURS = [  # her flyer: "Lundi au samedi 9h00 – 18h30"
     ("Lundi", "09:00", "18:30"), ("Mardi", "09:00", "18:30"), ("Mercredi", "09:00", "18:30"),
