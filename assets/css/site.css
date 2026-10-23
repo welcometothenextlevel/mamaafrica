@@ -207,6 +207,14 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 .mstyles--4 .ph{aspect-ratio:4/5}
 .mstyles img{width:100%;height:100%;object-fit:cover}
 .mstyles figcaption{margin-top:10px;font-weight:600}
+/* boys */
+.boys{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:clamp(16px,2.4vw,32px);align-items:start}
+.boys-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.boys-grid figure{margin:0}
+.boys-grid .ph{aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--sand)}
+.boys-grid img{width:100%;height:100%;object-fit:cover}
+@media (max-width:760px){.boys{grid-template-columns:1fr}.boys-vid{max-width:300px}}
+
 /* boutique photo grid */
 .shopgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(12px,1.4vw,18px)}
 .shopgrid figure{margin:0}

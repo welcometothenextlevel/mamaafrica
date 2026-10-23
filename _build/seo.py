@@ -28,7 +28,7 @@ META = {
     "hommes-enfants": ("Tresses homme et enfant à Payerne · Cornrows dès 90 CHF",
                        "Tresses pour hommes à Payerne : cornrows, zigzag, couronne, motifs, 90 CHF. Tresses enfant avec perles colorées, 100 CHF. Sur rendez-vous, Rue de Lausanne 38B."),
     "tissage": ("Tissage et extensions à Payerne · Pose cousue dès 135 CHF",
-                "Tissage cousu sur nattes dès 135 CHF, pose d'extensions longues 150 CHF, coiffage compris. Cheveux naturels en vente au salon, Rue de Lausanne 38B à Payerne."),
+                "Tissage cousu dès 135 CHF et extensions pour toutes les textures de cheveux, lisses à crépues, toutes origines. Coiffage compris, Rue de Lausanne 38B, Payerne."),
     "soins": ("Coiffeuse femme à Payerne · Défrisage, lissage, perruques",
               "Coiffeuse pour femmes à Payerne : défrisage 65 CHF, brushing, bio-plastie, soins Lowell, coupe, couleur, rénovation de perruque. Tous types de cheveux."),
     "beaute": ("Extension de cils à Payerne · Cil à cil, volume russe",
@@ -46,9 +46,9 @@ META = {
     "avis": ("Avis clients · Mama Africa, coiffeuse afro à Payerne",
              "Les avis Google de nos clientes sur Mama Africa, salon de coiffure afro à Payerne. Laissez votre avis en un clic."),
     "reservation": ("Prendre rendez-vous · Coiffeuse afro à Payerne | Mama Africa",
-                    "Réservez vos tresses africaines, tissage, soin ou beauté à Payerne : en ligne sur Salonkee, sur WhatsApp ou au 078 259 77 38. Lundi au samedi, 9h – 18h30."),
+                    "Réservez vos tresses africaines, tissage, soin ou beauté à Payerne : en ligne sur Salonkee, sur WhatsApp ou au 078 624 29 24. Lundi au samedi, 9h – 18h30."),
     "contact": ("Contact · Mama Africa, Rue de Lausanne 38B, Payerne",
-                "Mama Africa Beauty, Rue de Lausanne 38B, 1530 Payerne, à 3 minutes de la gare. 078 259 77 38, WhatsApp, Instagram. Lundi au samedi 9h00 – 18h30."),
+                "Mama Africa Beauty, Rue de Lausanne 38B, 1530 Payerne, à 3 minutes de la gare. 078 624 29 24, WhatsApp, Instagram. Lundi au samedi 9h00 – 18h30."),
     "coiffure-afro-broye": ("Coiffeuse afro près d'Estavayer, Avenches et Fribourg",
                             "Salon afro de la Broye, à 15 min d'Estavayer et d'Avenches, 25 min de Fribourg, 30 min d'Yverdon. Tresses africaines, tissage et produits afro à Payerne."),
     "conseils": ("Conseils cheveux afro et tresses · Mama Africa Payerne",
@@ -153,7 +153,7 @@ BOUTIQUE_FAQ = [
 REGION_FAQ = [
     ("Y a-t-il une coiffeuse afro près d'Estavayer-le-Lac ou d'Avenches ?", "Oui : Mama Africa est à Payerne, à environ 15 minutes en voiture d'Estavayer-le-Lac et d'Avenches. Tresses africaines, tissage, défrisage et soins pour cheveux crépus, sur rendez-vous."),
     ("Comment venir en train ?", "Le salon est à 3 minutes à pied de la gare de Payerne, desservie directement depuis Fribourg, Yverdon-les-Bains, Moudon et Lausanne."),
-    ("Puis-je réserver à distance ?", "Oui, en ligne sur Salonkee, sur WhatsApp ou par téléphone au 078 259 77 38. Envoyez une photo du modèle souhaité pour une estimation."),
+    ("Puis-je réserver à distance ?", "Oui, en ligne sur Salonkee, sur WhatsApp ou par téléphone au 078 624 29 24. Envoyez une photo du modèle souhaité pour une estimation."),
 ]
 
 TOWNS = [  # (town, by car, by train) — rounded travel times to Rue de Lausanne 38B
@@ -165,7 +165,7 @@ TOWNS = [  # (town, by car, by train) — rounded travel times to Rue de Lausann
 
 ARTICLES = {
     "entretien-tresses-africaines": dict(
-        h1="Entretenir ses tresses africaines : le guide pratique", img="perles-a", date="2026-10-20",
+        h1="Entretenir ses tresses africaines : le guide pratique", img="perles-1", date="2026-10-20",
         intro="Des tresses bien entretenues restent belles plus longtemps et protègent vraiment vos cheveux. Voici ce que nous conseillons à nos clientes au salon, à Payerne.",
         sections=[
             ("Combien de temps garder ses tresses ?", "Comptez en général entre quatre et huit semaines selon le modèle et la pousse. Au-delà, les cheveux qui repoussent s'emmêlent à la racine et les tresses tirent davantage. Après les avoir défaites, laissez idéalement vos cheveux respirer quelques jours avec un soin profond avant une nouvelle pose."),
@@ -178,7 +178,7 @@ ARTICLES = {
         faq=[("Combien de temps peut-on garder des tresses africaines ?", "Entre quatre et huit semaines en général, selon le modèle et la pousse de vos cheveux."),
              ("Peut-on laver ses cheveux avec des tresses ?", "Oui, toutes les une à deux semaines, en appliquant un shampoing dilué directement sur le cuir chevelu, puis en séchant bien les longueurs.")]),
     "box-braids-knotless-boheme": dict(
-        h1="Box braids, knotless ou bohème : quelles tresses choisir ?", img="boheme-a", date="2026-10-20",
+        h1="Box braids, knotless ou bohème : quelles tresses choisir ?", img="boheme-1", date="2026-10-20",
         intro="Ce sont les trois demandes les plus fréquentes au salon. Elles se ressemblent, mais ne se posent pas de la même façon et ne donnent pas le même rendu.",
         sections=[
             ("Les box braids, le grand classique", "La tresse démarre par un petit nœud à la racine, autour duquel on ajoute la mèche. Le résultat est très net, avec une base bien marquée, et la coiffure tient longtemps. C'est un style polyvalent, des tresses fines aux plus épaisses, de toutes les longueurs."),

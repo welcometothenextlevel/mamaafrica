@@ -227,10 +227,10 @@ def codes_block():
 <div class="code-cta"><p id="code-sel">Touchez un modèle pour le choisir.</p><div class="btns"><a class="btn btn--wa" id="code-wa" href="{wa("Bonjour Mama Africa, je souhaite réserver un modèle de votre catalogue.")}" target="_blank" rel="noopener">{I["wa"]}Réserver ce code</a><button class="btn btn--line btn--sm" type="button" data-flyer="affiche-codes">Voir le catalogue</button></div></div>'''
 
 SERVICES = [
-    ("tresses", "Tresses & nattes", "Perles, bohème, box braids, twist, rasta, crochet", "70", "perles-a"),
-    ("hommes-enfants", "Hommes & enfants", "Cornrows en 6 modèles, tresses à perles colorées", "90", "enfants-a"),
-    ("tissage", "Tissage & extensions", "Tissage cousu, extensions longues, coiffage inclus", "135", "tissage-ondule"),
-    ("soins", "Soins & perruques", "Défrisage, brushing, bio-plastie, rénovation de perruque", "45", "perruque-b"),
+    ("tresses", "Tresses & nattes", "Perles, bohème, box braids, twist, rasta, crochet", "70", "perles-1"),
+    ("hommes-enfants", "Hommes & enfants", "Cornrows en 6 modèles, tresses à perles colorées", "90", "enfant-perles-3"),
+    ("tissage", "Tissage & extensions", "Tissage cousu, extensions pour toutes les textures et origines", "135", "tissage-ondule"),
+    ("soins", "Soins & perruques", "Défrisage, brushing, bio-plastie, rénovation de perruque", "45", "afro-or"),
     ("beaute", "Beauté du regard", "Extensions de cils, sourcils, maquillage", None, "makeup"),
 ]
 
@@ -241,14 +241,13 @@ def services():
 
 def strip():
     items = [
-        (img("reel-nattes", "Tresses collées longues, réalisées au salon", "300px"), "Tresses collées longues", True),
+        (video("garcon-nattes", "Nattes collées pour garçon, réalisées au salon"), "Nattes collées pour garçon", True),
         (video("salon-tresses", "Pose de tresses au salon"), "Une pose en cours", True),
         (img("transplas-4", "Quatre transplas", "300px"), "Quatre transplas", True),
         (img("crochet-volume", "Crochet bouclé volume", "300px"), "Crochet bouclé volume", True),
         (img("boutique-meches", "Le mur des mèches à tresser", "300px"), "Le mur des mèches", False),
         (img("boutique-cheveux-2", "Cheveux naturels et tissages", "300px"), "Cheveux naturels et tissages", False),
         (video("salon-visite", "La boutique"), "La boutique", False),
-        (img("realisation-tresses-2", "Tresses en cours", "300px"), "Tresses avec ajout", True),
         (img("boutique-rayons-2", "Les rayons de soins", "300px"), "Les rayons de soins", False),
     ]
     figs = "".join(f'<figure data-reveal><div class="ph">{m}{"<span class=real>Fait au salon</span>" if r else ""}</div><figcaption>{c}</figcaption></figure>' for m, c, r in items)
@@ -295,10 +294,10 @@ def why_us():
     return f'''<section class="sec"><div class="wrap why">
   <div class="prose" data-reveal>{tag("Coiffeuse afro à Payerne")}<h2 class="h2" style="margin-bottom:22px">Une adresse afro rare dans la Broye</h2>
     <p class="lead">Trouver une coiffeuse qui sait travailler les cheveux crépus et bouclés, sans faire une heure de route : c'est pour ça que Mama Africa existe.</p>
-    <p>Au salon de la Rue de Lausanne 38B, à 3 minutes à pied de la gare de Payerne, nous réalisons <a href="tresses">tresses africaines</a>, box braids, knotless, nattes collées, <a href="tissage">tissages</a>, <a href="soins">défrisages et soins</a>, pour les femmes, les <a href="hommes-enfants">hommes et les enfants</a>.</p>
+    <p>Au salon de la Rue de Lausanne 38B, à 3 minutes à pied de la gare de Payerne, nous réalisons <a href="tresses">tresses africaines</a>, box braids, knotless, nattes collées, <a href="tissage">tissages et extensions pour toutes les textures</a>, <a href="soins">défrisages et soins</a>, pour les femmes, les <a href="hommes-enfants">hommes et les enfants</a>.</p>
     <p>Nos clientes viennent de Payerne, mais aussi d'Estavayer-le-Lac, d'Avenches, de Moudon, de Fribourg ou d'Yverdon-les-Bains. <a href="coiffure-afro-broye">Venir depuis la région</a>.</p></div>
-  <aside class="rare" data-reveal><div class="ribbon"></div><div class="rare-in">{tag("La boutique")}<h3 class="h3">Des produits qu'on ne trouve presque nulle part ailleurs dans la région</h3>
-    <p>Les grandes surfaces suisses proposent très peu de soins pour cheveux afro. À la boutique, ces marques sont en rayon :</p><ul class="rare-list">{brands}</ul>
+  <aside class="rare" data-reveal><div class="ribbon"></div><div class="rare-in">{tag("La boutique")}<h3 class="h3">Des produits introuvables ailleurs dans la région</h3>
+    <p>Cosmétiques, soins et produits capillaires pour cheveux afro, bouclés et texturés : les grandes surfaces suisses n'en proposent presque pas. À la boutique, ces marques sont en rayon :</p><ul class="rare-list">{brands}</ul>
     <p>Mèches pour tresses, cheveux naturels, perruques, cosmétiques et produits africains complètent la sélection.</p>
     <a class="btn btn--gold" href="boutique">Découvrir la boutique {I["arr"]}</a></div></aside>
 </div></section>'''
@@ -330,14 +329,14 @@ def p_index():
   <div>
     {tag("Salon de tresses africaines à Payerne")}
     <h1 class="h1">Coiffeuse afro à Payerne : tresses, tissage et soins</h1>
-    <p class="intro">Tresses, nattes, tissage, soins et perruques, réalisés à la main Rue de Lausanne 38B. Sur nos offres, les mèches sont incluses.</p>
+    <p class="intro">Tresses, nattes, tissage, extensions pour toutes les textures, soins et perruques, réalisés à la main Rue de Lausanne 38B. Et une boutique de cosmétiques et de produits capillaires introuvables ailleurs dans la région.</p>
     <a class="offer-tag" href="offres#perles">{medal(p["price"])}<span class="ot"><small>En ce moment</small><b>{p["title"]}</b><span>Perles et un paquet de mèches offerts, coiffure comprise</span></span></a>
     <div class="btns"><button class="btn btn--gold" type="button" data-book>{I["cal"]}Prendre rendez-vous</button><a class="btn btn--line" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a></div>
     <div class="hero-trust"><span>{STARS} {G_RATING} sur Google</span><span>{I["clock"]}Lun – sam, 9h – 18h30</span><span>{I["pin"]}Rue de Lausanne 38B</span></div>
   </div>
   <div class="hero-pic">
     <div class="hero-main">{video("tresses-portrait", "Femme aux longues tresses")}</div>
-    <div class="hero-inset">{img("reel-nattes", "Tresses collées réalisées au salon", "220px", eager=True)}<p>Réalisé au salon</p></div>
+    <div class="hero-inset">{img("transplas-4", "Transplas réalisés au salon", "220px", eager=True)}<p>Réalisé au salon</p></div>
   </div>
 </div></section>
 
@@ -379,36 +378,39 @@ def p_tresses():
     sel = [OFFER[k] for k in ("perles", "boheme", "tresses-africaines", "twist-curly", "rasta-elegance")]
     body = pintro("Tresses", "Tresses africaines à Payerne",
                   "Perles, bohème, box braids, twist &amp; curly, rasta, nattes, crochet et transplas. Choisissez un style ou un code du catalogue.",
-                  img("reel-nattes", "Tresses collées réalisées au salon", "(max-width: 960px) 100vw, 40vw", eager=True) + '<span class="real">Réalisé au salon</span>', "130", "dès") + f'''
+                  img("tresses-miel", "Tresses africaines couleur miel", "(max-width: 960px) 100vw, 40vw", eager=True), "130", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(sel))}</div></section>
 <section class="sec" id="codes"><div class="wrap"><div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Choisissez votre modèle par son code</h2></div></div>{codes_block()}</div></section>
 <section class="sec sec--sand"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Tresses et nattes</h2></div><a class="more" href="tarifs">Tous les tarifs {I["arr"]}</a></div>{ptables(("tresses",))}</div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("tresses", "Tresses africaines à Payerne · Perles, bohème, box braids | Mama Africa",
-                "Tresses avec perles 130 CHF (perles et mèches offertes), bohème et box braids 150 CHF mèches incluses, twist & curly, rasta, nattes, crochet à Payerne.", body, og="reel-nattes")
+                "Tresses avec perles 130 CHF (perles et mèches offertes), bohème et box braids 150 CHF mèches incluses, twist & curly, rasta, nattes, crochet à Payerne.", body, og="perles-1")
 
 def p_famille():
     h, e = OFFER["hommes"], OFFER["enfants"]
     hm = dict(h, incl=MEN_STYLES)
     body = pintro("Hommes &amp; enfants", "Tresses homme et tresses enfant à Payerne",
-                  "Six modèles de cornrows pour hommes à 90 CHF. Des tresses légères avec perles colorées pour les enfants à 100 CHF.",
+                  "Six modèles de cornrows pour hommes à 90 CHF. Des tresses légères avec perles colorées pour les filles à 100 CHF, et des nattes collées pour les garçons.",
                   img("homme-tresses-2", "Homme aux tresses", "(max-width: 960px) 100vw, 40vw", eager=True), "90", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{detail(hm)}</div></section>
 <section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tresses hommes")}<h2 class="h2">Six modèles, un prix : 90 CHF</h2></div><button class="fly" type="button" data-flyer="affiche-hommes">Voir l'affiche</button></div>
 <div class="mstyles">{"".join(f'<figure data-reveal><div class="ph">{img(f"homme-style-{i}", s, "(max-width: 760px) 50vw, 30vw")}</div><figcaption>{s}</figcaption></figure>' for i, s in enumerate(MEN_STYLES, 1))}</div></div></section>
 <section class="sec sec--paper"><div class="wrap">{detail(e)}
 <div class="mstyles mstyles--4" style="margin-top:40px">{"".join(f'<figure data-reveal><div class="ph">{img(n, "Tresses enfant avec perles", "(max-width: 760px) 50vw, 24vw")}</div></figure>' for n in ("enfants-a", "enfants-b", "enfants-c", "enfants-d"))}</div></div></section>
+<section class="sec"><div class="wrap"><div class="shead"><div>{tag("Garçons")}<h2 class="h2">Nattes collées pour garçons</h2></div><p class="intro">Lignes droites, motifs, couronnes : choisissez un modèle, envoyez-nous la photo sur WhatsApp, nous vous donnons le prix.</p></div>
+<div class="boys"><figure class="vcard boys-vid" data-reveal><div class="ph">{video("garcon-nattes", "Nattes collées pour garçon, réalisées au salon")}<span class="real">Fait au salon</span></div><figcaption><b>Réalisé chez Mama Africa</b><span>Nattes collées pour garçon, à la boutique de Payerne.</span></figcaption></figure>
+<div class="boys-grid">{"".join(f'<figure data-reveal><div class="ph">{img(f"garcon-{i}", "Modèle de nattes pour garçon", "(max-width: 760px) 33vw, 18vw")}</div></figure>' for i in range(1, 10))}<p class="hint" style="grid-column:1/-1;margin-top:4px">Idées de modèles. <a class="fly" href="{wa("Bonjour Mama Africa, je souhaite des nattes pour mon fils. Voici le modèle :")}" target="_blank" rel="noopener">Demander un prix sur WhatsApp</a></p></div></div></div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("hommes-enfants", "Tresses hommes et enfants à Payerne | Mama Africa", "Tresses hommes 90 CHF (cornrows, zigzag, couronne, motifs) et tresses enfants avec perles colorées 100 CHF à Payerne.", body, og="homme-tresses-2")
 
 def p_tissage():
     body = pintro("Tissage", "Tissage et extensions à Payerne",
-                  "Tissage cousu sur nattes, extensions longues, lisses ou bouclées. Un résultat naturel, coiffage compris.",
-                  img("extensions-b", "Extensions bouclées", "(max-width: 960px) 100vw, 40vw", eager=True), "135", "dès") + f'''
+                  "Tissage cousu sur nattes et extensions pour tous les types de cheveux : toutes les textures, toutes les origines. Un résultat naturel, coiffage compris.",
+                  img("extensions-lisses", "Longues extensions lisses", "(max-width: 960px) 100vw, 40vw", eager=True), "135", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{detail(OFFER["tissage"])}{detail(OFFER["extensions-longues"], True)}</div></section>
 <section class="sec"><div class="wrap split">
   <div class="frame" data-reveal>{img("boutique-cheveux-2", "Cheveux naturels et tissages en boutique", "(max-width: 960px) 100vw, 45vw")}<span class="real">Au salon</span></div>
-  <div data-reveal>{tag("Les cheveux")}<h2 class="h2">Choisis avec vous, au salon</h2><div class="prose" style="margin-top:20px"><p class="lead">Cheveux naturels lisses, ondulés ou bouclés, au comptoir de la boutique.</p><p>Nous vous conseillons la longueur, la couleur et la quantité avant la pose. Extensions classiques : 135 CHF.</p></div></div>
+  <div data-reveal>{tag("Extensions pour toutes les textures")}<h2 class="h2">Tous les types de cheveux, toutes les origines</h2><div class="prose" style="margin-top:20px"><p class="lead">Lisses, ondulés, bouclés, frisés ou crépus : nous avons des extensions pour chaque texture, en cheveux naturels de toutes origines.</p><p>On choisit ensemble la texture qui se fond avec la vôtre, la longueur, la couleur et la quantité, avant la pose. Extensions classiques : 135 CHF, extensions longues : 150 CHF.</p></div><ul class="rare-list" style="margin-top:20px"><li>Lisses</li><li>Ondulés</li><li>Bouclés</li><li>Frisés</li><li>Crépus / afro</li></ul></div>
 </div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("tissage", "Tissage & extensions à Payerne | Mama Africa", "Tissage cousu dès 135 CHF, extensions 135 CHF, extensions longues 150 CHF, coiffage compris, à Payerne.", body, og="tissage-ondule")
@@ -416,7 +418,7 @@ def p_tissage():
 def p_soins():
     body = pintro("Soins &amp; perruques", "Coiffeuse femme à Payerne : soins, lissage et perruques",
                   "Coupe, couleur, brushing, défrisage, lissage et soins profonds : une coiffeuse pour toutes les femmes, quels que soient vos cheveux, crépus, bouclés, ondulés ou lisses. Et vos perruques retrouvent une seconde vie.",
-                  img("perruque-a", "Cheveux lisses et brillants", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
+                  img("afro-or", "Cheveux afro naturels et soignés", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-collagene"])}{detail(OFFER["soin-brillance"], True)}{detail(OFFER["soin-boucles"])}{detail(OFFER["renovation-perruque"], True)}</div></section>
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
 <section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Soins et lissage</h2></div></div>{ptables(("soins",))}</div></section>
@@ -443,7 +445,7 @@ def p_beaute():
 def p_offres():
     body = pintro("Offres", "Les offres du moment à Payerne",
                   "Mèches offertes, cheveux inclus, prix ronds. Chaque offre a son affiche, à consulter en un clic.",
-                  img("boheme-b", "Tresses bohème", "(max-width: 960px) 100vw, 40vw", eager=True), "130", "dès") + f'''
+                  img("boheme-2", "Tresses bohème", "(max-width: 960px) 100vw, 40vw", eager=True), "130", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(OFFERS))}</div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("offres", "Offres du moment · Mama Africa Payerne", "Tresses avec perles 130 CHF, bohème et tresses africaines 150 CHF mèches incluses, tresses hommes 90 CHF, enfants 100 CHF, rénovation de perruque 110 CHF.", body, og="boheme-1")
@@ -477,25 +479,29 @@ def p_boutique():
     return page("boutique", "", "", body, og="boutique-rayons-1", ld=seo.jsonld("boutique", crumbs=[("Boutique", "boutique")], faq=seo.BOUTIQUE_FAQ))
 
 GALLERY = [  # (image, caption, filter, is_real_salon_photo) — her own images first, stock only as inspiration
-    ("reel-nattes", "Tresses collées longues", "tresses", True), ("perles-a", "Tresses avec perles", "tresses", False),
-    ("realisation-tresses", "Pose de tresses au salon", "tresses", True), ("africaines-a", "Tresses africaines", "tresses", False),
+    ("perles-1", "Tresses avec perles", "tresses", False), ("box-braids-longues", "Box braids longues", "tresses", False),
+    ("boheme-1", "Tresses bohème", "tresses", False), ("nattes-portrait", "Rasta longues", "tresses", False),
+    ("garcon-4", "Nattes garçon", "famille", False), ("garcon-9", "Nattes garçon à motif", "famille", False),
+    ("garcon-6", "Nattes garçon", "famille", False), ("tresses-miel", "Tresses miel", "tresses", False),
+    ("perles-a", "Tresses avec perles", "tresses", False),
+    ("africaines-a", "Tresses africaines", "tresses", False),
     ("transplas-4", "Transplas", "tresses", True), ("boheme-a", "Tresses bohème", "tresses", False),
     ("rasta-a", "Rasta longues Élégance", "tresses", False), ("boutique-meches", "Le mur des mèches", "salon", True),
-    ("perles-c", "Modèle avec perles", "tresses", False), ("twist-b", "Twist & curly", "tresses", True),
+    ("perles-c", "Modèle avec perles", "tresses", False), 
     ("homme-style-5", "Tresses homme en couronne", "famille", False), ("enfants-a", "Tresses enfant avec perles", "famille", False),
     ("boutique-rayons-1", "Les soins capillaires", "salon", True), ("crochet-volume", "Crochet bouclé volume", "tresses", True),
-    ("africaines-b", "Tresses blond 613", "tresses", False), ("extensions-a", "Extensions longues", "tissage", False),
+    ("africaines-b", "Tresses blond 613", "tresses", False), 
     ("tissage-a", "Tissage cousu sur nattes", "tissage", False), ("perruque-b", "Perruque rénovée", "tissage", False),
-    ("boutique-cheveux-2", "Cheveux naturels et tissages", "salon", True), ("twist-a", "Twists torsadées", "tresses", True),
+    ("boutique-cheveux-2", "Cheveux naturels et tissages", "salon", True), 
     ("homme-style-1", "Cornrows classiques", "famille", False), ("enfants-d", "Chignon et perles", "famille", False),
     ("perles-d", "Perles et tresses fines", "tresses", False), ("boheme-b", "Bohème cuivré", "tresses", False),
     ("salon-fauteuil", "Le coin shampoing", "salon", True), ("crochet-tendance", "Crochet bouclé tendance", "tresses", True),
-    ("rasta-b", "Nattes collées", "tresses", False), ("boutique-rayons-2", "Masques et crèmes", "salon", True),
+    ("boutique-rayons-2", "Masques et crèmes", "salon", True),
     ("homme-style-6", "Tresses modernes à motifs", "famille", False), ("enfants-c", "Queue et perles roses", "famille", False),
-    ("perruque-a", "Perruque lisse", "tissage", False), ("boutique-vitrine", "L'entrée de la boutique", "salon", True),
-    ("realisation-tresses-2", "Tresses en cours", "tresses", True), ("salon-rose", "Le coin beauté", "salon", True),
+    ("boutique-vitrine", "L'entrée de la boutique", "salon", True),
+    
 ]
-FLYERS = ["affiche-soin-collagene", "affiche-soin-brillance", "affiche-produits", "affiche-perles-130", "affiche-offre-coiffure", "affiche-hommes", "affiche-enfants", "affiche-twist-curly", "affiche-rasta-135",
+FLYERS = ["affiche-garcons", "affiche-soin-collagene", "affiche-soin-brillance", "affiche-produits", "affiche-perles-130", "affiche-offre-coiffure", "affiche-hommes", "affiche-enfants", "affiche-twist-curly", "affiche-rasta-135",
           "affiche-tissage", "affiche-extensions", "affiche-renovation-perruque", "affiche-crochet", "affiche-transplas", "affiche-codes", "affiche-tarifs", "affiche-boutique"]
 
 def p_galerie():
@@ -504,10 +510,10 @@ def p_galerie():
     filt = "".join(f'<button type="button" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{l}</button>' for k, l in [("all", "Tout"), ("tresses", "Tresses"), ("famille", "Hommes & enfants"), ("tissage", "Tissage & perruques"), ("salon", "Le salon"), ("affiches", "Nos affiches")])
     body = pintro("Galerie", "Nos tresses en photos",
                   "Nos réalisations et les coulisses du salon (« Au salon »), des idées pour votre prochain style, et toutes nos affiches.",
-                  img("perles-c", "Tresses avec perles", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False) + f'''
+                  img("perles-4", "Tresses avec perles", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False) + f'''
 <section class="sec sec--paper"><div class="wrap"><div class="filters" role="group" aria-label="Filtrer">{filt}</div><div class="masonry" id="masonry">{figs}</div></div></section>
 <div class="ribbon"></div>{booking()}'''
-    return page("galerie", "Galerie · Mama Africa Payerne", "Réalisations du salon Mama Africa à Payerne, inspirations et affiches.", body, og="reel-nattes")
+    return page("galerie", "Galerie · Mama Africa Payerne", "Réalisations du salon Mama Africa à Payerne, inspirations et affiches.", body, og="perles-1")
 
 def p_salon():
     body = pintro("Le salon", "Mama Africa, salon afro et boutique à Payerne",
@@ -529,7 +535,7 @@ def p_salon():
 def p_avis():
     body = pintro("Avis", "Avis de nos clientes",
                   "Merci à toutes celles et ceux qui partagent leur expérience. Un avis aide d'autres femmes à nous trouver.",
-                  img("africaines-b", "Tresses blondes", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False,
+                  img("afro-bijoux", "Cliente souriante", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False,
                   extra=f'<div class="btns" style="margin-top:28px"><a class="btn btn--gold" href="{G_WRITE}" target="_blank" rel="noopener">Laisser un avis Google</a><a class="btn btn--line" href="{G_REVIEWS}" target="_blank" rel="noopener">Voir sur Google</a></div>') + f'''
 <section class="sec sec--paper" style="overflow:hidden">{reviews()}</section>
 <div class="ribbon"></div>{booking()}'''
@@ -582,7 +588,7 @@ def p_region():
     rows = "".join(f"<tr><th scope=row>{t}</th><td>{c}</td><td>{tr}</td></tr>" for t, c, tr in seo.TOWNS)
     body = pintro("Broye et environs", "Coiffeuse afro pour la Broye, Fribourg et le Nord vaudois",
                   "Il y a très peu de salons spécialisés dans les cheveux afro entre Fribourg et Yverdon. Mama Africa est au centre de Payerne, à 3 minutes à pied de la gare : facile d'accès depuis toute la région.",
-                  img("africaines-a", "Tresses africaines longues", "(max-width: 960px) 100vw, 40vw", eager=True)) + f'''
+                  img("braids-portrait", "Tresses africaines longues", "(max-width: 960px) 100vw, 40vw", eager=True)) + f'''
 <section class="sec sec--paper"><div class="wrap split" style="align-items:start">
   <div class="prose" data-reveal>{tag("Pourquoi venir à Payerne")}<h2 class="h2" style="margin-bottom:20px">Le salon afro le plus proche de chez vous</h2>
     <p class="lead">Tresses africaines, nattes collées, tissage, défrisage, soins pour cheveux crépus : tout au même endroit, sans aller jusqu'à Lausanne ou Berne.</p>
@@ -603,7 +609,7 @@ def p_conseils():
     cards = "".join(f'''<article class="poster" data-reveal><a class="ph" href="{s}">{img(a["img"], a["h1"], "(max-width: 760px) 76vw, 33vw")}</a><h3><a href="{s}">{a["h1"]}</a></h3><p>{a["intro"][:150].rsplit(" ", 1)[0]}…</p><div class="acts"><a class="more" href="{s}">Lire l\'article {I["arr"]}</a></div></article>''' for s, a in seo.ARTICLES.items())
     body = pintro("Conseils", "Conseils cheveux afro et tresses",
                   "Entretien des tresses, choix du modèle, produits pour cheveux crépus et bouclés : les réponses aux questions qu'on nous pose le plus souvent au salon.",
-                  img("perles-c", "Tresses avec perles", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False) + f'''
+                  img("tresses-miel", "Tresses avec perles", "(max-width: 960px) 100vw, 40vw", eager=True), btns=False) + f'''
 <section class="sec sec--paper"><div class="wrap"><div class="posters posters--3">{cards}</div></div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("conseils", "", "", body, og="perles-c")

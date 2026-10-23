@@ -5,13 +5,13 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "42"  # cache-busting for css/js
+V = "43"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
-PHONE = "078 259 77 38"
-TEL = "+41782597738"
-WA = "41782597738"  # confirmed: her code flyer shows this number with the WhatsApp logo
+PHONE = "078 624 29 24"
+TEL = "+41786242924"
+WA = "41786242924"  # her main number since 23.10.2026 (meeting notes)
 STREET = "Rue de Lausanne 38B"
 CITY = "1530 Payerne"
 GEO = (46.8195624, 6.936667)
@@ -35,23 +35,23 @@ HOURS = [  # her flyer: "Lundi au samedi 9h00 – 18h30"
 
 # ---------- current offers (her flyers, latest first: 14–15.10.2026) ----------
 OFFERS = [
-    dict(id="perles", title="Tresses avec perles", price="130", img="perles-a", badge="Perles offertes",
+    dict(id="perles", title="Tresses avec perles", price="130", img="perles-1", badge="Perles offertes",
          flyer="affiche-perles-130",
          lead="Tresses soignées ornées de perles. Les perles et un paquet de mèches sont offerts par la maison, coiffure comprise.",
          incl=["Perles offertes", "1 paquet de mèches offert", "Coiffure comprise dans le prix"]),
-    dict(id="boheme", title="Tresses bohème", price="150", img="boheme-a", badge="Mèches incluses",
+    dict(id="boheme", title="Tresses bohème", price="150", img="boheme-1", badge="Mèches incluses",
          flyer="affiche-offre-coiffure",
          lead="Quatre modèles bohème, boucles libres sur toute la longueur. Paquets de mèches inclus : 150 CHF pour chaque modèle.",
          incl=["Paquets de mèches inclus", "4 modèles au choix", "Boucles libres, effet naturel"]),
-    dict(id="tresses-africaines", title="Tresses africaines", price="150", img="africaines-a", badge="Mèches offertes",
+    dict(id="tresses-africaines", title="Tresses africaines", price="150", img="box-braids-longues", badge="Mèches offertes",
          flyer=None,
          lead="Box braids longues, du brun chocolat au blond 613. Les paquets de mèches sont offerts.",
          incl=["Paquets de mèches offerts", "Toutes longueurs", "Toutes couleurs"]),
-    dict(id="twist-curly", title="Twist & Curly", price="150", img="twist-b", badge="Longue tenue",
+    dict(id="twist-curly", title="Twist & Curly", price="150", img="boheme-3", badge="Longue tenue",
          flyer="affiche-twist-curly",
          lead="Twists torsadées et boucles : un style élégant, soigné et propre, pour toutes les occasions.",
          incl=["Longue tenue", "Style élégant", "Soigné et propre"]),
-    dict(id="rasta-elegance", title="Rasta longues Élégance", price="135", img="rasta-a", badge="Cheveux inclus",
+    dict(id="rasta-elegance", title="Rasta longues Élégance", price="135", img="nattes-portrait", badge="Cheveux inclus",
          flyer="affiche-rasta-135",
          lead="Nattes collées longues au dessin travaillé, avec baby hair. Cheveux, soin et finition compris.",
          incl=["Cheveux inclus", "Soin et finition", "Baby hair"]),
@@ -59,7 +59,7 @@ OFFERS = [
          flyer="affiche-hommes",
          lead="Cornrows classiques, droites vers l'arrière, zigzag, raie au milieu, couronne ou motifs modernes.",
          incl=["Coupe nette, finitions propres", "Produits de qualité", "Rapide et professionnel"]),
-    dict(id="enfants", title="Tresses enfants avec perles", price="100", img="enfants-a", badge="Perles colorées",
+    dict(id="enfants", title="Tresses enfants avec perles", price="100", img="enfant-perles-3", badge="Perles colorées",
          flyer="affiche-enfants",
          lead="Des tresses jolies, légères et confortables, adaptées aux enfants, avec perles de couleur.",
          incl=["Tresses légères", "Protection des cheveux", "Perles de différentes couleurs"]),
@@ -67,10 +67,10 @@ OFFERS = [
          flyer="affiche-tissage",
          lead="Pose de tissage cousue sur nattes, pour un résultat naturel. Coiffage compris.",
          incl=["Pose professionnelle", "Tresses bien faites", "Finition soignée"]),
-    dict(id="extensions-longues", title="Extensions longues", price="150", img="extensions-a", badge="Coiffage inclus",
+    dict(id="extensions-longues", title="Extensions longues", price="150", img="lissage", badge="Toutes textures",
          flyer="affiche-extensions",
-         lead="Extensions longues, lisses ou bouclées, posées sur tresses bien faites. Résultat naturel.",
-         incl=["Pose professionnelle", "Résultat naturel", "Coiffage inclus"]),
+         lead="Des extensions pour tous les types de cheveux : lisses, ondulées, bouclées, frisées ou crépues, en cheveux naturels de toutes origines. Posées sur tresses bien faites, pour un résultat naturel.",
+         incl=["Toutes les textures de cheveux", "Cheveux de toutes origines", "Pose professionnelle, coiffage inclus"]),
     dict(id="soin-collagene", title="Soin nourrissant collagène & karité", price="95", img="soin-collagene", badge="Cheveux secs et abîmés",
          flyer="affiche-soin-collagene",
          lead="Le masque Ecolchi au collagène et au beurre de karité, appliqué au salon : il nourrit les cheveux secs et abîmés, et leur rend douceur et souplesse.",
@@ -83,7 +83,7 @@ OFFERS = [
          flyer="affiche-tarifs",
          lead="Un soin pensé pour les cheveux bouclés et frisés, avec la crème Meu Cacho : des boucles bien définies et un volume naturel.",
          incl=["Définition des boucles", "Volume naturel", "Soin réalisé au salon"]),
-    dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-b", badge="Seconde vie",
+    dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-glam", badge="Seconde vie",
          flyer="affiche-renovation-perruque",
          lead="Nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle.",
          incl=["Nettoyage, soin, démêlage", "Remise en forme, ajustement", "Finition professionnelle"]),
@@ -147,7 +147,7 @@ SHADES = [  # braiding hair colour codes, as on her crochet flyer
 ]
 
 BOUTIQUE_CATS = [
-    ("Mèches & extensions", "Mèches pour tresses, crochets, cheveux naturels."),
+    ("Mèches & extensions", "Mèches pour tresses et crochets, extensions pour toutes les textures, cheveux de toutes origines."),
     ("Perruques", "À essayer au salon, rénovation possible."),
     ("Soins capillaires", "Masques, crèmes coiffantes, huiles pour cheveux texturés."),
     ("Cosmétiques", "Soins visage et corps, maquillage."),
@@ -164,7 +164,7 @@ REVIEWS = [
 FAQ = [
     ("Les mèches sont-elles comprises ?", "Oui sur nos offres : tresses africaines et tresses bohème à 150 CHF (paquets de mèches inclus), tresses avec perles à 130 CHF (perles et un paquet offerts), rasta longues Élégance à 135 CHF et crochet bouclé à 120 CHF (cheveux inclus). Pour les autres coiffures, les mèches s'achètent sur place et nous vous aidons à choisir la quantité et la couleur."),
     ("Comment choisir mon modèle ?", "Parcourez notre catalogue de codes (1 à 9) ou envoyez-nous une photo sur WhatsApp. Indiquez simplement le code au moment de réserver."),
-    ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 259 77 38. La boutique est ouverte sans rendez-vous du lundi au samedi."),
+    ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 624 29 24. La boutique est ouverte sans rendez-vous du lundi au samedi."),
     ("Combien de temps dure une pose ?", "Cela dépend du modèle, de la longueur et de l'épaisseur. Envoyez une photo sur WhatsApp, nous vous donnons une estimation avant le rendez-vous."),
     ("Vous coiffez les enfants ?", "Oui : nattes, transplas et tresses se font aussi pour les enfants. Précisez l'âge en réservant."),
     ("Vous rénovez les perruques ?", "Oui, 110 CHF : nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle."),
