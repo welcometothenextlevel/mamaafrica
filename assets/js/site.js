@@ -80,8 +80,14 @@
   lb.querySelector('.pv').addEventListener('click', function () { show(li - 1); });
   lb.querySelector('.nx').addEventListener('click', function () { show(li + 1); });
   lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  function flyerItem(b) { return { src: 'assets/img/' + b.dataset.flyer + '.webp', cap: b.dataset.cap || 'Affiche Mama Africa' }; }
   d.querySelectorAll('[data-flyer]').forEach(function (b) {
-    b.addEventListener('click', function () { openLb([{ src: 'assets/img/' + b.dataset.flyer + '.webp', cap: 'Affiche Mama Africa' }], 0); });
+    b.addEventListener('click', function () {
+      // flyers in one grid open as a set, so you can swipe through them
+      var g = b.classList.contains('sq') && b.closest('.posters');
+      var set = g ? [].slice.call(g.querySelectorAll('.ph.sq[data-flyer]')) : [b];
+      openLb(set.map(flyerItem), set.indexOf(b));
+    });
   });
   d.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { if (lb.classList.contains('is-open')) closeLb(); else if (sheet.classList.contains('is-open')) closeSheet(); else if (body.classList.contains('menu-open')) setMenu(false); }
@@ -192,6 +198,8 @@
         grid.querySelectorAll('.code').forEach(function (z) { z.setAttribute('aria-pressed', z === b); });
         if (sel) sel.innerHTML = 'Votre choix : <em>code ' + b.dataset.code + '</em>, ' + b.dataset.price + ' CHF';
         if (link) link.href = waLink('Bonjour Mama Africa, je souhaite réserver le modèle code ' + b.dataset.code + ' (' + b.dataset.price + ' CHF). Quelles sont vos disponibilités ?');
+        var all = [].slice.call(grid.querySelectorAll('.code'));
+        openLb(all.map(function (z) { return { src: 'assets/img/code-' + z.dataset.code + '.webp', cap: 'Code ' + z.dataset.code + ', ' + z.dataset.price + ' CHF' }; }), all.indexOf(b));
       });
     });
   });

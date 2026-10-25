@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "44"  # cache-busting for css/js
+V = "45"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -44,7 +44,7 @@ OFFERS = [
          lead="Quatre modèles bohème, boucles libres sur toute la longueur. Paquets de mèches inclus : 150 CHF pour chaque modèle.",
          incl=["Paquets de mèches inclus", "4 modèles au choix", "Boucles libres, effet naturel"]),
     dict(id="tresses-africaines", title="Tresses africaines", price="150", img="africaines-a", badge="Mèches offertes",
-         flyer=None,
+         flyer="affiche-africaines",
          lead="Box braids longues, du brun chocolat au blond 613. Les paquets de mèches sont offerts.",
          incl=["Paquets de mèches offerts", "Toutes longueurs", "Toutes couleurs"]),
     dict(id="twist-curly", title="Twist & Curly", price="150", img="twist-b", badge="Longue tenue",
@@ -63,6 +63,26 @@ OFFERS = [
          flyer="affiche-enfants",
          lead="Des tresses jolies, légères et confortables, adaptées aux enfants, avec perles de couleur.",
          incl=["Tresses légères", "Protection des cheveux", "Perles de différentes couleurs"]),
+    dict(id="boheme-4", title="Bohème « comme celle-là »", price="150", img="boheme-a", badge="4 modèles",
+         flyer="affiche-4-modeles",
+         lead="Quatre modèles bohème bouclés, 150 CHF chacun. Les mèches s'achètent sur place, nous vous aidons à choisir.",
+         incl=["4 modèles au choix", "150 CHF par modèle", "Mèches à acheter sur place"]),
+    dict(id="promo-boheme", title="Promo bohème", price="150", img="boheme-b", badge="Cheveux offerts",
+         flyer="affiche-promo-boheme",
+         lead="Le modèle bohème bouclé à 150 CHF, avec deux paquets de cheveux offerts, inclus dans le prix.",
+         incl=["2 paquets de cheveux offerts", "Inclus dans le prix", "Sur rendez-vous"]),
+    dict(id="transplas", title="Transplas", price="65", pre="dès", img="transplas-4", badge="2 ou 4 tresses",
+         flyer="affiche-transplas",
+         lead="Deux transplas 65 CHF, quatre transplas 100 CHF. Propre, élégant et durable. Les cheveux s'achètent sur place.",
+         incl=["2 transplas : 65 CHF", "4 transplas : 100 CHF", "Cheveux à acheter sur place"]),
+    dict(id="crochet", title="Crochet bouclé", price="120", img="crochet-volume", badge="4 modèles",
+         flyer="affiche-crochet",
+         lead="Quatre bouclés au choix (classique, volume, naturel, tendance), chacun en plusieurs couleurs. Cheveux et pose inclus.",
+         incl=["Cheveux et pose inclus", "4 modèles, plusieurs couleurs", "Léger et naturel"]),
+    dict(id="garcons", title="Tresses garçons", price="60", img="garcon-4", badge="Nattes collées",
+         flyer="affiche-garcons",
+         lead="Des nattes collées pour les garçons : lignes droites, motifs, couronnes. Choisissez le modèle, on s'occupe du reste.",
+         incl=["Lignes, motifs ou couronnes", "Propre et durable", "Sur rendez-vous"]),
     dict(id="tissage", title="Tissage cousu", price="135", pre="dès", img="tissage-a", badge="Coiffage inclus",
          flyer="affiche-tissage",
          lead="Pose de tissage cousue sur nattes, pour un résultat naturel. Coiffage compris.",
@@ -113,6 +133,7 @@ MENU = {
     "famille": ("Hommes & enfants", [
         ("Tresses hommes · 6 modèles", "90", "Cornrows, zigzag, couronne, motifs…"),
         ("Tresses enfants avec perles colorées", "100", "Légères, confortables, perles au choix"),
+        ("Tresses garçons (nattes collées)", "60", "Lignes, motifs, couronnes"),
     ]),
     "tissage": ("Tissage & extensions", [
         ("Extensions", "135", "Pose d'extensions ou tissage"),

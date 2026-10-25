@@ -173,19 +173,31 @@ def page(slug, title, desc, body, og="perles-a", ld=None):
 </html>'''
 
 # ---------------------------------------------------------------- blocks
-def pintro(crumb, h1, intro, pic, price=None, pre=None, btns=True, extra=""):
+def pintro(crumb, h1, intro, pic, price=None, pre=None, btns=True, extra="", sq=False):
     b = f'<div class="btns"><button class="btn btn--gold" type="button" data-book>{I["cal"]}Prendre rendez-vous</button><a class="btn btn--line" href="{wa()}" target="_blank" rel="noopener">{I["wa"]}WhatsApp</a></div>' if btns else ""
     return f'''<section class="pintro"><div class="wrap pintro-grid">
   <div><nav class="crumbs" aria-label="Fil d'Ariane"><a href="./">Accueil</a><span>›</span><span>{crumb}</span></nav>
     <h1 class="h1">{h1}</h1><p class="intro">{intro}</p>{b}{extra}</div>
-  <div class="pintro-pic"><div class="ph">{pic}</div>{medal(price, pre)}</div>
+  <div class="pintro-pic"><div class="ph{" sq" if sq else ""}">{pic}</div>{medal(price, pre)}</div>
 </div></section>'''
 
 def book_msg(o):
     return wa("Bonjour Mama Africa, je souhaite réserver : " + o["title"] + " (" + o["price"] + " CHF).")
 
+def price_txt(o):
+    return ((o["pre"] + " ") if o.get("pre") else "") + o["price"] + " CHF"
+
+def flyer_btn(o, sizes):
+    cap = esc(o["title"] + ", " + price_txt(o))
+    return f'<button class="ph sq" type="button" data-flyer="{o["flyer"]}" data-cap="{cap}" aria-label="Agrandir l\'affiche : {esc(o["title"])}">{img(o["flyer"], "Affiche " + o["title"], sizes)}</button>'
+
 def poster(o):
-    fl = f'<button class="fly" type="button" data-flyer="{o["flyer"]}">Voir l\'affiche</button>' if o.get("flyer") else ""
+    if o.get("flyer"):
+        return f'''<article class="poster" data-reveal>
+  {flyer_btn(o, "(max-width: 760px) 50vw, 25vw")}
+  <h3>{o["title"]}</h3><p><b>{price_txt(o)}</b> · {o["incl"][0]}</p>
+  <div class="acts"><a class="btn btn--sm" href="{book_msg(o)}" target="_blank" rel="noopener">Réserver</a><a class="fly" href="offres#{o["id"]}">Détails</a></div>
+</article>'''
     return f'''<article class="poster" data-reveal>
   <a class="ph" href="offres#{o["id"]}">{img(o["img"], o["title"], "(max-width: 760px) 76vw, 25vw")}<span class="gift">{o["badge"]}</span>{medal(o["price"], o.get("pre"))}</a>
   <h3>{o["title"]}</h3><p>{o["incl"][0]}</p>
@@ -194,10 +206,12 @@ def poster(o):
 
 def detail(o, rev=False):
     incl = "".join(f"<li>{x}</li>" for x in o["incl"])
-    fl = f'<button class="fly" type="button" data-flyer="{o["flyer"]}">Voir l\'affiche</button>' if o.get("flyer") else ""
+    fl = f'<button class="fly" type="button" data-flyer="{o["flyer"]}" data-cap="{esc(o["title"] + ", " + price_txt(o))}">Agrandir l\'affiche</button>' if o.get("flyer") else ""
+    pic = (f'<div class="d-pic d-pic--fly" data-reveal>{flyer_btn(o, "(max-width: 960px) 100vw, 46vw")}</div>' if o.get("flyer") else
+           f'<div class="d-pic" data-reveal>{img(o["img"], o["title"], "(max-width: 960px) 100vw, 46vw")}<span class="gift">{o["badge"]}</span>{medal(o["price"], o.get("pre"))}</div>')
     return f'''<article class="detail{" rev" if rev else ""}" id="{o["id"]}">
-  <div class="d-pic" data-reveal>{img(o["img"], o["title"], "(max-width: 960px) 100vw, 46vw")}<span class="gift">{o["badge"]}</span>{medal(o["price"], o.get("pre"))}</div>
-  <div class="d-txt" data-reveal><h2>{o["title"]}</h2><p class="intro">{o["lead"]}</p><ul class="checks">{incl}</ul>
+  {pic}
+  <div class="d-txt" data-reveal><h2>{o["title"]}</h2><p class="d-price">{price_txt(o)}</p><p class="intro">{o["lead"]}</p><ul class="checks">{incl}</ul>
     <div class="d-acts"><a class="btn btn--gold" href="{book_msg(o)}" target="_blank" rel="noopener">{I["wa"]}{"Réserver ce soin" if o.get("id", "").startswith(("soin", "renovation")) else "Réserver ce modèle"}</a>{fl}</div></div>
 </article>'''
 
@@ -322,6 +336,8 @@ def shop():
 </div>'''
 
 # ================================================================ PAGES
+POPULAR = ("twist-curly", "boheme-4", "promo-boheme", "rasta-elegance", "tresses-africaines", "transplas", "extensions-longues", "hommes")
+
 def p_index():
     p = OFFER["perles"]
     body = f'''
@@ -342,7 +358,12 @@ def p_index():
 
 <section class="sec sec--paper" id="offres"><div class="wrap">
   <div class="shead"><div>{tag("Les offres du moment")}<h2 class="h2">Les mèches sont pour nous</h2></div><a class="more" href="offres">Toutes les offres {I["arr"]}</a></div>
-  <div class="posters">{"".join(poster(OFFER[k]) for k in ("perles", "boheme", "hommes", "enfants"))}</div>
+  <div class="posters">{"".join(poster(OFFER[k]) for k in ("perles", "boheme", "garcons", "enfants"))}</div>
+</div></section>
+
+<section class="sec" id="modeles"><div class="wrap">
+  <div class="shead"><div>{tag("Les plus demandés")}<h2 class="h2">Les modèles les plus demandés</h2></div><a class="more" href="tresses">Tous les modèles {I["arr"]}</a></div>
+  <div class="posters posters--grid">{"".join(poster(OFFER[k]) for k in POPULAR)}</div>
 </div></section>
 
 <div class="ribbon"></div>
@@ -353,11 +374,6 @@ def p_index():
 <div class="ribbon"></div>
 
 <section class="sec sec--paper"><div class="wrap">{soin_videos()}</div></section>
-
-<section class="sec" id="codes"><div class="wrap">
-  <div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Choisissez votre modèle par son code</h2></div><p class="intro">Neuf modèles de nattes et de tresses, de 100 à 135 CHF. Indiquez simplement le code en réservant.</p></div>
-  {codes_block()}
-</div></section>
 
 <section class="sec sec--sand"><div class="wrap">
   <div class="shead"><div>{tag("Au salon")}<h2 class="h2">Notre travail, sans filtre</h2></div><a class="more" href="galerie">La galerie {I["arr"]}</a></div>
@@ -374,32 +390,33 @@ def p_index():
     return page("index", "Mama Africa Beauty · Tresses africaines à Payerne",
                 "Salon de tresses africaines à Payerne : tresses avec perles, bohème, box braids, nattes, tissage, soins et perruques. Mèches incluses sur nos offres.", body)
 
+TRESSES_F = ("perles", "boheme", "boheme-4", "promo-boheme", "tresses-africaines", "twist-curly", "rasta-elegance", "transplas", "crochet")
+
 def p_tresses():
-    sel = [OFFER[k] for k in ("perles", "boheme", "tresses-africaines", "twist-curly", "rasta-elegance")]
+    grid = lambda keys, c: f'<div class="posters posters--grid" style="--c:{c}">{"".join(poster(OFFER[k]) for k in keys)}</div>'
     body = pintro("Tresses", "Tresses africaines à Payerne",
-                  "Perles, bohème, box braids, twist &amp; curly, rasta, nattes, crochet et transplas. Choisissez un style ou un code du catalogue.",
+                  "Perles, bohème, box braids, twist &amp; curly, rasta, transplas, crochet, nattes pour garçons et tresses hommes. Touchez une affiche pour l'agrandir, ou choisissez un code du catalogue.",
                   img("africaines-b", "Tresses africaines blond 613", "(max-width: 960px) 100vw, 40vw", eager=True), "130", "dès") + f'''
-<section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(sel))}</div></section>
-<section class="sec" id="codes"><div class="wrap"><div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Choisissez votre modèle par son code</h2></div></div>{codes_block()}</div></section>
+<section class="sec sec--paper" id="femmes"><div class="wrap"><div class="shead"><div>{tag("Femmes")}<h2 class="h2">Tresses pour femmes</h2></div><a class="more" href="offres">Détail des offres {I["arr"]}</a></div>{grid(TRESSES_F, 3)}</div></section>
+<section class="sec" id="famille"><div class="wrap"><div class="shead"><div>{tag("Enfants, garçons et hommes")}<h2 class="h2">Pour toute la famille</h2></div><a class="more" href="hommes-enfants">Hommes &amp; enfants {I["arr"]}</a></div>{grid(("enfants", "garcons", "hommes"), 3)}</div></section>
+<section class="sec sec--paper" id="codes"><div class="wrap"><div class="shead"><div>{tag("Le catalogue")}<h2 class="h2">Choisissez votre modèle par son code</h2></div><p class="intro">Touchez un code pour voir le modèle en grand, puis réservez-le sur WhatsApp.</p></div>{codes_block()}</div></section>
 <section class="sec sec--sand"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Tresses et nattes</h2></div><a class="more" href="tarifs">Tous les tarifs {I["arr"]}</a></div>{ptables(("tresses",))}</div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("tresses", "Tresses africaines à Payerne · Perles, bohème, box braids | Mama Africa",
-                "Tresses avec perles 130 CHF (perles et mèches offertes), bohème et box braids 150 CHF mèches incluses, twist & curly, rasta, nattes, crochet à Payerne.", body, og="perles-a")
+                "Tresses avec perles 130 CHF (perles et mèches offertes), bohème et box braids 150 CHF mèches incluses, twist & curly, rasta, transplas, crochet, tresses garçons 60 CHF à Payerne.", body, og="perles-a")
 
 def p_famille():
     h, e = OFFER["hommes"], OFFER["enfants"]
-    hm = dict(h, incl=MEN_STYLES)
     body = pintro("Hommes &amp; enfants", "Tresses homme et tresses enfant à Payerne",
-                  "Six modèles de cornrows pour hommes à 90 CHF. Des tresses légères avec perles colorées pour les filles à 100 CHF, et des nattes collées pour les garçons.",
-                  img("homme-style-1", "Tresses homme, cornrows classiques", "(max-width: 960px) 100vw, 40vw", eager=True), "90", "dès") + f'''
-<section class="sec sec--paper"><div class="wrap">{detail(hm)}</div></section>
-<section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tresses hommes")}<h2 class="h2">Six modèles, un prix : 90 CHF</h2></div><button class="fly" type="button" data-flyer="affiche-hommes">Voir l'affiche</button></div>
+                  "Six modèles de cornrows pour hommes à 90 CHF. Des tresses légères avec perles colorées pour les filles à 100 CHF, et des nattes collées pour les garçons à 60 CHF.",
+                  f'<button type="button" data-flyer="affiche-hommes" data-cap="Tresses hommes, 90 CHF" aria-label="Agrandir l\'affiche des tresses hommes">{img("affiche-hommes", "Affiche des modèles de tresses hommes, 90 CHF", "(max-width: 960px) 100vw, 40vw", eager=True)}</button>', sq=True) + f'''
+<section class="sec sec--paper"><div class="wrap"><div class="shead"><div>{tag("Tresses hommes")}<h2 class="h2">Six modèles, un prix : 90 CHF</h2></div><a class="btn btn--sm" href="{book_msg(h)}" target="_blank" rel="noopener">Réserver</a></div>
 <div class="mstyles">{"".join(f'<figure data-reveal><div class="ph">{img(f"homme-style-{i}", s, "(max-width: 760px) 50vw, 30vw")}</div><figcaption>{s}</figcaption></figure>' for i, s in enumerate(MEN_STYLES, 1))}</div></div></section>
-<section class="sec sec--paper"><div class="wrap">{detail(e)}
+<section class="sec"><div class="wrap">{detail(e)}
 <div class="mstyles mstyles--4" style="margin-top:40px">{"".join(f'<figure data-reveal><div class="ph">{img(n, "Tresses enfant avec perles", "(max-width: 760px) 50vw, 24vw")}</div></figure>' for n in ("enfants-a", "enfants-b", "enfants-c", "enfants-d"))}</div></div></section>
-<section class="sec"><div class="wrap"><div class="shead"><div>{tag("Garçons")}<h2 class="h2">Nattes collées pour garçons</h2></div><p class="intro">Lignes droites, motifs, couronnes : choisissez un modèle, envoyez-nous la photo sur WhatsApp, nous vous donnons le prix.</p></div>
+<section class="sec sec--paper" id="garcons"><div class="wrap"><div class="shead"><div>{tag("Garçons")}<h2 class="h2">Tresses garçons : 60 CHF</h2></div><p class="intro">Lignes droites, motifs, couronnes : choisissez un modèle et envoyez-nous la photo sur WhatsApp. <button class="fly" type="button" data-flyer="affiche-garcons" data-cap="Tresses garçons, 60 CHF">Voir l'affiche</button></p></div>
 <div class="boys"><figure class="vcard boys-vid" data-reveal><div class="ph">{video("garcon-nattes", "Nattes collées pour garçon, réalisées au salon")}<span class="real">Fait au salon</span></div><figcaption><b>Réalisé chez Mama Africa</b><span>Nattes collées pour garçon, à la boutique de Payerne.</span></figcaption></figure>
-<div class="boys-grid">{"".join(f'<figure data-reveal><div class="ph">{img(f"garcon-{i}", "Modèle de nattes pour garçon", "(max-width: 760px) 33vw, 18vw")}</div></figure>' for i in range(1, 10))}<p class="hint" style="grid-column:1/-1;margin-top:4px">Idées de modèles. <a class="fly" href="{wa("Bonjour Mama Africa, je souhaite des nattes pour mon fils. Voici le modèle :")}" target="_blank" rel="noopener">Demander un prix sur WhatsApp</a></p></div></div></div></section>
+<div class="boys-grid">{"".join(f'<figure data-reveal><div class="ph">{img(f"garcon-{i}", "Modèle de nattes pour garçon", "(max-width: 760px) 33vw, 18vw")}</div></figure>' for i in range(1, 10))}<p class="hint" style="grid-column:1/-1;margin-top:4px">Idées de modèles. <a class="fly" href="{wa("Bonjour Mama Africa, je souhaite des tresses garçon (60 CHF) pour mon fils. Voici le modèle :")}" target="_blank" rel="noopener">Réserver sur WhatsApp</a></p></div></div></div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("hommes-enfants", "Tresses hommes et enfants à Payerne | Mama Africa", "Tresses hommes 90 CHF (cornrows, zigzag, couronne, motifs) et tresses enfants avec perles colorées 100 CHF à Payerne.", body, og="homme-style-5")
 
