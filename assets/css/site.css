@@ -207,6 +207,19 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
 .vcard figcaption{margin-top:14px}
 .vcard figcaption b{display:block;font:500 22px/1.2 var(--serif)}
 .vcard figcaption span{display:block;color:var(--muted);font-size:15px;margin-top:4px}
+/* embedded brand videos: poster first, the platform player loads on tap */
+.ecards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,26px)}
+.ecard .ph{display:block;width:100%;cursor:pointer}
+.ecard .ph img,.ecard .ph iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.ecard .play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(42,23,14,.72);box-shadow:0 0 0 2px var(--gold-2);transition:transform .35s var(--ease)}
+.ecard .play::after{content:"";position:absolute;left:27px;top:21px;border-style:solid;border-width:13px 0 13px 21px;border-color:transparent transparent transparent var(--gold-2)}
+.ecard .ph:hover .play{transform:scale(1.08)}
+.ecard figcaption small{display:block;margin-top:6px;font-size:12.5px;color:var(--muted);font-style:italic}
+.visit-r{display:grid;gap:18px;align-content:start}
+.facade{margin:0;position:relative;border-radius:var(--r);overflow:hidden}
+.facade img{display:block;width:100%;height:auto;aspect-ratio:720/690;object-fit:cover;max-height:420px}
+.facade figcaption{position:absolute;left:12px;bottom:12px;right:12px;padding:8px 12px;border-radius:8px;background:rgba(42,23,14,.78);color:var(--on);font-size:13.5px}
+.visit-r .map{min-height:300px}
 .vprice{position:absolute;left:12px;top:12px;padding:7px 11px;border-radius:9px;background:var(--cacao);color:var(--gold-2);font:600 14px var(--sans);box-shadow:0 0 0 1.5px var(--gold)}
 .vcard .fly{display:inline-block;margin-top:8px}
 .snd{position:absolute;right:12px;bottom:12px;padding:9px 13px;border-radius:10px;background:rgba(42,23,14,.82);color:var(--on);font:600 13.5px var(--sans);backdrop-filter:blur(6px)}
@@ -519,6 +532,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0
   .posters{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:76%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(var(--gut) * -1);padding:0 var(--gut)}
   .posters::-webkit-scrollbar{display:none}
   .poster{scroll-snap-align:start}
+  .ecards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(var(--gut) * -1);padding:0 var(--gut)}
+  .ecard{scroll-snap-align:start}
   .posters--grid{grid-auto-flow:row;grid-template-columns:1fr 1fr;overflow:visible;margin:0;padding:0;gap:26px 14px}
   .posters--grid .poster h3{font-size:19px;margin-top:12px}
   .posters--grid .poster p{font-size:13.5px}

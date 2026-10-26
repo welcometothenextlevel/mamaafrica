@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "45"  # cache-busting for css/js
+V = "46"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -79,11 +79,11 @@ OFFERS = [
          flyer="affiche-crochet",
          lead="Quatre bouclés au choix (classique, volume, naturel, tendance), chacun en plusieurs couleurs. Cheveux et pose inclus.",
          incl=["Cheveux et pose inclus", "4 modèles, plusieurs couleurs", "Léger et naturel"]),
-    dict(id="garcons", title="Tresses garçons", price="60", img="garcon-4", badge="Nattes collées",
-         flyer="affiche-garcons",
-         lead="Des nattes collées pour les garçons : lignes droites, motifs, couronnes. Choisissez le modèle, on s'occupe du reste.",
-         incl=["Lignes, motifs ou couronnes", "Propre et durable", "Sur rendez-vous"]),
-    dict(id="tissage", title="Tissage cousu", price="135", pre="dès", img="tissage-a", badge="Coiffage inclus",
+    dict(id="garcons", title="Tresses garçons", price="50", img="garcon-4", badge="Avec ou sans ajouts",
+         flyer="affiche-garcons-50",
+         lead="Des nattes collées pour les garçons, avec ou sans ajouts : lignes droites, motifs, couronnes. Choisissez le modèle, on s'occupe du reste.",
+         incl=["Avec ou sans ajouts", "Lignes, motifs ou couronnes", "Propre et durable"]),
+    dict(id="tissage", title="Tissage cousu", price="120", pre="dès", img="tissage-a", badge="Coiffage inclus",
          flyer="affiche-tissage",
          lead="Pose de tissage cousue sur nattes, pour un résultat naturel. Coiffage compris.",
          incl=["Pose professionnelle", "Tresses bien faites", "Finition soignée"]),
@@ -103,8 +103,16 @@ OFFERS = [
          flyer="affiche-meu-cacho",
          lead="Un soin pour mettre vos boucles à l'honneur, avec la crème Ammatrão Meu Cacho : des boucles bien définies et un volume naturel.",
          incl=["Définition des boucles", "Volume naturel", "Soin réalisé au salon"]),
-    dict(id="renovation-perruque", title="Rénovation de perruque", price="110", img="perruque-b", badge="Seconde vie",
-         flyer="affiche-renovation-perruque",
+    dict(id="soin-botox", title="Botox capillaire Onix", price="95", img="lissage-a", badge="Brillance, douceur, souplesse",
+         flyer="affiche-botox-onix",
+         lead="Le soin botox capillaire Onix offre un nouvel éclat à vos cheveux : brillance, douceur et souplesse. Le traitement est réalisé au salon, sur rendez-vous.",
+         incl=["Brillance, douceur, souplesse", "95 CHF le traitement", "Sur rendez-vous"]),
+    dict(id="soin-botox-gold", title="Botox Lisoplastia Gold Show", price="95", img="lissage-a", badge="Huile d'argan, coco, karité",
+         flyer="affiche-botox-gold",
+         lead="Un botox ultra hydratant, anti-volume et anti-frisottis, à l'huile d'argan, à l'huile de coco et au beurre de karité, sans formol. Traitement au salon, produit aussi disponible à l'achat.",
+         incl=["Ultra hydratant, anti-frisottis", "0 % formol", "Produit aussi en vente"]),
+    dict(id="renovation-perruque", title="Rénovation de perruque", price="50", img="perruque-b", badge="Seconde vie",
+         flyer="affiche-perruque-50",
          lead="Nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle.",
          incl=["Nettoyage, soin, démêlage", "Remise en forme, ajustement", "Finition professionnelle"]),
 ]
@@ -120,24 +128,24 @@ MENU = {
     "tresses": ("Tresses & nattes", [
         ("Nattes simples", "70", "Nattes simples et naturelles"),
         ("Rasta courtes", "100", "Nattes collées avec locks courtes"),
-        ("Diverses tresses avec ajout", "110", "Tresses variées avec mèches"),
+        ("Diverses tresses avec ajout", "100", "Tresses variées avec mèches"),
         ("Tresses avec perles", "130", "Perles + 1 paquet de mèches offerts, coiffure comprise"),
         ("Rasta longues · Élégance", "135", "Cheveux inclus, soin, finition, baby hair"),
         ("Tresses africaines", "150", "Paquets de mèches offerts"),
         ("Tresses bohème · 4 modèles", "150", "Paquets de mèches inclus"),
         ("Twist & Curly", "150", "Longue tenue"),
-        ("Rasta longues", "150", "Nattes collées avec locks longues"),
+        ("Rasta longues", "120", "Nattes collées avec locks longues"),
         ("Crochet bouclé", "120", "Cheveux et pose inclus"),
         ("Transplas · 2 / 4 tresses", "65 / 100", "Cheveux à acheter sur place"),
     ]),
     "famille": ("Hommes & enfants", [
         ("Tresses hommes · 6 modèles", "90", "Cornrows, zigzag, couronne, motifs…"),
         ("Tresses enfants avec perles colorées", "100", "Légères, confortables, perles au choix"),
-        ("Tresses garçons (nattes collées)", "60", "Lignes, motifs, couronnes"),
+        ("Tresses garçons", "50", "Avec ou sans ajouts"),
     ]),
     "tissage": ("Tissage & extensions", [
-        ("Extensions", "135", "Pose d'extensions ou tissage"),
-        ("Tissage cousu sur nattes", "dès 135", "Coiffage inclus"),
+        ("Extensions ou tissage", "120", "Pose d'extensions ou tissage"),
+        ("Tissage cousu sur nattes", "dès 120", "Coiffage inclus"),
         ("Extensions longues", "150", "Coiffage inclus"),
     ]),
     "soins": ("Soins, lissage & perruques", [
@@ -146,7 +154,10 @@ MENU = {
         ("Soin nourrissant collagène & karité", "95", "Masque Ecolchi, pour cheveux secs et abîmés"),
         ("Soin douceur & brillance", "95", "Rituel EVORK, shampoing et après-shampoing"),
         ("Soin des boucles Meu Cacho", "95", "Définition des boucles et volume naturel"),
-        ("Rénovation de perruque", "110", "Nettoyage, soin, remise en forme"),
+        ("Soin au collagène Karseell", "95", "Douceur, souplesse, brillance"),
+        ("Botox capillaire Onix", "95", "Brillance, douceur, souplesse"),
+        ("Botox Lisoplastia Gold Show", "95", "Ultra hydratant, anti-frisottis"),
+        ("Rénovation de perruque", "50", "Nettoyage, soin, remise en forme"),
         ("Bio-plastie capillaire", "95", "Sur rendez-vous téléphonique"),
         ("Soin cheveux lisses ou ondulés", "85", ""),
         ("Traitement produits Lowell", "95", ""),
@@ -188,5 +199,5 @@ FAQ = [
     ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 624 29 24. La boutique est ouverte sans rendez-vous du lundi au samedi."),
     ("Combien de temps dure une pose ?", "Cela dépend du modèle, de la longueur et de l'épaisseur. Envoyez une photo sur WhatsApp, nous vous donnons une estimation avant le rendez-vous."),
     ("Vous coiffez les enfants ?", "Oui : nattes, transplas et tresses se font aussi pour les enfants. Précisez l'âge en réservant."),
-    ("Vous rénovez les perruques ?", "Oui, 110 CHF : nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle."),
+    ("Vous rénovez les perruques ?", "Oui, 50 CHF : nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle."),
 ]

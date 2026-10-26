@@ -190,6 +190,16 @@
     });
   });
 
+  /* ---------- brand videos: swap the poster for the platform player on tap ---------- */
+  d.querySelectorAll('[data-embed]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = d.createElement('iframe'), box = d.createElement('div');
+      f.src = b.dataset.embed; f.title = b.getAttribute('aria-label') || 'Vidéo';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+      box.className = 'ph'; box.appendChild(f); b.replaceWith(box);
+    }, { once: true });
+  });
+
   /* ---------- model codes ---------- */
   d.querySelectorAll('.codes').forEach(function (grid) {
     var box = grid.parentNode, sel = box.querySelector('#code-sel'), link = box.querySelector('#code-wa');
