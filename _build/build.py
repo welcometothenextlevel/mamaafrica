@@ -126,7 +126,7 @@ def overlays():
 
 def schema():
     d = {"@context": "https://schema.org", "@type": "HairSalon", "name": NAME, "slogan": SLOGAN,
-         "image": BASE + "assets/img/logo.png", "url": BASE, "telephone": TEL, "priceRange": "CHF 40 – 150",
+         "image": BASE + "assets/img/logo.png", "url": BASE, "telephone": TEL, "priceRange": "CHF 40 – 120",
          "address": {"@type": "PostalAddress", "streetAddress": STREET, "postalCode": "1530", "addressLocality": "Payerne", "addressRegion": "VD", "addressCountry": "CH"},
          "geo": {"@type": "GeoCoordinates", "latitude": GEO[0], "longitude": GEO[1]},
          "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:00", "closes": "18:30"}],
@@ -270,9 +270,9 @@ def strip():
 def soin_videos(head=True):
     vids = [("soin-lissage", "Soin douceur & brillance", "Rituel EVORK : des cheveux doux, soyeux et brillants.", "affiche-soin-brillance"),
             ("soin-masque", "Soin nourrissant collagène & karité", "Masque Ecolchi pour cheveux secs et abîmés.", "affiche-soin-collagene")]
-    cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<span class="vprice">95 CHF</span><button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span><button class="fly" type="button" data-flyer="{f}">Voir l\'affiche</button></figcaption></figure>''' for v, t, d, f in vids)
+    cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<span class="vprice"><small>Prix du soin</small>65 CHF</span><button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span><button class="fly" type="button" data-flyer="{f}">Voir l\'affiche</button></figcaption></figure>''' for v, t, d, f in vids)
     return f'''<div class="vsplit"><div>{tag("Les soins en vidéo")}<h2 class="h2">Voyez le résultat</h2>
-  <p class="intro" style="margin:18px 0 26px">Botox capillaire Onix ou Gold Show à 85 CHF. Et à 95 CHF : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell et le soin des boucles Meu Cacho. Les produits sont aussi en vente à la boutique.</p>
+  <p class="intro" style="margin:18px 0 26px">Nos soins capillaires sont à 65 CHF : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell, le soin des boucles Meu Cacho et le botox Onix. Botox Gold Show : 85 CHF. Les produits sont aussi en vente à la boutique.</p>
   <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin.")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
   <div class="vcards">{cards}</div></div>'''
 
@@ -351,9 +351,9 @@ def product_card(f, t, d):
 
 # videos published by the brands / creators, shown through the platform's own player (credited, not re-uploaded)
 PRODUCT_VIDEOS = [
-    ("emb-botox-onix", "https://www.youtube-nocookie.com/embed/O9_F1Pl2p8U?autoplay=1&rel=0&playsinline=1", "Botox capillaire Onix", "Le mode d'emploi et le résultat, pas à pas. Soin à 85 CHF au salon.", "affiche-botox-onix", "All-Keratin, sur YouTube"),
+    ("emb-botox-onix", "https://www.youtube-nocookie.com/embed/O9_F1Pl2p8U?autoplay=1&rel=0&playsinline=1", "Botox capillaire Onix", "Le mode d'emploi et le résultat, pas à pas. Soin à 65 CHF au salon.", "affiche-botox-onix", "All-Keratin, sur YouTube"),
     ("emb-tonico-poderoso", "https://www.youtube-nocookie.com/embed/d8I2RCNoftc?autoplay=1&rel=0&playsinline=1", "Tônico Poderoso", "Onze mois d'utilisation sur cheveux crépus. En vente à la boutique.", "affiche-tonico-poderoso", "@suhromao, sur YouTube"),
-    ("emb-meu-cacho", "https://www.facebook.com/plugins/video.php?href=" + quote("https://www.facebook.com/watch/?v=1395441502563862", safe="") + "&show_text=false&autoplay=true", "Ammatrão Meu Cacho", "Des boucles définies, sans rien changer à vos cheveux. Soin à 95 CHF.", "affiche-meu-cacho", "Anna Telles, sur Facebook"),
+    ("emb-meu-cacho", "https://www.facebook.com/plugins/video.php?href=" + quote("https://www.facebook.com/watch/?v=1395441502563862", safe="") + "&show_text=false&autoplay=true", "Ammatrão Meu Cacho", "Des boucles définies, sans rien changer à vos cheveux. Soin à 65 CHF.", "affiche-meu-cacho", "Anna Telles, sur Facebook"),
 ]
 
 def product_videos():
@@ -429,7 +429,7 @@ def p_tresses():
 <section class="sec sec--sand"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Tresses et nattes</h2></div><a class="more" href="tarifs">Tous les tarifs {I["arr"]}</a></div>{ptables(("tresses",))}</div></section>
 <div class="ribbon"></div>{booking()}'''
     return page("tresses", "Tresses africaines à Payerne · Perles, bohème, box braids | Mama Africa",
-                "Tresses avec perles 85 CHF (perles et mèches offertes), tresses africaines 110 CHF, bohème dès 110 CHF, rasta Élégance 90 CHF, transplas dès 40 CHF, twist & curly, crochet, tresses garçons 50 CHF à Payerne.", body, og="perles-a")
+                "Tresses avec perles 85 CHF (perles et mèches offertes), tresses africaines 110 CHF, bohème dès 100 CHF, twist & curly 80 CHF, rasta Élégance 90 CHF, transplas dès 40 CHF, crochet, tresses garçons 50 CHF à Payerne.", body, og="perles-a")
 
 def p_famille():
     h, e = OFFER["hommes"], OFFER["enfants"]
@@ -471,7 +471,7 @@ def p_soins():
   <div class="frame" data-reveal>{img("boucles-b", "Boucles définies après un soin", "(max-width: 960px) 100vw, 45vw")}</div>
 </div></section>
 <div class="ribbon"></div>{booking()}'''
-    return page("soins", "Soins, défrisage & rénovation de perruque à Payerne | Mama Africa", "Défrisage 65 CHF, brushing 65 CHF, botox capillaire 85 CHF, soins 95 CHF, pose et rénovation de perruque 50 CHF, bio-plastie, coupe et teinture à Payerne.", body, og="perruque-b")
+    return page("soins", "Soins, défrisage & rénovation de perruque à Payerne | Mama Africa", "Défrisage 65 CHF, brushing 65 CHF, soins et botox capillaire 65 CHF, pose et rénovation de perruque 50 CHF, bio-plastie, coupe et teinture à Payerne.", body, og="perruque-b")
 
 def p_beaute():
     body = pintro("Beauté", "Extensions de cils et maquillage à Payerne",
@@ -492,7 +492,7 @@ def p_offres():
                   img("boheme-b", "Tresses bohème", "(max-width: 960px) 100vw, 40vw", eager=True), "40", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{"".join(detail(o, i % 2 == 1) for i, o in enumerate(OFFERS))}</div></section>
 <div class="ribbon"></div>{booking()}'''
-    return page("offres", "Offres du moment · Mama Africa Payerne", "Tresses avec perles 85 CHF, tresses africaines 110 CHF, promo bohème 120 CHF, tresses hommes 69 CHF, enfants 65 CHF, garçons 50 CHF, pose et rénovation de perruque 50 CHF.", body, og="boheme-a")
+    return page("offres", "Offres du moment · Mama Africa Payerne", "Tresses avec perles 85 CHF, twist & curly 80 CHF, tresses bohème 100 CHF, tresses africaines 110 CHF, tresses hommes 69 CHF, enfants 65 CHF, garçons 50 CHF, pose et rénovation de perruque 50 CHF.", body, og="boheme-a")
 
 def p_tarifs():
     body = pintro("Tarifs", "Tarifs des tresses et soins à Payerne",
@@ -547,7 +547,7 @@ GALLERY = [  # (image, caption, filter, is_real_salon_photo) — her own images 
     ("boutique-vitrine", "L'entrée de la boutique", "salon", True),
     
 ]
-FLYERS = ["affiche-perles-85", "affiche-africaines-110", "affiche-4-modeles-110", "affiche-promo-boheme-120", "affiche-offre-coiffure", "affiche-twist-curly",
+FLYERS = ["affiche-perles-85", "affiche-africaines-110", "affiche-4-modeles-110", "affiche-promo-boheme-120", "affiche-boheme-100", "affiche-twist-80",
           "affiche-rasta-90", "affiche-transplas-40", "affiche-crochet", "affiche-hommes-69", "affiche-enfants-65", "affiche-garcons-50",
           "affiche-tissage-100", "affiche-extensions-100", "affiche-botox-onix", "affiche-botox-gold", "affiche-soin-collagene", "affiche-lissage",
           "affiche-meu-cacho", "affiche-pose-perruque", "affiche-perruque-50", "affiche-codes", "affiche-tarifs", "affiche-nouvelles-arrivees",
