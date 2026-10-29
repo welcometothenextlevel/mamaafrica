@@ -272,7 +272,7 @@ def soin_videos(head=True):
             ("soin-masque", "Soin nourrissant collagène & karité", "Masque Ecolchi pour cheveux secs et abîmés.", "affiche-soin-collagene")]
     cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<span class="vprice"><small>Prix du soin</small>65 CHF</span><button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span><button class="fly" type="button" data-flyer="{f}">Voir l\'affiche</button></figcaption></figure>''' for v, t, d, f in vids)
     return f'''<div class="vsplit"><div>{tag("Les soins en vidéo")}<h2 class="h2">Voyez le résultat</h2>
-  <p class="intro" style="margin:18px 0 26px">Nos soins capillaires sont à 65 CHF : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell, le soin des boucles Meu Cacho et le botox Onix. Botox Gold Show : 85 CHF. Les produits sont aussi en vente à la boutique.</p>
+  <p class="intro" style="margin:18px 0 26px">Nos soins capillaires sont à 65 CHF : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell, le soin des boucles Meu Cacho, le botox Onix et le soin pousse cheveux longs. Botox Gold Show : 85 CHF. Les produits sont aussi en vente à la boutique.</p>
   <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin.")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
   <div class="vcards">{cards}</div></div>'''
 
@@ -336,6 +336,7 @@ def shop():
 </div>'''
 
 NEW_PRODUCTS = [
+    ("gamme-cheveux-longs", "Gamme complète cheveux longs · 199 CHF", "9 produits pour la pousse des cheveux crépus : shampoing, démêlant, soin botox africain, spray anti-casse, huile pousse rapide, poudre, Super Boost, Super Volume. Moins cher qu'au détail."),
     ("affiche-nouvelles-arrivees", "Nouvelles arrivées", "Umectação Oliva, Mielle, Salon Line, Gold Spell, botox capillaire et plus."),
     ("affiche-masque-super", "Masque capillaire Super", "Un soin complet, texture et parfum surprenants."),
     ("affiche-tonico-poderoso", "Tônico Poderoso Gold Spell", "Aide à fortifier les cheveux et à limiter la casse."),
@@ -462,7 +463,7 @@ def p_soins():
     body = pintro("Soins &amp; perruques", "Coiffeuse femme à Payerne : soins, lissage et perruques",
                   "Coupe, couleur, brushing, défrisage, lissage et soins profonds : une coiffeuse pour toutes les femmes, quels que soient vos cheveux, crépus, bouclés, ondulés ou lisses. Et vos perruques retrouvent une seconde vie.",
                   img("perruque-a", "Cheveux lisses et brillants", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
-<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-botox"])}{detail(OFFER["soin-botox-gold"], True)}{detail(OFFER["soin-collagene"])}{detail(OFFER["soin-brillance"], True)}{detail(OFFER["soin-boucles"])}{detail(OFFER["pose-perruque"], True)}{detail(OFFER["renovation-perruque"])}</div></section>
+<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-pousse"])}{detail(OFFER["soin-botox"], True)}{detail(OFFER["soin-botox-gold"])}{detail(OFFER["soin-collagene"], True)}{detail(OFFER["soin-brillance"])}{detail(OFFER["soin-boucles"], True)}{detail(OFFER["pose-perruque"])}{detail(OFFER["renovation-perruque"], True)}</div></section>
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
 <section class="sec sec--paper"><div class="wrap">{product_videos()}</div></section>
 <section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Soins et lissage</h2></div></div>{ptables(("soins",))}</div></section>
@@ -518,7 +519,7 @@ def p_boutique():
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
 <section class="sec sec--paper"><div class="wrap"><div class="shead"><div>{tag("En rayon")}<h2 class="h2">Quelques-uns de nos produits</h2></div><button class="fly" type="button" data-flyer="affiche-boutique">L'affiche de la boutique</button></div>
 <div class="posters posters--5">{prods}</div></div></section>
-<section class="sec" id="nouveautes"><div class="wrap"><div class="shead"><div>{tag("Nouveautés")}<h2 class="h2">Nouveau en boutique</h2></div><p class="intro">Disponibles sur place, Rue de Lausanne 38B. Demandez-nous conseil pour choisir.</p></div><div class="posters posters--grid" style="--c:4">{"".join(product_card(*p) for p in NEW_PRODUCTS)}</div></div></section>
+<section class="sec" id="nouveautes"><div class="wrap"><div class="shead"><div>{tag("Nouveautés")}<h2 class="h2">Nouveau en boutique</h2></div><p class="intro">Disponibles sur place, Rue de Lausanne 38B. Demandez-nous conseil pour choisir.</p></div><div class="posters posters--grid" style="--c:5">{"".join(product_card(*p) for p in NEW_PRODUCTS)}</div></div></section>
 <section class="sec sec--paper"><div class="wrap">{product_videos()}</div></section>
 <section class="sec"><div class="wrap split" style="align-items:start"><div>{tag("Questions fréquentes")}<h2 class="h2">La boutique en pratique</h2><p class="intro" style="margin-top:16px">Comment choisir ses soins ? Lisez notre guide <a href="produits-cheveux-afro-suisse-romande" style="text-decoration:underline">où acheter des produits pour cheveux afro en Suisse romande</a>.</p></div>{faq(seo.BOUTIQUE_FAQ)}</div></section>
 <div class="ribbon"></div>{visit(top=True)}'''

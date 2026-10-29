@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "48"  # cache-busting for css/js
+V = "49"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -103,6 +103,10 @@ OFFERS = [
          flyer="affiche-meu-cacho",
          lead="Un soin pour mettre vos boucles à l'honneur, avec la crème Ammatrão Meu Cacho : des boucles bien définies et un volume naturel.",
          incl=["Définition des boucles", "Volume naturel", "Soin réalisé au salon"]),
+    dict(id="soin-pousse", title="Soin pousse cheveux longs", price="65", img="gamme-cheveux-longs", badge="Gamme Cheveux Longs",
+         flyer="gamme-cheveux-longs",
+         lead="Un soin intense pour la pousse des cheveux crépus, réalisé au salon avec la gamme complète Cheveux Longs : neuf produits bio et naturels, à base de poudres et de plantes africaines et indiennes. La gamme est aussi en vente à la boutique, 199 CHF les neuf produits.",
+         incl=["9 produits bio et naturels", "Plantes africaines et indiennes", "Gamme en boutique : 199 CHF"]),
     dict(id="soin-botox", title="Botox capillaire Onix", price="65", img="lissage-a", badge="Brillance, douceur, souplesse",
          flyer="affiche-botox-onix",
          lead="Le soin botox capillaire Onix offre un nouvel éclat à vos cheveux : brillance, douceur et souplesse. Le traitement est réalisé au salon, sur rendez-vous.",
@@ -160,6 +164,7 @@ MENU = {
         ("Soin nourrissant collagène & karité", "65", "Masque Ecolchi, pour cheveux secs et abîmés"),
         ("Soin douceur & brillance", "65", "Rituel EVORK, shampoing et après-shampoing"),
         ("Soin des boucles Meu Cacho", "65", "Définition des boucles et volume naturel"),
+        ("Soin pousse cheveux longs", "65", "Gamme complète Cheveux Longs"),
         ("Soin au collagène Karseell", "65", "Douceur, souplesse, brillance"),
         ("Botox capillaire Onix", "65", "Brillance, douceur, souplesse"),
         ("Botox Lisoplastia Gold Show", "85", "Ultra hydratant, anti-frisottis"),
