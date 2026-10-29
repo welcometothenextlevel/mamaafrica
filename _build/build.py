@@ -336,7 +336,7 @@ def shop():
 </div>'''
 
 NEW_PRODUCTS = [
-    ("gamme-cheveux-longs", "Gamme complète cheveux longs · 199 CHF", "9 produits pour la pousse des cheveux crépus : shampoing, démêlant, soin botox africain, spray anti-casse, huile pousse rapide, poudre, Super Boost, Super Volume. Moins cher qu'au détail."),
+    ("gamme-cheveux-longs", "Gamme Cheveux Longs", "<b>199 CHF</b> · 9 produits bio pour la pousse des cheveux crépus, moins chers qu'au détail. Le soin au salon : 65 CHF."),
     ("affiche-nouvelles-arrivees", "Nouvelles arrivées", "Umectação Oliva, Mielle, Salon Line, Gold Spell, botox capillaire et plus."),
     ("affiche-masque-super", "Masque capillaire Super", "Un soin complet, texture et parfum surprenants."),
     ("affiche-tonico-poderoso", "Tônico Poderoso Gold Spell", "Aide à fortifier les cheveux et à limiter la casse."),
