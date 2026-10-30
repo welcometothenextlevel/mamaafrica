@@ -20,6 +20,7 @@ I = {
  "clock": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
  "arr": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
  "prev": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+ "mail": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>',
  "x": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
  "g": '<svg class="g-logo" viewBox="0 0 48 48" aria-label="Google"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>',
 }
@@ -85,6 +86,7 @@ def ways(light=False):
   <a class="way" href="{SALONKEE}" target="_blank" rel="noopener"><span class="ic">{I["cal"]}</span><span><b>En ligne sur Salonkee</b><small>Choisissez votre créneau, 24h/24</small></span>{ARR_W}</a>
   <a class="way wa" href="{wa()}" target="_blank" rel="noopener"><span class="ic">{I["wa"]}</span><span><b>Sur WhatsApp</b><small>Envoyez le code ou une photo du modèle</small></span>{ARR_W}</a>
   <a class="way" href="tel:{TEL}"><span class="ic">{I["tel"]}</span><span><b>{PHONE}</b><small>Du lundi au samedi, 9h00 – 18h30</small></span>{ARR_W}</a>
+  <a class="way" href="mailto:{EMAIL}"><span class="ic">{I["mail"]}</span><span><b>Par e-mail</b><small>{EMAIL}</small></span>{ARR_W}</a>
 </div>'''
 
 def hours_list():
@@ -103,7 +105,7 @@ def footer():
       <div class="socials"><a href="{INSTAGRAM}" target="_blank" rel="noopener" aria-label="Instagram">{I["ig"]}</a><a href="{wa()}" target="_blank" rel="noopener" aria-label="WhatsApp">{I["wa"]}</a><a href="{GMAPS}" target="_blank" rel="noopener" aria-label="Google Maps">{I["pin"]}</a><a href="{SALONKEE}" target="_blank" rel="noopener" aria-label="Salonkee">{I["cal"]}</a></div></div>
     <div><h4>Coiffure</h4><ul>{col(["tresses", "hommes-enfants", "tissage", "soins", "beaute"])}</ul></div>
     <div><h4>Mama Africa</h4><ul>{col(["offres", "tarifs", "boutique", "galerie", "salon", "avis", "conseils"])}<li><a href="coiffure-afro-broye">Broye, Fribourg et environs</a></li></ul></div>
-    <div><h4>Nous trouver</h4><ul><li><a href="{GMAPS}" target="_blank" rel="noopener">{STREET}<br>{CITY}</a></li><li><a href="tel:{TEL}">{PHONE}</a></li><li><a href="{INSTAGRAM}" target="_blank" rel="noopener">{IG_HANDLE}</a></li><li style="color:var(--on-2)">Lundi au samedi, 9h00 – 18h30</li></ul></div>
+    <div><h4>Nous trouver</h4><ul><li><a href="{GMAPS}" target="_blank" rel="noopener">{STREET}<br>{CITY}</a></li><li><a href="tel:{TEL}">{PHONE}</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><a href="{INSTAGRAM}" target="_blank" rel="noopener">{IG_HANDLE}</a></li><li style="color:var(--on-2)">Lundi au samedi, 9h00 – 18h30</li></ul></div>
   </div>
   <div class="ftr-bot"><span>© 2026 {NAME}</span><span><a href="reservation">Réserver</a> · <a href="confidentialite">Confidentialité</a></span></div>
 </div></footer>'''
@@ -126,7 +128,7 @@ def overlays():
 
 def schema():
     d = {"@context": "https://schema.org", "@type": "HairSalon", "name": NAME, "slogan": SLOGAN,
-         "image": BASE + "assets/img/logo.png", "url": BASE, "telephone": TEL, "priceRange": "CHF 40 – 120",
+         "image": BASE + "assets/img/logo.png", "url": BASE, "telephone": TEL, "email": EMAIL, "priceRange": "CHF 40 – 120",
          "address": {"@type": "PostalAddress", "streetAddress": STREET, "postalCode": "1530", "addressLocality": "Payerne", "addressRegion": "VD", "addressCountry": "CH"},
          "geo": {"@type": "GeoCoordinates", "latitude": GEO[0], "longitude": GEO[1]},
          "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:00", "closes": "18:30"}],
@@ -268,13 +270,21 @@ def strip():
     return f'<div class="strip">{figs}</div>'
 
 def soin_videos(head=True):
-    vids = [("soin-lissage", "Soin douceur & brillance", "Rituel EVORK : des cheveux doux, soyeux et brillants.", "affiche-soin-brillance"),
+    vids = [("soin-lissage", "Soin douceur & brillance", "Rituel EVORK : des cheveux doux, soyeux et brillants.", "affiche-lissage-65"),
             ("soin-masque", "Soin nourrissant collagène & karité", "Masque Ecolchi pour cheveux secs et abîmés.", "affiche-soin-collagene")]
     cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<span class="vprice"><small>Prix du soin</small>65 CHF</span><button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span><button class="fly" type="button" data-flyer="{f}">Voir l\'affiche</button></figcaption></figure>''' for v, t, d, f in vids)
     return f'''<div class="vsplit"><div>{tag("Les soins en vidéo")}<h2 class="h2">Voyez le résultat</h2>
-  <p class="intro" style="margin:18px 0 26px">Nos soins capillaires sont à 65 CHF : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell, le soin des boucles Meu Cacho, le botox Onix et le soin pousse cheveux longs. Botox Gold Show : 85 CHF. Les produits sont aussi en vente à la boutique.</p>
+  <p class="intro" style="margin:18px 0 26px">Nos soins capillaires sont à 65 CHF : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell, le soin des boucles Meu Cacho, le botox Onix, le soin pousse cheveux longs et le soin Pro-Kératine Duo P9. Botox Gold Show : 85 CHF. Les produits sont aussi en vente à la boutique.</p>
   <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin.")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
   <div class="vcards">{cards}</div></div>'''
+
+SND = '<button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button>'
+
+def feature_video(v, label, t, h, intro, btn, sound=False):
+    return f'''<div class="vsplit"><div>{tag(t)}<h2 class="h2">{h}</h2>
+  <p class="intro" style="margin:18px 0 26px">{intro}</p>
+  <div class="btns">{btn}</div></div>
+  <div class="vcards vcards--one"><figure class="vcard" data-reveal><div class="ph">{video(v, label)}{SND if sound else ""}</div></figure></div></div>'''
 
 def reviews():
     real = lambda r: f'<article class="rv-card"><div class="rv-top"><span class="rv-av">{r["initial"]}</span><div><b>{esc(r["name"])}</b><small>{r["meta"]}</small></div>{I["g"]}</div>{STARS}<p>« {esc(r["text"])} »</p></article>'
@@ -327,7 +337,7 @@ def faq(items=FAQ):
 def shop():
     cats = "".join(f'<li><span><b>{t}</b><span>{d}</span></span></li>' for t, d in BOUTIQUE_CATS)
     return f'''<div class="shop">
-  <div class="shop-pic" data-reveal>{img("boutique-rayons-1", "Les rayons de soins de la boutique Mama Africa", "(max-width: 960px) 100vw, 42vw")}<span class="real">La boutique</span></div>
+  <div class="shop-pic shop-pic--fly" data-reveal><button class="ph" type="button" data-flyer="affiche-boutique-coiffure" data-cap="Mama Africa, boutique &amp; coiffure" aria-label="Agrandir l'affiche de la boutique">{img("affiche-boutique-coiffure", "Affiche Mama Africa boutique et coiffure : produits cosmétiques, mèches, perruques et coiffure sur place", "(max-width: 960px) 100vw, 42vw")}</button></div>
   <div data-reveal>{tag("La boutique")}<h2 class="h2">Tout pour vos cheveux, sous le même toit</h2>
     <p class="intro" style="margin-top:16px">Mielle, Lola Cosmetics, Salon Line, Novex, Lowell : des marques pour cheveux crépus, bouclés et en transition qu'on trouve très peu ailleurs dans la région. Chez nous, elles sont en rayon, avec les conseils en plus. Ouvert du lundi au samedi, sans rendez-vous.</p>
     <ul class="cats">{cats}</ul>
@@ -452,6 +462,7 @@ def p_tissage():
                   "Tissage cousu sur nattes et extensions pour tous les types de cheveux : toutes les textures, toutes les origines. Un résultat naturel, coiffage compris.",
                   img("tissage-b", "Pose de tissage sur nattes", "(max-width: 960px) 100vw, 40vw", eager=True), "100", "dès") + f'''
 <section class="sec sec--paper"><div class="wrap">{detail(OFFER["tissage"])}{detail(OFFER["extensions-longues"], True)}</div></section>
+<section class="sec"><div class="wrap">{feature_video("salon-boucles", "Boucles naturelles réalisées au salon", "En vidéo", "Des boucles naturelles, posées au salon", "Des nattes bien faites et des boucles qui gardent leur volume : le résultat filmé chez nous, Rue de Lausanne 38B. Activez le son pour la musique.", f'<a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour une pose de boucles comme dans la vidéo.")}" target="_blank" rel="noopener">{I["wa"]}Je veux le même résultat</a>', sound=True)}</div></section>
 <section class="sec"><div class="wrap split">
   <div class="frame" data-reveal>{img("boutique-cheveux-2", "Cheveux naturels et tissages en boutique", "(max-width: 960px) 100vw, 45vw")}<span class="real">Au salon</span></div>
   <div data-reveal>{tag("Extensions pour toutes les textures")}<h2 class="h2">Tous les types de cheveux, toutes les origines</h2><div class="prose" style="margin-top:20px"><p class="lead">Lisses, ondulés, bouclés, frisés ou crépus : nous avons des extensions pour chaque texture, en cheveux naturels de toutes origines.</p><p>On choisit ensemble la texture qui se fond avec la vôtre, la longueur, la couleur et la quantité, avant la pose. Tissage dès 100 CHF, extensions 120 CHF, extensions longues 100 CHF.</p></div><ul class="rare-list" style="margin-top:20px"><li>Lisses</li><li>Ondulés</li><li>Bouclés</li><li>Frisés</li><li>Crépus / afro</li></ul></div>
@@ -463,7 +474,7 @@ def p_soins():
     body = pintro("Soins &amp; perruques", "Coiffeuse femme à Payerne : soins, lissage et perruques",
                   "Coupe, couleur, brushing, défrisage, lissage et soins profonds : une coiffeuse pour toutes les femmes, quels que soient vos cheveux, crépus, bouclés, ondulés ou lisses. Et vos perruques retrouvent une seconde vie.",
                   img("perruque-a", "Cheveux lisses et brillants", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
-<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-pousse"])}{detail(OFFER["soin-botox"], True)}{detail(OFFER["soin-botox-gold"])}{detail(OFFER["soin-collagene"], True)}{detail(OFFER["soin-brillance"])}{detail(OFFER["soin-boucles"], True)}{detail(OFFER["pose-perruque"])}{detail(OFFER["renovation-perruque"], True)}</div></section>
+<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-pousse"])}{detail(OFFER["soin-botox"], True)}{detail(OFFER["soin-botox-gold"])}{detail(OFFER["soin-collagene"], True)}{detail(OFFER["soin-brillance"])}{detail(OFFER["soin-boucles"], True)}{detail(OFFER["soin-p9"])}{detail(OFFER["pose-perruque"], True)}{detail(OFFER["renovation-perruque"])}</div></section>
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
 <section class="sec sec--paper"><div class="wrap">{product_videos()}</div></section>
 <section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Soins et lissage</h2></div></div>{ptables(("soins",))}</div></section>
@@ -520,6 +531,7 @@ def p_boutique():
 <section class="sec sec--paper"><div class="wrap"><div class="shead"><div>{tag("En rayon")}<h2 class="h2">Quelques-uns de nos produits</h2></div><button class="fly" type="button" data-flyer="affiche-boutique">L'affiche de la boutique</button></div>
 <div class="posters posters--5">{prods}</div></div></section>
 <section class="sec" id="nouveautes"><div class="wrap"><div class="shead"><div>{tag("Nouveautés")}<h2 class="h2">Nouveau en boutique</h2></div><p class="intro">Disponibles sur place, Rue de Lausanne 38B. Demandez-nous conseil pour choisir.</p></div><div class="posters posters--grid" style="--c:5">{"".join(product_card(*p) for p in NEW_PRODUCTS)}</div></div></section>
+<section class="sec sec--sand" id="en-stock"><div class="wrap">{feature_video("boutique-stock", "Les gammes disponibles en stock à la boutique", "Disponible en stock", "Nos gammes en rayon", "Real Natura (Cachos do Brasil, Pro-Cachos, Bomba Café, Poderoso Cabelão), Lola Cosmetics (Bossa, Morte Súbita), Skala, le lait corporel Makari, Nativa Spa, le duo Borthe P9 et la gamme Cheveux Longs : tout est disponible sur place, Rue de Lausanne 38B.", f'<a class="btn btn--gold" href="{wa("Bonjour Mama Africa, avez-vous ce produit en stock ?")}" target="_blank" rel="noopener">{I["wa"]}Demander un produit</a><a class="btn btn--line" href="#nouveautes">Nouveau en boutique</a>')}</div></section>
 <section class="sec sec--paper"><div class="wrap">{product_videos()}</div></section>
 <section class="sec"><div class="wrap split" style="align-items:start"><div>{tag("Questions fréquentes")}<h2 class="h2">La boutique en pratique</h2><p class="intro" style="margin-top:16px">Comment choisir ses soins ? Lisez notre guide <a href="produits-cheveux-afro-suisse-romande" style="text-decoration:underline">où acheter des produits pour cheveux afro en Suisse romande</a>.</p></div>{faq(seo.BOUTIQUE_FAQ)}</div></section>
 <div class="ribbon"></div>{visit(top=True)}'''
@@ -550,7 +562,7 @@ GALLERY = [  # (image, caption, filter, is_real_salon_photo) — her own images 
 ]
 FLYERS = ["affiche-perles-85", "affiche-africaines-110", "affiche-4-modeles-110", "affiche-promo-boheme-120", "affiche-boheme-100", "affiche-twist-80",
           "affiche-rasta-90", "affiche-transplas-40", "affiche-crochet", "affiche-hommes-69", "affiche-enfants-65", "affiche-garcons-50",
-          "affiche-tissage-100", "affiche-extensions-100", "affiche-botox-onix", "affiche-botox-gold", "affiche-soin-collagene", "affiche-lissage",
+          "affiche-tissage-100", "affiche-extensions-100", "affiche-botox-onix", "affiche-botox-gold", "affiche-soin-collagene", "affiche-lissage-65", "affiche-soin-p9", "affiche-soin-pousse",
           "affiche-meu-cacho", "affiche-pose-perruque", "affiche-perruque-50", "affiche-codes", "affiche-tarifs", "affiche-nouvelles-arrivees",
           "affiche-masque-super", "affiche-tonico-poderoso", "affiche-nativa-spa", "affiche-boutique-coiffure"]
 

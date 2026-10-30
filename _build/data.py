@@ -5,7 +5,7 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "49"  # cache-busting for css/js
+V = "50"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
@@ -17,6 +17,7 @@ CITY = "1530 Payerne"
 GEO = (46.8195624, 6.936667)
 SLOGAN = "Votre beauté, notre passion."
 
+EMAIL = "mamaafricabeauty2@gmail.com"
 SALONKEE = "https://salonkee.ch/salon/mamaafrica-brut"
 INSTAGRAM = "https://www.instagram.com/mamaafricabeauty_/"
 IG_HANDLE = "@mamaafricabeauty_"
@@ -96,7 +97,7 @@ OFFERS = [
          lead="Le masque Ecolchi au collagène et au beurre de karité, appliqué au salon : il nourrit les cheveux secs et abîmés, et leur rend douceur et souplesse.",
          incl=["Aide à nourrir les cheveux", "Douceur et souplesse", "Traitement réalisé au salon"]),
     dict(id="soin-brillance", title="Soin douceur & brillance", price="65", img="lissage-a", badge="Lissage professionnel",
-         flyer="affiche-lissage",
+         flyer="affiche-lissage-65",
          lead="Un lissage professionnel avec le shampoing et le soin EVORK : il lisse la fibre, réduit le volume et discipline les frisottis, pour des cheveux doux, brillants effet miroir et faciles à coiffer.",
          incl=["Cheveux doux et soyeux", "Brillants et faciles à coiffer", "Soin réalisé au salon"]),
     dict(id="soin-boucles", title="Soin des boucles Meu Cacho", price="65", img="boucles-a", badge="Ammatrão Meu Cacho",
@@ -104,9 +105,13 @@ OFFERS = [
          lead="Un soin pour mettre vos boucles à l'honneur, avec la crème Ammatrão Meu Cacho : des boucles bien définies et un volume naturel.",
          incl=["Définition des boucles", "Volume naturel", "Soin réalisé au salon"]),
     dict(id="soin-pousse", title="Soin pousse cheveux longs", price="65", img="gamme-cheveux-longs", badge="Gamme Cheveux Longs",
-         flyer="gamme-cheveux-longs",
+         flyer="affiche-soin-pousse",
          lead="Un soin intense pour la pousse des cheveux crépus, réalisé au salon avec la gamme complète Cheveux Longs : neuf produits bio et naturels, à base de poudres et de plantes africaines et indiennes. La gamme est aussi en vente à la boutique, 199 CHF les neuf produits.",
          incl=["9 produits bio et naturels", "Plantes africaines et indiennes", "Gamme en boutique : 199 CHF"]),
+    dict(id="soin-p9", title="Soin Pro-Kératine Duo P9", price="65", img="lissage-a", badge="Borthe Professional",
+         flyer="affiche-soin-p9",
+         lead="Le duo Borthe Professional P9 : le shampoing Pro-Kératine n° 1, puis le soin lissant n° 2. Il aide à réduire les frisottis, facilite le coiffage et apporte douceur et brillance. Traitement réalisé au salon, produits aussi en vente à la boutique.",
+         incl=["Aide à réduire les frisottis", "Facilite le coiffage", "Douceur et brillance"]),
     dict(id="soin-botox", title="Botox capillaire Onix", price="65", img="lissage-a", badge="Brillance, douceur, souplesse",
          flyer="affiche-botox-onix",
          lead="Le soin botox capillaire Onix offre un nouvel éclat à vos cheveux : brillance, douceur et souplesse. Le traitement est réalisé au salon, sur rendez-vous.",
@@ -166,6 +171,7 @@ MENU = {
         ("Soin des boucles Meu Cacho", "65", "Définition des boucles et volume naturel"),
         ("Soin pousse cheveux longs", "65", "Gamme complète Cheveux Longs"),
         ("Soin au collagène Karseell", "65", "Douceur, souplesse, brillance"),
+        ("Soin Pro-Kératine Duo P9", "65", "Borthe Professional, shampoing et soin lissant"),
         ("Botox capillaire Onix", "65", "Brillance, douceur, souplesse"),
         ("Botox Lisoplastia Gold Show", "85", "Ultra hydratant, anti-frisottis"),
         ("Pose de perruque avec colle", "50", "Nattes incluses"),
