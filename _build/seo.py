@@ -46,9 +46,9 @@ META = {
     "avis": ("Avis clients · Mama Africa, coiffeuse afro à Payerne",
              "Les avis Google de nos clientes sur Mama Africa, salon de coiffure afro à Payerne. Laissez votre avis en un clic."),
     "reservation": ("Prendre rendez-vous · Coiffeuse afro à Payerne | Mama Africa",
-                    "Réservez vos tresses africaines, tissage, soin ou beauté à Payerne : en ligne sur Salonkee, sur WhatsApp ou au 078 624 29 24. Lundi au samedi, 9h – 18h30."),
+                    "Réservez vos tresses africaines, tissage, soin ou beauté à Payerne : en ligne sur Salonkee, sur WhatsApp ou au 078 259 77 38. Lundi au samedi, 9h – 18h30."),
     "contact": ("Contact · Mama Africa, Rue de Lausanne 38B, Payerne",
-                "Mama Africa Beauty, Rue de Lausanne 38B, 1530 Payerne, à 3 minutes de la gare. 078 624 29 24, WhatsApp, Instagram. Lundi au samedi 9h00 – 18h30."),
+                "Mama Africa Beauty, Rue de Lausanne 38B, 1530 Payerne, à 3 minutes de la gare. 078 259 77 38, WhatsApp, Instagram. Lundi au samedi 9h00 – 18h30."),
     "coiffure-afro-broye": ("Coiffeuse afro près d'Estavayer, Avenches et Fribourg",
                             "Salon afro de la Broye, à 15 min d'Estavayer et d'Avenches, 25 min de Fribourg, 30 min d'Yverdon. Tresses africaines, tissage et produits afro à Payerne."),
     "conseils": ("Conseils cheveux afro et tresses · Mama Africa Payerne",
@@ -153,7 +153,7 @@ BOUTIQUE_FAQ = [
 REGION_FAQ = [
     ("Y a-t-il une coiffeuse afro près d'Estavayer-le-Lac ou d'Avenches ?", "Oui : Mama Africa est à Payerne, à environ 15 minutes en voiture d'Estavayer-le-Lac et d'Avenches. Tresses africaines, tissage, défrisage et soins pour cheveux crépus, sur rendez-vous."),
     ("Comment venir en train ?", "Le salon est à 3 minutes à pied de la gare de Payerne, desservie directement depuis Fribourg, Yverdon-les-Bains, Moudon et Lausanne."),
-    ("Puis-je réserver à distance ?", "Oui, en ligne sur Salonkee, sur WhatsApp ou par téléphone au 078 624 29 24. Envoyez une photo du modèle souhaité pour une estimation."),
+    ("Puis-je réserver à distance ?", "Oui, en ligne sur Salonkee, sur WhatsApp ou par téléphone au 078 259 77 38. Envoyez une photo du modèle souhaité pour une estimation."),
 ]
 
 TOWNS = [  # (town, by car, by train) — rounded travel times to Rue de Lausanne 38B

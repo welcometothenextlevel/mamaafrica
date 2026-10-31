@@ -5,13 +5,13 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "50"  # cache-busting for css/js
+V = "51"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
-PHONE = "078 624 29 24"
-TEL = "+41786242924"
-WA = "41786242924"  # her main number since 23.10.2026 (meeting notes)
+PHONE = "078 259 77 38"
+TEL = "+41782597738"
+WA = "41782597738"  # her only number since 30.10.2026 (she typed 71 38; her flyers say 77 38)
 STREET = "Rue de Lausanne 38B"
 CITY = "1530 Payerne"
 GEO = (46.8195624, 6.936667)
@@ -116,7 +116,7 @@ OFFERS = [
          flyer="affiche-botox-onix",
          lead="Le soin botox capillaire Onix offre un nouvel éclat à vos cheveux : brillance, douceur et souplesse. Le traitement est réalisé au salon, sur rendez-vous.",
          incl=["Brillance, douceur, souplesse", "65 CHF le traitement", "Sur rendez-vous"]),
-    dict(id="soin-botox-gold", title="Botox Lisoplastia Gold Show", price="85", img="lissage-a", badge="Huile d'argan, coco, karité",
+    dict(id="soin-botox-gold", title="Botox Lisoplastia Gold Show", price="65", img="lissage-a", badge="Huile d'argan, coco, karité",
          flyer="affiche-botox-gold",
          lead="Un botox ultra hydratant, anti-volume et anti-frisottis, à l'huile d'argan, à l'huile de coco et au beurre de karité, sans formol. Traitement au salon, produit aussi disponible à l'achat.",
          incl=["Ultra hydratant, anti-frisottis", "0 % formol", "Produit aussi en vente"]),
@@ -173,11 +173,11 @@ MENU = {
         ("Soin au collagène Karseell", "65", "Douceur, souplesse, brillance"),
         ("Soin Pro-Kératine Duo P9", "65", "Borthe Professional, shampoing et soin lissant"),
         ("Botox capillaire Onix", "65", "Brillance, douceur, souplesse"),
-        ("Botox Lisoplastia Gold Show", "85", "Ultra hydratant, anti-frisottis"),
+        ("Botox Lisoplastia Gold Show", "65", "Ultra hydratant, anti-frisottis"),
         ("Pose de perruque avec colle", "50", "Nattes incluses"),
         ("Rénovation de perruque", "50", "Nettoyage, soin, remise en forme"),
         ("Bio-plastie capillaire", "95", "Sur rendez-vous téléphonique"),
-        ("Soin cheveux lisses ou ondulés", "85", ""),
+        ("Soin cheveux lisses ou ondulés", "65", ""),
         ("Traitement produits Lowell", "95", ""),
         ("Coupe", "45", ""),
         ("Teinture", "55", ""),
@@ -214,7 +214,7 @@ REVIEWS = [
 FAQ = [
     ("Les mèches sont-elles comprises ?", "Oui sur nos offres : tresses africaines à 110 CHF (paquets de mèches offerts), tresses bohème à 100 CHF (un paquet offert), promo bohème à 120 CHF (2 paquets de cheveux offerts), tresses avec perles à 85 CHF (perles et un paquet offerts), rasta longues Élégance à 90 CHF et crochet bouclé à 120 CHF (cheveux inclus). Pour les autres coiffures, les mèches s'achètent sur place et nous vous aidons à choisir la quantité et la couleur."),
     ("Comment choisir mon modèle ?", "Parcourez notre catalogue de codes (1 à 9) ou envoyez-nous une photo sur WhatsApp. Indiquez simplement le code au moment de réserver."),
-    ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 624 29 24. La boutique est ouverte sans rendez-vous du lundi au samedi."),
+    ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 259 77 38. La boutique est ouverte sans rendez-vous du lundi au samedi."),
     ("Combien de temps dure une pose ?", "Cela dépend du modèle, de la longueur et de l'épaisseur. Envoyez une photo sur WhatsApp, nous vous donnons une estimation avant le rendez-vous."),
     ("Vous coiffez les enfants ?", "Oui : nattes, transplas et tresses se font aussi pour les enfants. Précisez l'âge en réservant."),
     ("Vous rénovez les perruques ?", "Oui, 50 CHF : nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle."),
