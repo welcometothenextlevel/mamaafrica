@@ -5,13 +5,13 @@ take precedence over the older Salonkee list, which is kept only for services th
 
 PITCH = True  # lead pitch: keep noindex until she signs
 BASE = "https://welcometothenextlevel.github.io/mamaafrica/"
-V = "51"  # cache-busting for css/js
+V = "52"  # cache-busting for css/js
 
 NAME = "Mama Africa Beauty"
 SHORT = "Mama Africa"
-PHONE = "078 259 77 38"
-TEL = "+41782597738"
-WA = "41782597738"  # her only number since 30.10.2026 (she typed 71 38; her flyers say 77 38)
+PHONE = "078 259 67 38"
+TEL = "+41782596738"
+WA = "41782596738"  # her only number, confirmed in writing 02.11.2026 (earlier: 71 38 typed 30.10, 77 38 on her flyers)
 STREET = "Rue de Lausanne 38B"
 CITY = "1530 Payerne"
 GEO = (46.8195624, 6.936667)
@@ -120,6 +120,14 @@ OFFERS = [
          flyer="affiche-botox-gold",
          lead="Un botox ultra hydratant, anti-volume et anti-frisottis, à l'huile d'argan, à l'huile de coco et au beurre de karité, sans formol. Traitement au salon, produit aussi disponible à l'achat.",
          incl=["Ultra hydratant, anti-frisottis", "0 % formol", "Produit aussi en vente"]),
+    dict(id="soin-bioplastia", title="Soin Lowell Bioplastia", price="65", img="lissage-a", badge="Soin reconstructeur",
+         flyer="affiche-lowell-bioplastia",
+         lead="La bio-plastie Lowell est un soin reconstructeur pour les cheveux abîmés et fragilisés. Il aide à renforcer la fibre capillaire et à réduire la casse, et apporte hydratation, douceur et brillance. Le soin est fait au salon, uniquement sur rendez-vous.",
+         incl=["Aide à renforcer la fibre", "Aide à réduire la casse", "Hydratation, douceur, brillance"]),
+    dict(id="soin-royal-bee", title="Lissage Lowell Royal Bee", price="65", img="lissage-a", badge="Lissage professionnel",
+         flyer="affiche-lowell-royal-bee",
+         lead="Le lissage professionnel et soin Lowell Royal Bee aide à lisser les cheveux et à réduire le volume, pour des cheveux doux, brillants et disciplinés. Le traitement est fait au salon, uniquement sur rendez-vous.",
+         incl=["Aide à lisser, réduit le volume", "Cheveux doux et brillants", "Uniquement sur rendez-vous"]),
     dict(id="pose-perruque", title="Pose de perruque avec colle", price="50", img="perruque-b", badge="Nattes incluses",
          flyer="affiche-pose-perruque",
          lead="Pose de perruque avec colle, pour un rendu naturel. Les nattes sur vos cheveux naturels avant la pose sont incluses dans le prix. Sur rendez-vous, appelez-nous pour confirmer.",
@@ -176,9 +184,9 @@ MENU = {
         ("Botox Lisoplastia Gold Show", "65", "Ultra hydratant, anti-frisottis"),
         ("Pose de perruque avec colle", "50", "Nattes incluses"),
         ("Rénovation de perruque", "50", "Nettoyage, soin, remise en forme"),
-        ("Bio-plastie capillaire", "95", "Sur rendez-vous téléphonique"),
+        ("Soin Lowell Bioplastia", "65", "Soin reconstructeur, cheveux abîmés"),
         ("Soin cheveux lisses ou ondulés", "65", ""),
-        ("Traitement produits Lowell", "95", ""),
+        ("Lissage Lowell Royal Bee", "65", "Lissage professionnel et soin"),
         ("Coupe", "45", ""),
         ("Teinture", "55", ""),
     ]),
@@ -214,7 +222,7 @@ REVIEWS = [
 FAQ = [
     ("Les mèches sont-elles comprises ?", "Oui sur nos offres : tresses africaines à 110 CHF (paquets de mèches offerts), tresses bohème à 100 CHF (un paquet offert), promo bohème à 120 CHF (2 paquets de cheveux offerts), tresses avec perles à 85 CHF (perles et un paquet offerts), rasta longues Élégance à 90 CHF et crochet bouclé à 120 CHF (cheveux inclus). Pour les autres coiffures, les mèches s'achètent sur place et nous vous aidons à choisir la quantité et la couleur."),
     ("Comment choisir mon modèle ?", "Parcourez notre catalogue de codes (1 à 9) ou envoyez-nous une photo sur WhatsApp. Indiquez simplement le code au moment de réserver."),
-    ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 259 77 38. La boutique est ouverte sans rendez-vous du lundi au samedi."),
+    ("Faut-il prendre rendez-vous ?", "Oui pour la coiffure : sur Salonkee, sur WhatsApp ou au 078 259 67 38. La boutique est ouverte sans rendez-vous du lundi au samedi."),
     ("Combien de temps dure une pose ?", "Cela dépend du modèle, de la longueur et de l'épaisseur. Envoyez une photo sur WhatsApp, nous vous donnons une estimation avant le rendez-vous."),
     ("Vous coiffez les enfants ?", "Oui : nattes, transplas et tresses se font aussi pour les enfants. Précisez l'âge en réservant."),
     ("Vous rénovez les perruques ?", "Oui, 50 CHF : nettoyage, soin, démêlage, remise en forme, ajustement et finition professionnelle."),

@@ -274,7 +274,7 @@ def soin_videos(head=True):
             ("soin-masque", "Soin nourrissant collagène & karité", "Masque Ecolchi pour cheveux secs et abîmés.", "affiche-soin-collagene")]
     cards = "".join(f'''<figure class="vcard" data-reveal><div class="ph">{video(v, t)}<span class="vprice"><small>Prix du soin</small>65 CHF</span><button class="snd" type="button" aria-label="Activer le son" aria-pressed="false"><span class="on">Son activé</span><span class="off">Activer le son</span></button></div><figcaption><b>{t}</b><span>{d}</span><button class="fly" type="button" data-flyer="{f}">Voir l\'affiche</button></figcaption></figure>''' for v, t, d, f in vids)
     return f'''<div class="vsplit"><div>{tag("Les soins en vidéo")}<h2 class="h2">Voyez le résultat</h2>
-  <p class="intro" style="margin:18px 0 26px">Tous nos soins capillaires sont à 65 CHF chez Mama Africa Beauty Shop : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell, le soin des boucles Meu Cacho, les botox Onix et Gold Show, le soin pousse cheveux longs et le soin Pro-Kératine Duo P9. Les produits sont aussi en vente à la boutique.</p>
+  <p class="intro" style="margin:18px 0 26px">Tous nos soins capillaires sont à 65 CHF chez Mama Africa Beauty Shop : le rituel douceur &amp; brillance EVORK, le masque Ecolchi au collagène et au karité, le soin au collagène Karseell, le soin des boucles Meu Cacho, les botox Onix et Gold Show, la bio-plastie et le lissage Royal Bee de Lowell, le soin pousse cheveux longs et le soin Pro-Kératine Duo P9. Les produits sont aussi en vente à la boutique.</p>
   <div class="btns"><a class="btn btn--gold" href="{wa("Bonjour Mama Africa, je souhaite un rendez-vous pour un soin.")}" target="_blank" rel="noopener">{I["wa"]}Réserver un soin</a><a class="btn btn--line" href="soins">Tous les soins</a></div></div>
   <div class="vcards">{cards}</div></div>'''
 
@@ -474,7 +474,7 @@ def p_soins():
     body = pintro("Soins &amp; perruques", "Coiffeuse femme à Payerne : soins, lissage et perruques",
                   "Coupe, couleur, brushing, défrisage, lissage et soins profonds : une coiffeuse pour toutes les femmes, quels que soient vos cheveux, crépus, bouclés, ondulés ou lisses. Et vos perruques retrouvent une seconde vie.",
                   img("perruque-a", "Cheveux lisses et brillants", "(max-width: 960px) 100vw, 40vw", eager=True), "45", "dès") + f'''
-<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-pousse"])}{detail(OFFER["soin-botox"], True)}{detail(OFFER["soin-botox-gold"])}{detail(OFFER["soin-collagene"], True)}{detail(OFFER["soin-brillance"])}{detail(OFFER["soin-boucles"], True)}{detail(OFFER["soin-p9"])}{detail(OFFER["pose-perruque"], True)}{detail(OFFER["renovation-perruque"])}</div></section>
+<section class="sec sec--paper"><div class="wrap">{detail(OFFER["soin-pousse"])}{detail(OFFER["soin-botox"], True)}{detail(OFFER["soin-botox-gold"])}{detail(OFFER["soin-bioplastia"], True)}{detail(OFFER["soin-royal-bee"])}{detail(OFFER["soin-collagene"], True)}{detail(OFFER["soin-brillance"])}{detail(OFFER["soin-boucles"], True)}{detail(OFFER["soin-p9"])}{detail(OFFER["pose-perruque"], True)}{detail(OFFER["renovation-perruque"])}</div></section>
 <section class="sec"><div class="wrap">{soin_videos()}</div></section>
 <section class="sec sec--paper"><div class="wrap">{product_videos()}</div></section>
 <section class="sec"><div class="wrap"><div class="shead"><div>{tag("Tarifs")}<h2 class="h2">Soins et lissage</h2></div></div>{ptables(("soins",))}</div></section>
@@ -562,7 +562,7 @@ GALLERY = [  # (image, caption, filter, is_real_salon_photo) — her own images 
 ]
 FLYERS = ["affiche-perles-85", "affiche-africaines-110", "affiche-4-modeles-110", "affiche-promo-boheme-120", "affiche-boheme-100", "affiche-twist-80",
           "affiche-rasta-90", "affiche-transplas-40", "affiche-crochet", "affiche-hommes-69", "affiche-enfants-65", "affiche-garcons-50",
-          "affiche-tissage-100", "affiche-extensions-100", "affiche-botox-onix", "affiche-botox-gold", "affiche-soin-collagene", "affiche-lissage-65", "affiche-soin-p9", "affiche-soin-pousse",
+          "affiche-tissage-100", "affiche-extensions-100", "affiche-botox-onix", "affiche-botox-gold", "affiche-lowell-bioplastia", "affiche-lowell-royal-bee", "affiche-soin-collagene", "affiche-lissage-65", "affiche-soin-p9", "affiche-soin-pousse",
           "affiche-meu-cacho", "affiche-pose-perruque", "affiche-perruque-50", "affiche-codes", "affiche-tarifs", "affiche-nouvelles-arrivees",
           "affiche-masque-super", "affiche-tonico-poderoso", "affiche-nativa-spa", "affiche-boutique-coiffure"]
 

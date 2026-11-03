@@ -5,7 +5,7 @@
   var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var TOUCH = matchMedia('(pointer: coarse)').matches;
   var HOVER = matchMedia('(hover: hover) and (min-width: 961px)').matches;
-  var WA = window.MA_WA || '41782597738';
+  var WA = window.MA_WA || '41782596738';
   var hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
   var waLink = function (t) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t); };
