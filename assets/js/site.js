@@ -84,8 +84,8 @@
   d.querySelectorAll('[data-flyer]').forEach(function (b) {
     b.addEventListener('click', function () {
       // flyers in one grid open as a set, so you can swipe through them
-      var g = b.classList.contains('sq') && b.closest('.posters');
-      var set = g ? [].slice.call(g.querySelectorAll('.ph.sq[data-flyer]')) : [b];
+      var g = b.classList.contains('sq') && b.closest('.posters,.flow');
+      var set = g ? [].slice.call(g.querySelectorAll('.ph.sq[data-flyer]:not([aria-hidden])')) : [b];
       openLb(set.map(flyerItem), set.indexOf(b));
     });
   });
@@ -154,6 +154,30 @@
       rail.addEventListener('click', function (e) { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
       rail.addEventListener('dragstart', function (e) { e.preventDefault(); });
     }
+  }
+
+  /* ---------- product flyers: a strip that slides by itself ---------- */
+  var flow = d.querySelector('[data-flow]');
+  if (flow && !REDUCE) {
+    [].slice.call(flow.children).forEach(function (b) { // a second copy makes the loop seamless
+      var c = b.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.tabIndex = -1;
+      c.addEventListener('click', function () { b.click(); });
+      flow.appendChild(c);
+    });
+    var fPos = 0, fLast = 0, fSeen = false, fHold = 0, fOver = false, fCount = flow.children.length / 2;
+    new IntersectionObserver(function (e) { fSeen = e[0].isIntersecting; }).observe(flow);
+    flow.addEventListener('mouseenter', function () { fOver = true; });
+    flow.addEventListener('mouseleave', function () { fOver = false; });
+    ['touchstart', 'touchmove', 'wheel'].forEach(function (t) { flow.addEventListener(t, function () { fHold = performance.now() + 2500; }, { passive: true }); });
+    (function step(now) {
+      var dt = Math.min(now - fLast, 50); fLast = now;
+      var half = flow.children[fCount].offsetLeft - flow.children[0].offsetLeft;
+      if (Math.abs(flow.scrollLeft - fPos) > 2) fPos = flow.scrollLeft; // a swipe: carry on from there
+      if (fSeen && !fOver && now > fHold && !lb.classList.contains('is-open')) fPos += dt * 0.028;
+      if (half > 0 && fPos >= half) fPos -= half;
+      flow.scrollLeft = fPos; // fPos stays a float: iOS rounds scrollLeft
+      requestAnimationFrame(step);
+    })(performance.now());
   }
 
   /* ---------- la carte: a photo follows the cursor ---------- */

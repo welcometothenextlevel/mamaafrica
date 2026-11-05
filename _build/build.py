@@ -286,6 +286,21 @@ def feature_video(v, label, t, h, intro, btn, sound=False):
   <div class="btns">{btn}</div></div>
   <div class="vcards vcards--one"><figure class="vcard" data-reveal><div class="ph">{video(v, label)}{SND if sound else ""}</div></figure></div></div>'''
 
+PRODUCT_FLOW = [  # the set she sent on 04.11, in the order she sent it, plus mèches and Morte Súbita
+    ("affiche-lowell-bioplastia", "Soin Lowell Bioplastia, 65 CHF"), ("affiche-lowell-royal-bee", "Lissage Lowell Royal Bee, 65 CHF"),
+    ("affiche-soin-p9", "Duo Borthe P9 Pro-Kératine, 65 CHF"), ("affiche-soin-pousse", "Gamme complète Cheveux Longs, 65 CHF"),
+    ("affiche-lissage-65", "Lissage professionnel, 65 CHF"), ("affiche-makari", "Lait corporel Makari, en stock"),
+    ("affiche-nativa-spa", "O Boticário Nativa Spa, en stock"), ("affiche-lola-bossa", "Gamme Lola Bossa, en stock"),
+    ("affiche-cachos-do-brasil", "Real Natura Cachos do Brasil, en stock"), ("affiche-real-natura", "Real Natura, en stock"),
+    ("affiche-stock-gammes", "Toutes nos gammes en stock"), ("affiche-morte-subita", "Lola Morte Súbita, en stock"),
+    ("affiche-meches-naturelles", "Mèches de cheveux naturels, en stock"),
+]
+
+def product_flow():
+    items = "".join(f'<button class="ph sq" type="button" data-flyer="{f}" data-cap="{esc(c)}" aria-label="Agrandir l\'affiche : {esc(c)}">{img(f, "Affiche " + c, "(max-width: 760px) 60vw, 280px")}</button>' for f, c in PRODUCT_FLOW)
+    return f'''<div class="shead flow-head"><div><h2 class="h2">Tous nos produits en affiche</h2></div><p class="intro">Touchez une affiche pour l'agrandir.</p></div>
+<div class="flow" data-flow>{items}</div>'''
+
 def reviews():
     real = lambda r: f'<article class="rv-card"><div class="rv-top"><span class="rv-av">{r["initial"]}</span><div><b>{esc(r["name"])}</b><small>{r["meta"]}</small></div>{I["g"]}</div>{STARS}<p>« {esc(r["text"])} »</p></article>'
     ph = lambda: f'<article class="rv-card is-ph" aria-hidden="true"><div class="rv-top"><span class="rv-av">G</span><div><b style="color:var(--muted)">Avis Google</b><small>Emplacement réservé</small></div>{I["g"]}</div>{STARS}<div class="sk"></div><div class="sk"></div><div class="sk"></div><em>Le prochain avis s\'affichera ici.</em></article>'
@@ -531,7 +546,7 @@ def p_boutique():
 <section class="sec sec--paper"><div class="wrap"><div class="shead"><div>{tag("En rayon")}<h2 class="h2">Quelques-uns de nos produits</h2></div><button class="fly" type="button" data-flyer="affiche-boutique">L'affiche de la boutique</button></div>
 <div class="posters posters--5">{prods}</div></div></section>
 <section class="sec" id="nouveautes"><div class="wrap"><div class="shead"><div>{tag("Nouveautés")}<h2 class="h2">Nouveau en boutique</h2></div><p class="intro">Disponibles sur place, Rue de Lausanne 38B. Demandez-nous conseil pour choisir.</p></div><div class="posters posters--grid" style="--c:5">{"".join(product_card(*p) for p in NEW_PRODUCTS)}</div></div></section>
-<section class="sec sec--sand" id="en-stock"><div class="wrap">{feature_video("boutique-stock", "Les gammes disponibles en stock à la boutique", "Disponible en stock", "Nos gammes en rayon", "Mèches de cheveux naturels (lisses, bouclées, courtes), Real Natura (Cachos do Brasil, Pro-Cachos, Bomba Café, Poderoso Cabelão), Lola Cosmetics (Bossa, Morte Súbita), Skala, le lait corporel Makari, Nativa Spa, le duo Borthe P9 et la gamme Cheveux Longs : tout est disponible sur place, Rue de Lausanne 38B.", f'<a class="btn btn--gold" href="{wa("Bonjour Mama Africa, avez-vous ce produit en stock ?")}" target="_blank" rel="noopener">{I["wa"]}Demander un produit</a><a class="btn btn--line" href="#nouveautes">Nouveau en boutique</a>')}</div></section>
+<section class="sec sec--sand" id="en-stock"><div class="wrap">{feature_video("boutique-stock", "Les gammes disponibles en stock à la boutique", "Disponible en stock", "Nos gammes en rayon", "Mèches de cheveux naturels (lisses, bouclées, courtes), Real Natura (Cachos do Brasil, Pro-Cachos, Bomba Café, Poderoso Cabelão), Lola Cosmetics (Bossa, Morte Súbita), Skala, Lowell, le lait corporel Makari, Nativa Spa, le duo Borthe P9 et la gamme Cheveux Longs : tout est disponible sur place, Rue de Lausanne 38B.", f'<a class="btn btn--gold" href="{wa("Bonjour Mama Africa, avez-vous ce produit en stock ?")}" target="_blank" rel="noopener">{I["wa"]}Demander un produit</a><a class="btn btn--line" href="#nouveautes">Nouveau en boutique</a>')}{product_flow()}</div></section>
 <section class="sec sec--paper"><div class="wrap">{product_videos()}</div></section>
 <section class="sec"><div class="wrap split" style="align-items:start"><div>{tag("Questions fréquentes")}<h2 class="h2">La boutique en pratique</h2><p class="intro" style="margin-top:16px">Comment choisir ses soins ? Lisez notre guide <a href="produits-cheveux-afro-suisse-romande" style="text-decoration:underline">où acheter des produits pour cheveux afro en Suisse romande</a>.</p></div>{faq(seo.BOUTIQUE_FAQ)}</div></section>
 <div class="ribbon"></div>{visit(top=True)}'''
